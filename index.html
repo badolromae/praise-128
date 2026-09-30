@@ -107,6 +107,8 @@ input[type=number],select{background:rgba(10,6,2,.7);border:1px solid var(--line
 .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--ember);
   padding:12px 20px;border-radius:12px;z-index:50;opacity:0;transition:opacity .3s;pointer-events:none}
 .toast.show{opacity:1}
+.ytlogin{margin-top:16px;padding:12px;border:1px dashed var(--line);border-radius:12px;background:rgba(0,0,0,.25)}
+a.btn{text-decoration:none;display:inline-block}
 
 /* ── 관객(폰) 화면 ── */
 body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;overscroll-behavior:none}
@@ -206,6 +208,15 @@ body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none
           <input id="voterCount" type="number" min="1" max="20" value="3" style="width:120px">
         </div>
         <div id="qrHint" class="tag hidden" style="margin-top:12px">시작하면 큰 QR이 나와요. 폰으로 스캔해 접속한 뒤 첫 대결을 시작하세요.</div>
+        <div id="ytBox" style="margin-top:18px;padding:12px;border:1px dashed var(--line);border-radius:12px;background:rgba(0,0,0,.25)">
+          <div style="font-weight:800;margin-bottom:6px">📺 YouTube 로그인 <span class="tag">(선택)</span></div>
+          <div class="tag" style="line-height:1.6">YouTube Premium 계정으로 로그인하면 게임 중 광고 없이 재생돼요. 로그인하지 않아도 게임은 그대로 진행됩니다.</div>
+          <div class="row" style="justify-content:flex-start;margin-top:10px;gap:8px">
+            <button class="btn small" id="btnYtLogin" type="button">YouTube 로그인하기</button>
+            <button class="btn small ghost" id="btnYtCheck" type="button">내 멤버십 확인</button>
+          </div>
+          <div class="tag" id="ytStatus" style="margin-top:8px"></div>
+        </div>
         <div style="margin-top:16px" class="row"><button class="btn" id="btnStart">🔥 토너먼트 시작</button></div>
       </div>
       <div style="min-width:290px;flex:1;max-width:460px" class="card">
@@ -523,6 +534,7 @@ function hostInit(){
   }
   $("startRound").onchange=applyVersion;applyVersion();
 
+
   $("songTotal").textContent=S.length;
   $("rosterPreview").innerHTML=[1,2,3,4].map(e=>`<b>${ERA[e]} · ${S.filter(s=>s.era===e).length}곡</b><br>`+
     S.filter(s=>s.era===e).map(s=>`· ${esc(s.t)} <span style="opacity:.6">— ${esc(s.a)}</span>`).join("<br>")).join("<br><br>");
@@ -540,7 +552,7 @@ function hostInit(){
     if(players[side]&&players[side].loadVideoById){try{players[side].cueVideoById(opt);}catch(_){}return;}
     $("host"+side).innerHTML='<div id="yt'+side+'" style="width:100%;height:100%"></div>';
     const vars={rel:0,playsinline:1,modestbranding:1};if(!full){vars.start=song.s;vars.end=song.e;}
-    players[side]=new YT.Player("yt"+side,{videoId:song.id,playerVars:vars,events:{
+    players[side]=new YT.Player("yt"+side,{host:"https://www.youtube.com",videoId:song.id,playerVars:vars,events:{
       onStateChange:e=>{if(e.data===1){const o=players[side==="A"?"B":"A"];try{o&&o.pauseVideo();}catch(_){}}},
       onError:()=>{l.classList.remove("hidden");toast("이 영상은 외부 재생이 막혀 있어요 · YouTube에서 찾기를 눌러주세요");}}});
   }
@@ -698,6 +710,21 @@ function hostInit(){
   const toHome=()=>{stopPlayers();$("qrDock").classList.add("hidden");if(state.mode==="qr")broadcast({type:"wait"});show("home");};
   $("btnQuit").onclick=toHome;$("btnRestart").onclick=toHome;
   $("btnShowBracket").onclick=()=>$("bracketView").classList.toggle("hidden");
+
+  /* ---- YouTube 로그인 (선택) : 이 브라우저에 로그인돼 있으면 임베드 영상에도 Premium이 적용됨 ---- */
+  function ytPopup(url,msgDone){
+    const w=window.open(url,"ytlogin","width=520,height=720");
+    if(!w){location.href=url;return;}
+    $("ytStatus").textContent="로그인 창이 열렸어요. 로그인한 뒤 창을 닫아주세요.";
+    const t=setInterval(()=>{if(w.closed){clearInterval(t);$("ytStatus").textContent=msgDone;
+      try{localStorage.setItem("ytLoginTried","1");}catch(_){}
+      try{Object.values(players).forEach(p=>p&&p.destroy&&p.destroy());}catch(_){}players={};}},700);
+  }
+  $("btnYtLogin").onclick=()=>ytPopup("https://accounts.google.com/ServiceLogin?service=youtube&continue=https%3A%2F%2Fwww.youtube.com%2F",
+    "✅ 이 브라우저에 Premium 계정으로 로그인돼 있으면 광고 없이 재생돼요.");
+  $("btnYtCheck").onclick=()=>ytPopup("https://www.youtube.com/paid_memberships",
+    "멤버십 페이지에서 'YouTube Premium'이 보이면 준비 완료예요.");
+  try{if(localStorage.getItem("ytLoginTried"))$("ytStatus").textContent="이전에 로그인을 진행했어요. 필요하면 멤버십을 다시 확인하세요.";}catch(_){}
 }
 </script>
 </body>
