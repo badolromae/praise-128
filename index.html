@@ -2,693 +2,703 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>찬양 64강 토너먼트 · 겨울 펜션 캠프파이어</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>찬양 64강 토너먼트 · 128곡</title>
 <style>
 :root{
-  --bg:#150f0a; --bg2:#1e1409; --panel:#241708; --panel2:#2e1d0c;
-  --ember:#ff7a18; --ember2:#ffb347; --flame:#ffd166; --amber:#e8a33d;
-  --cream:#f6ead5; --muted:#c8ab84; --line:#3d2814; --green:#7fb069; --red:#e0603a;
+  --panel:rgba(28,17,8,.80); --panel2:rgba(40,24,11,.82);
+  --ember:#ff7a18; --flame:#ffd166; --amber:#e8a33d;
+  --cream:#f6ead5; --muted:#d4b893; --line:rgba(255,190,110,.18);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-body{
-  font-family:"Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;
-  color:var(--cream);
-  background:
-    radial-gradient(900px 500px at 15% -5%, rgba(255,122,24,.22), transparent 60%),
-    radial-gradient(700px 400px at 85% 0%, rgba(255,209,102,.12), transparent 60%),
-    radial-gradient(1000px 700px at 50% 115%, rgba(255,90,0,.20), transparent 60%),
-    linear-gradient(160deg,#160f08,#1d1309 45%,#120b06);
-  min-height:100%;
-}
-body::before{
-  content:"";position:fixed;inset:0;pointer-events:none;opacity:.06;z-index:0;
-  background-image:repeating-linear-gradient(90deg,#000 0 2px,transparent 2px 6px),
-                   repeating-linear-gradient(0deg,#000 0 1px,transparent 1px 5px);
-}
-.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:22px 16px 90px}
-.title{font-size:clamp(22px,4vw,40px);font-weight:800;letter-spacing:-.02em;
-  background:linear-gradient(92deg,var(--flame),var(--ember),#ff5e00);
-  -webkit-background-clip:text;background-clip:text;color:transparent;text-align:center}
-.sub{text-align:center;color:var(--muted);margin-top:8px;font-size:14px}
-.ember-dot{display:inline-block;width:7px;height:7px;border-radius:50%;
-  background:var(--ember);box-shadow:0 0 12px var(--ember);margin:0 6px;vertical-align:middle}
+html,body{min-height:100%}
+body{font-family:"Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;color:var(--cream);background:#0b1026;overflow-x:hidden}
+
+/* ── 전체 배경: 겨울밤 펜션 + 모닥불 ── */
+#scene{position:fixed;inset:0;z-index:0;pointer-events:none}
+#scene svg{width:100%;height:100%;display:block}
+#scene::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(6,8,20,.55) 0%,rgba(6,8,20,.25) 40%,rgba(10,6,2,.35) 100%)}
+.flame{transform-origin:50% 100%;transform-box:fill-box;animation:flick 1.6s ease-in-out infinite alternate}
+.flame.f2{animation-duration:1.1s;animation-delay:-.4s}
+.flame.f3{animation-duration:1.9s;animation-delay:-.8s}
+@keyframes flick{0%{transform:scaleY(1) skewX(0)}50%{transform:scaleY(1.08) skewX(-3deg)}100%{transform:scaleY(.94) skewX(3deg)}}
+.glow{animation:glow 2.4s ease-in-out infinite alternate}
+@keyframes glow{from{opacity:.75}to{opacity:1}}
+.spark{animation:rise 3s linear infinite}
+@keyframes rise{from{transform:translateY(0);opacity:1}to{transform:translateY(-160px);opacity:0}}
+.snow{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.snow i{position:absolute;top:-10px;width:5px;height:5px;border-radius:50%;background:#fff;opacity:.7;animation:fall linear infinite}
+@keyframes fall{to{transform:translateY(105vh) translateX(30px)}}
+@media (prefers-reduced-motion:reduce){.flame,.glow,.spark,.snow i{animation:none}}
+
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:26px 16px 90px}
+.title{font-size:clamp(24px,4.2vw,44px);font-weight:900;letter-spacing:-.02em;text-align:center;
+  color:var(--flame);text-shadow:0 2px 18px rgba(255,122,24,.55),0 1px 0 #3a1a02}
+.sub{text-align:center;color:var(--cream);opacity:.85;margin-top:10px;font-size:14px;text-shadow:0 1px 6px #000}
 .card{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);
-  border-radius:18px;padding:18px;box-shadow:0 14px 40px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,180,80,.08)}
+  border-radius:18px;padding:18px;box-shadow:0 14px 40px rgba(0,0,0,.5);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .center{text-align:center}
 .row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
-.btn{cursor:pointer;border:none;border-radius:13px;padding:13px 20px;font-weight:700;font-size:15px;
+.btn{cursor:pointer;border:none;border-radius:13px;padding:13px 20px;font-weight:800;font-size:15px;
   color:#2a1503;background:linear-gradient(180deg,var(--flame),var(--ember));
-  box-shadow:0 8px 22px rgba(255,122,24,.35);transition:transform .12s,box-shadow .12s;font-family:inherit}
-@media(hover:hover){.btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(255,122,24,.5)}}
-.btn.ghost{background:transparent;color:var(--cream);border:1px solid var(--line);box-shadow:none}
-@media(hover:hover){.btn.ghost:hover{border-color:var(--ember);color:var(--flame)}}
+  box-shadow:0 8px 22px rgba(255,122,24,.35);transition:transform .12s;font-family:inherit}
+@media(hover:hover){.btn:hover{transform:translateY(-2px)}}
+.btn:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.btn.ghost{background:rgba(0,0,0,.25);color:var(--cream);border:1px solid var(--line);box-shadow:none}
 .btn.small{padding:9px 14px;font-size:13px;border-radius:10px}
 .btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
-input[type=number],input[type=text],select{background:#120c06;border:1px solid var(--line);color:var(--cream);
+input[type=number],select{background:rgba(10,6,2,.7);border:1px solid var(--line);color:var(--cream);
   border-radius:10px;padding:10px 12px;font-size:15px;font-family:inherit}
 .hidden{display:none!important}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:760px){.grid2{grid-template-columns:1fr}}
+.big{font-size:clamp(18px,3vw,26px);font-weight:800;text-align:center;margin:6px 0}
+.note{color:var(--muted);font-size:13px;line-height:1.65}
+.tag{font-size:12px;color:var(--muted)}
+.hook{color:var(--flame);font-weight:800}
+.badge{background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:12px;padding:8px 14px;font-weight:700;color:var(--amber);display:inline-block}
+.logbox{max-height:210px;overflow:auto;font-size:12px;color:var(--muted);background:rgba(0,0,0,.35);
+  border:1px solid var(--line);border-radius:10px;padding:8px;line-height:1.7}
+.logbox b{color:var(--flame)}
+
+/* ── 대결 ── */
 .versus{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:16px;align-items:stretch}
-.versus .vs{min-width:56px}
-@media(max-width:760px){.versus{grid-template-columns:1fr}.versus .vs{padding:2px 0;min-width:0}}
-.song{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#180f07;
-  display:flex;flex-direction:column;transition:border-color .15s, box-shadow .15s}
-.song.active{border-color:var(--ember);box-shadow:0 0 0 2px rgba(255,122,24,.35),0 12px 30px rgba(0,0,0,.5)}
-.song img{width:100%;aspect-ratio:16/9;object-fit:cover;background:#0e0904;display:block}
-.song .meta{padding:12px 14px}
-.song .t{font-weight:800;font-size:17px;line-height:1.3}
-.song .a{color:var(--muted);font-size:13px;margin-top:4px}
-.song .y{display:inline-block;font-size:11px;color:#2a1503;background:var(--amber);border-radius:20px;padding:2px 9px;margin-top:8px;font-weight:700}
+.vs{display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--ember);font-size:28px;min-width:56px;text-shadow:0 0 14px rgba(255,122,24,.7)}
+@media(max-width:760px){.versus{grid-template-columns:1fr}.vs{min-width:0}}
+.song{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(12,7,3,.75);display:flex;flex-direction:column;transition:border-color .15s,box-shadow .15s}
+.song.active{border-color:var(--ember);box-shadow:0 0 0 3px rgba(255,122,24,.45),0 12px 30px rgba(0,0,0,.5)}
 .player{aspect-ratio:16/9;background:#000;width:100%;position:relative;overflow:hidden}
 .player .yth{position:absolute;inset:0}
-.player .cover{position:absolute;inset:0;z-index:2;background:#0e0904 center/cover no-repeat;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 12px;color:#fff;font-weight:800;text-shadow:0 2px 8px #000}
-.player .cover::before{content:"";position:absolute;inset:0;background:rgba(20,12,6,.6)}
-.player .cover span{position:relative}
-.player .cover{align-items:flex-end;padding-bottom:8px;font-size:13px}
-.player .cover::before{background:linear-gradient(to top,rgba(20,12,6,.75),transparent 40%)}
-.lnk{font-size:12px;color:var(--amber);text-decoration:none}
-.lnk:hover{color:var(--flame);text-decoration:underline}
-.clipbar{display:flex;gap:8px;padding:10px 14px;align-items:center;justify-content:space-between}
-.tag{font-size:12px;color:var(--muted)}
-.vs{display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--ember);font-size:26px}
-.vote-btn{width:100%;margin-top:10px}
-.tally{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap}
-.pill{background:#120c06;border:1px solid var(--line);border-radius:20px;padding:8px 16px;font-weight:700}
-.pill.a{color:var(--flame);border-color:var(--ember)}
-.pill.b{color:#9fd0ff;border-color:#3a6ea5}
+.cover{position:absolute;inset:0;z-index:2;background:#1a0f06 center/cover no-repeat;display:flex;align-items:flex-end;justify-content:flex-start;padding:10px}
+.cover.noimg{background:radial-gradient(circle at 30% 30%,#7a3a12,#1a0f06);align-items:center;justify-content:center;font-size:44px;font-weight:900;color:var(--flame)}
+.pill{background:rgba(0,0,0,.6);border-radius:20px;padding:4px 10px;font-size:12px;font-weight:700;color:#fff}
+.meta{padding:12px 14px}
+.meta .t{font-weight:800;font-size:18px;line-height:1.3}
+.meta .a{color:var(--muted);font-size:13px;margin-top:4px}
+.meta .y{display:inline-block;font-size:11px;color:#2a1503;background:var(--amber);border-radius:20px;padding:2px 9px;margin-top:8px;font-weight:800}
+.clipbar{display:flex;gap:8px;padding:0 14px 10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.lnk{font-size:12px;color:var(--amber)}
+.vote-btn{width:100%}
+.tally{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.tpill{background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:20px;padding:8px 16px;font-weight:800}
+.tpill.a{color:var(--flame);border-color:var(--ember)}.tpill.b{color:#9fd0ff;border-color:#3a6ea5}
 .roundhead{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px}
-.badge{background:#120c06;border:1px solid var(--line);border-radius:12px;padding:8px 14px;font-weight:700;color:var(--amber)}
-.progress{height:8px;background:#120c06;border:1px solid var(--line);border-radius:20px;overflow:hidden;margin-top:6px}
-.progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--ember),var(--flame));width:0}
-.bracket{display:flex;gap:18px;overflow-x:auto;padding:10px 4px}
-.col{min-width:190px;display:flex;flex-direction:column;gap:8px}
-.col h4{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
-.mrow{border:1px solid var(--line);border-radius:9px;padding:7px 9px;font-size:12px;background:#180f07}
-.mrow .w{color:var(--flame);font-weight:800}
-.mrow .l{color:#8a7358;text-decoration:line-through}
-.note{color:var(--muted);font-size:13px;line-height:1.6}
+.progress{height:8px;background:rgba(0,0,0,.45);border-radius:20px;overflow:hidden;margin-top:6px}
+.progress>i{display:block;height:100%;background:linear-gradient(90deg,var(--ember),var(--flame));width:0;transition:width .3s}
+
+/* ── QR ── */
 .qrbox{background:#fff;border-radius:14px;padding:14px;display:inline-block}
 .qrbox canvas,.qrbox img{display:block}
-.hook{color:var(--flame);font-weight:800}
-.big{font-size:clamp(18px,3vw,26px);font-weight:800;text-align:center;margin:6px 0}
+.qrdock{position:fixed;right:16px;bottom:16px;z-index:20;background:var(--panel2);border:1px solid var(--line);
+  border-radius:14px;padding:10px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.6);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.qrdock .qrbox{padding:6px;border-radius:8px}
+.qrdock .tag{margin-top:6px;color:var(--cream)}
+@media(max-width:760px){.qrdock{position:static;margin:16px auto 0;display:table}}
+
+/* ── 우승/대진표 ── */
 .champ{text-align:center;padding:26px}
-.champ .name{font-size:clamp(24px,5vw,46px);font-weight:900;color:var(--flame);margin:14px 0}
-.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--panel2);
-  border:1px solid var(--ember);color:var(--cream);padding:12px 20px;border-radius:12px;z-index:50;
-  box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;transition:opacity .3s}
+.champ img{width:min(420px,90%);border-radius:14px;margin:14px auto 0;display:block;border:2px solid var(--ember)}
+.champ .name{font-size:clamp(24px,5vw,46px);font-weight:900;color:var(--flame);margin:12px 0}
+.bracket{display:flex;gap:18px;overflow-x:auto;padding:10px 4px}
+.col{min-width:190px;display:flex;flex-direction:column;gap:8px}
+.col h4{font-size:12px;color:var(--muted);margin-bottom:4px}
+.mrow{border:1px solid var(--line);border-radius:9px;padding:7px 9px;font-size:12px;background:rgba(0,0,0,.35)}
+.mrow .w{color:var(--flame);font-weight:800}.mrow .l{color:#8a7358;text-decoration:line-through}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--ember);
+  padding:12px 20px;border-radius:12px;z-index:50;opacity:0;transition:opacity .3s;pointer-events:none}
 .toast.show{opacity:1}
-.logbox{margin-top:10px;max-height:150px;overflow:auto;font-size:12px;color:var(--muted);background:#120c06;
-  border:1px solid var(--line);border-radius:10px;padding:8px}
+
+/* ── 관객(폰) 화면 ── */
+body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;overscroll-behavior:none}
+.jwrap{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:18px 14px calc(30px + env(safe-area-inset-bottom))}
+.jcard{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center;width:100%;text-align:left;
+  background:rgba(12,7,3,.82);border:2px solid var(--line);border-radius:16px;padding:10px;margin-top:12px;
+  color:var(--cream);font-family:inherit;cursor:pointer}
+.jcard img,.jcard .ph{width:96px;aspect-ratio:1;object-fit:cover;border-radius:10px;background:#3a1a06}
+.jcard .ph{display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:900;color:var(--flame)}
+.jcard .t{font-weight:800;font-size:17px;line-height:1.3}
+.jcard .a{font-size:13px;color:var(--muted);margin-top:3px}
+.jcard .go{display:inline-block;margin-top:8px;font-size:13px;font-weight:800;color:#2a1503;background:var(--flame);border-radius:20px;padding:4px 12px}
+.jcard.pick{border-color:var(--ember);box-shadow:0 0 0 3px rgba(255,122,24,.4)}
+.jcard:disabled{cursor:default}
+.jcard:disabled:not(.pick){opacity:.45}
+.jstatus{text-align:center;margin-top:14px;font-weight:700;color:var(--cream);text-shadow:0 1px 6px #000}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1 class="title">🔥 찬양 64강 토너먼트 <span class="ember-dot"></span> 128곡</h1>
-  <p class="sub">겨울 펜션 · 캠프파이어 · 1분 하이라이트 배틀 &nbsp;|&nbsp; 128곡 → 64강 → 32강 → 16강 → 8강 → 4강 → 준결승 → 3·4위전 → 결승</p>
+<div id="scene" aria-hidden="true">
+<svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#070b24"/><stop offset=".55" stop-color="#1b2a5e"/><stop offset="1" stop-color="#3b2a52"/></linearGradient>
+<radialGradient id="fire" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff9a2e" stop-opacity=".8"/><stop offset=".45" stop-color="#ff7a18" stop-opacity=".28"/><stop offset="1" stop-color="#ff7a18" stop-opacity="0"/></radialGradient>
+<linearGradient id="fl" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#e03a12"/><stop offset=".55" stop-color="#ff8a1c"/><stop offset="1" stop-color="#ffd166"/></linearGradient>
+<radialGradient id="win" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#ffe7a0"/><stop offset="1" stop-color="#ff9f2e"/></radialGradient>
+<g id="pine"><rect x="-6" y="-10" width="12" height="26" fill="#2a1a10"/><polygon points="0,-150 -48,-70 48,-70" fill="#0f3a2f"/><polygon points="0,-110 -60,-20 60,-20" fill="#134a3a"/><polygon points="0,-70 -70,10 70,10" fill="#165544"/><polygon points="0,-150 -30,-100 30,-100" fill="#f1f5ff" opacity=".85"/></g>
+</defs>
+<rect width="1600" height="900" fill="url(#sky)"/>
+<g fill="#fff">
+<circle cx="80" cy="60" r="2"/><circle cx="210" cy="140" r="1.4"/><circle cx="330" cy="50" r="1.8"/><circle cx="470" cy="110" r="1.2"/><circle cx="600" cy="40" r="2"/><circle cx="720" cy="150" r="1.4"/><circle cx="850" cy="70" r="1.6"/><circle cx="980" cy="130" r="1.2"/><circle cx="1090" cy="40" r="2"/><circle cx="1480" cy="90" r="1.6"/><circle cx="1540" cy="190" r="1.2"/><circle cx="140" cy="230" r="1.2"/><circle cx="540" cy="230" r="1.4"/><circle cx="930" cy="240" r="1.2"/><circle cx="1400" cy="260" r="1.4"/>
+</g>
+<circle cx="1290" cy="140" r="90" fill="#fff6d8" opacity=".12"/><circle cx="1290" cy="140" r="52" fill="#fff6d8"/>
+<path d="M0 560 L160 400 L300 520 L470 360 L660 540 L820 420 L990 540 L1160 380 L1330 520 L1480 430 L1600 500 L1600 900 L0 900Z" fill="#14204a"/>
+<path d="M160 400 L200 440 L180 450 L140 425Z M470 360 L520 410 L480 415 L440 390Z M1160 380 L1210 430 L1170 435 L1130 410Z" fill="#dfe8ff" opacity=".7"/>
+<path d="M0 640 Q400 590 800 630 T1600 610 L1600 900 L0 900Z" fill="#e8eefb"/>
+<path d="M0 720 Q500 680 1000 720 T1600 705 L1600 900 L0 900Z" fill="#cdd8ef"/>
+<use href="#pine" transform="translate(90 690) scale(1.3)"/><use href="#pine" transform="translate(220 660) scale(.9)"/>
+<use href="#pine" transform="translate(1480 690) scale(1.4)"/><use href="#pine" transform="translate(1360 650) scale(.8)"/><use href="#pine" transform="translate(760 640) scale(.6)"/>
+<!-- 펜션 -->
+<g transform="translate(360 470)">
+<rect x="150" y="10" width="34" height="70" fill="#4a2c1a"/>
+<g fill="#e8eefb" opacity=".6"><circle cx="170" cy="-10" r="16"/><circle cx="185" cy="-40" r="20"/><circle cx="175" cy="-80" r="24"/></g>
+<rect x="0" y="100" width="340" height="190" fill="#6a3f22"/>
+<g stroke="#4d2c16" stroke-width="3"><line x1="0" y1="140" x2="340" y2="140"/><line x1="0" y1="180" x2="340" y2="180"/><line x1="0" y1="220" x2="340" y2="220"/><line x1="0" y1="260" x2="340" y2="260"/></g>
+<polygon points="-30,106 170,-10 370,106" fill="#3a2416"/>
+<polygon points="-30,106 170,-10 370,106 350,106 170,4 -10,106" fill="#f4f8ff"/>
+<rect x="30" y="150" width="70" height="60" rx="4" fill="url(#win)" class="glow"/><line x1="65" y1="150" x2="65" y2="210" stroke="#6a3f22" stroke-width="4"/>
+<rect x="240" y="150" width="70" height="60" rx="4" fill="url(#win)" class="glow"/><line x1="275" y1="150" x2="275" y2="210" stroke="#6a3f22" stroke-width="4"/>
+<rect x="140" y="170" width="60" height="120" rx="4" fill="#2b1a0f"/><circle cx="188" cy="232" r="4" fill="#e8a33d"/>
+<rect x="-40" y="286" width="420" height="12" fill="#f4f8ff"/>
+</g>
+<!-- 모닥불 -->
+<g transform="translate(1030 720)">
+<circle cx="0" cy="-30" r="260" fill="url(#fire)" class="glow"/>
+<ellipse cx="0" cy="18" rx="120" ry="16" fill="#3a2a2a" opacity=".5"/>
+<g fill="#6d6d78"><ellipse cx="-80" cy="10" rx="22" ry="13"/><ellipse cx="-40" cy="20" rx="20" ry="12"/><ellipse cx="0" cy="24" rx="22" ry="12"/><ellipse cx="42" cy="20" rx="20" ry="12"/><ellipse cx="82" cy="10" rx="22" ry="13"/></g>
+<rect x="-80" y="-6" width="160" height="18" rx="9" fill="#4a2a12" transform="rotate(-14)"/><rect x="-80" y="-6" width="160" height="18" rx="9" fill="#5a3316" transform="rotate(14)"/>
+<path class="flame" d="M0 0 C-60 -30 -36 -90 0 -170 C36 -90 60 -30 0 0Z" fill="url(#fl)"/>
+<path class="flame f2" d="M-40 0 C-72 -18 -60 -60 -40 -100 C-20 -60 -8 -18 -40 0Z" fill="url(#fl)"/>
+<path class="flame f3" d="M42 0 C12 -18 22 -58 42 -94 C62 -58 72 -18 42 0Z" fill="url(#fl)"/>
+<path class="flame f2" d="M0 -4 C-26 -24 -16 -60 0 -100 C16 -60 26 -24 0 -4Z" fill="#fff1a8"/>
+<circle class="spark" cx="-20" cy="-120" r="3" fill="#ffd166"/><circle class="spark" cx="26" cy="-100" r="2.5" fill="#ffb347" style="animation-delay:-1s"/><circle class="spark" cx="6" cy="-150" r="2" fill="#ffd166" style="animation-delay:-2s"/>
+</g>
+<!-- 통나무 의자 -->
+<rect x="820" y="740" width="110" height="28" rx="14" fill="#5a3316"/><rect x="1140" y="742" width="110" height="28" rx="14" fill="#5a3316"/>
+</svg>
+</div>
+<div class="snow" id="snow" aria-hidden="true"></div>
+
+<div class="wrap" id="app">
+  <h1 class="title" id="mainTitle">🔥 찬양 64강 토너먼트 · 128곡</h1>
+  <p class="sub" id="mainSub">64강(128곡) → 32강 → 16강 → 8강 → 4강 → 준결승 → 3·4위전 → 결승</p>
 
   <!-- HOME -->
   <div id="home" class="card" style="margin-top:22px">
     <div class="big">🎄 오늘 밤, 가장 사랑받는 찬양은?</div>
-    <p class="note center" style="max-width:720px;margin:8px auto 18px">
-      128곡이 단판 승부로 맞붙습니다. 각 곡은 <b class="hook">후렴 1분</b> 하이라이트로 겨루고, 결승은 <b class="hook">전곡 재생</b>입니다.<br>
-      유명곡 40곡(1990–2000) · 40곡(2001–2010) · 40곡(2011–2020) · 최신 8곡으로 구성됩니다.
-    </p>
+    <p class="note center" id="homeDesc" style="max-width:720px;margin:8px auto 18px"></p>
     <div class="row">
-      <div style="min-width:290px" class="card">
-        <div style="font-weight:800;margin-bottom:10px">🏁 시작 라운드</div>
+      <div style="min-width:290px;flex:1;max-width:460px" class="card">
+        <div style="font-weight:800;margin-bottom:10px">🏁 토너먼트 버전</div>
         <select id="startRound" style="width:100%">
-          <option value="0">64강부터 (128곡 전부)</option>
-          <option value="1">32강부터 (64곡)</option>
-          <option value="2">16강부터 (32곡)</option>
+          <option value="0">64강 (128곡)</option>
+          <option value="1">32강 (64곡)</option>
+          <option value="2">16강 (32곡)</option>
         </select>
-        <div class="tag" style="margin:6px 0 18px">128곡 중 무작위로 뽑아 진행해요</div>
-        <div style="font-weight:800;margin-bottom:10px">🎯 투표 방식 선택</div>
+        <div class="tag" id="pickTag" style="margin:6px 0 18px"></div>
+        <div style="font-weight:800;margin-bottom:10px">🎯 투표 방식</div>
         <label style="display:flex;gap:10px;align-items:center;margin-bottom:10px;cursor:pointer">
           <input type="radio" name="mode" value="single" checked> 한 기기에서 여러 명 투표
         </label>
         <label style="display:flex;gap:10px;align-items:center;cursor:pointer">
-          <input type="radio" name="mode" value="qr"> QR 코드로 각자 폰에서 투표 (PeerJS)
+          <input type="radio" name="mode" value="qr"> QR 코드로 각자 폰에서 투표
         </label>
         <div id="voterWrap" style="margin-top:14px">
-          <div class="tag" style="margin-bottom:6px">👥 투표 인원 (한 대결당 투표자 수)</div>
+          <div class="tag" style="margin-bottom:6px">👥 투표 인원 (한 대결당)</div>
           <input id="voterCount" type="number" min="1" max="20" value="3" style="width:120px">
         </div>
-        <div style="margin-top:16px" class="row" >
-          <button class="btn" id="btnStart">🔥 토너먼트 시작</button>
-        </div>
+        <div id="qrHint" class="tag hidden" style="margin-top:12px">시작하면 큰 QR이 나와요. 폰으로 스캔해 접속한 뒤 첫 대결을 시작하세요.</div>
+        <div style="margin-top:16px" class="row"><button class="btn" id="btnStart">🔥 토너먼트 시작</button></div>
       </div>
-      <div style="min-width:290px" class="card">
-        <div style="font-weight:800;margin-bottom:10px">📋 곡 목록 미리보기</div>
-        <div id="rosterPreview" class="logbox" style="max-height:210px"></div>
-        <div class="tag" style="margin-top:8px">총 <b id="songTotal" class="hook">0</b>곡 로드됨</div>
+      <div style="min-width:290px;flex:1;max-width:460px" class="card">
+        <div style="font-weight:800;margin-bottom:10px">📋 곡 목록 (복음성가)</div>
+        <div id="rosterPreview" class="logbox" style="max-height:300px"></div>
+        <div class="tag" style="margin-top:8px">총 <b id="songTotal" class="hook">0</b>곡</div>
       </div>
     </div>
+  </div>
+
+  <!-- LOBBY (QR) -->
+  <div id="lobby" class="card hidden center" style="margin-top:22px">
+    <div class="big">📱 폰으로 QR을 스캔해 투표에 참여하세요</div>
+    <p class="note">접속한 기기에는 두 곡 정보와 투표 버튼만 보입니다.</p>
+    <div style="margin:16px 0"><div class="qrbox"><div id="qrBig"></div></div></div>
+    <div class="row">
+      <span class="badge">방 코드 <b id="peerId" class="hook">생성 중…</b></span>
+      <span class="badge">접속 <b id="lobbyCount" class="hook">0</b>명</span>
+    </div>
+    <div class="row" style="margin-top:18px">
+      <button class="btn" id="btnBegin">▶ 첫 대결 시작</button>
+      <button class="btn ghost" id="btnLobbyQuit">처음으로</button>
+    </div>
+    <div class="logbox" id="qrlog" style="margin-top:14px;max-height:110px;text-align:left"></div>
   </div>
 
   <!-- MATCH -->
   <div id="match" class="card hidden" style="margin-top:22px">
     <div class="roundhead">
-      <div>
-        <div class="badge" id="roundLabel">64강</div>
-        <div class="progress" style="width:220px"><i id="roundBar"></i></div>
-      </div>
-      <div>
-        <span class="badge" id="matchLabel">대결 1 / 64</span>
-        <span class="badge" id="voterLabel">투표자 1 / 3</span>
-      </div>
+      <div><span class="badge" id="roundLabel">64강</span><div class="progress" style="width:220px"><i id="roundBar"></i></div></div>
+      <div><span class="badge" id="matchLabel">대결 1 / 64</span> <span class="badge" id="voterLabel">투표자 1 / 3</span></div>
     </div>
     <div id="finalNote" class="note center hidden" style="margin-bottom:10px">🎬 결승전 · 전곡 재생</div>
-
     <div class="versus">
       <div class="song" id="cardA">
-        <div class="player" id="playerA"><div class="yth" id="hostA"></div><div class="cover" id="coverA"><span>🎧 소리만 재생</span></div></div>
-        <div class="meta">
-          <div class="t" id="titleA">—</div>
-          <div class="a" id="artistA">—</div>
-          <span class="y" id="yearA">—</span>
-        </div>
+        <div class="player"><div class="yth" id="hostA"></div><div class="cover" id="coverA"></div></div>
+        <div class="meta"><div class="t" id="titleA">—</div><div class="a" id="artistA">—</div><span class="y" id="yearA">—</span></div>
         <div class="clipbar"><span class="tag" id="clipA">1분 하이라이트</span>
-          <a class="lnk hidden" id="linkA" target="_blank" rel="noopener">YouTube에서 열기 ↗</a>
+          <a class="lnk hidden" id="linkA" target="_blank" rel="noopener">YouTube에서 찾기 ↗</a>
           <button class="btn small ghost" data-play="A">▶ 듣기</button></div>
-        <div style="padding:0 14px 14px"><button class="btn vote-btn" data-vote="A" id="voteA">A에 투표</button></div>
+        <div style="padding:0 14px 14px"><button class="btn vote-btn" data-vote="A" id="voteA">이 곡에 투표</button></div>
       </div>
       <div class="vs">VS</div>
       <div class="song" id="cardB">
-        <div class="player" id="playerB"><div class="yth" id="hostB"></div><div class="cover" id="coverB"><span>🎧 소리만 재생</span></div></div>
-        <div class="meta">
-          <div class="t" id="titleB">—</div>
-          <div class="a" id="artistB">—</div>
-          <span class="y" id="yearB">—</span>
-        </div>
+        <div class="player"><div class="yth" id="hostB"></div><div class="cover" id="coverB"></div></div>
+        <div class="meta"><div class="t" id="titleB">—</div><div class="a" id="artistB">—</div><span class="y" id="yearB">—</span></div>
         <div class="clipbar"><span class="tag" id="clipB">1분 하이라이트</span>
-          <a class="lnk hidden" id="linkB" target="_blank" rel="noopener">YouTube에서 열기 ↗</a>
+          <a class="lnk hidden" id="linkB" target="_blank" rel="noopener">YouTube에서 찾기 ↗</a>
           <button class="btn small ghost" data-play="B">▶ 듣기</button></div>
-        <div style="padding:0 14px 14px"><button class="btn vote-btn" data-vote="B" id="voteB">B에 투표</button></div>
+        <div style="padding:0 14px 14px"><button class="btn vote-btn" data-vote="B" id="voteB">이 곡에 투표</button></div>
       </div>
     </div>
-
-    <div class="tally">
-      <div class="pill a">A · <span id="tallyA">0</span>표</div>
-      <div class="pill b">B · <span id="tallyB">0</span>표</div>
-    </div>
+    <div class="tally"><div class="tpill a">왼쪽 · <span id="tallyA">0</span>표</div><div class="tpill b">오른쪽 · <span id="tallyB">0</span>표</div></div>
     <div class="row" style="margin-top:12px">
+      <button class="btn small hidden" id="btnClose">✅ 투표 마감</button>
       <button class="btn ghost small" id="btnResetVotes">이 대결 다시 투표</button>
       <button class="btn ghost small" id="btnQuit">처음으로</button>
     </div>
-  </div>
-
-  <!-- QR HOST -->
-  <div id="qrpanel" class="card hidden" style="margin-top:18px">
-    <div class="big">📱 QR로 함께 투표</div>
-    <p class="note center">아래 QR을 관객이 스캔하면 각자 폰에서 투표할 수 있습니다. (HTTPS 환경 필요)</p>
-    <div class="center" style="margin:12px 0"><div class="qrbox"><div id="qrcode"></div></div></div>
-    <div class="center"><span class="badge">방 코드: <b id="peerId" class="hook">생성 중…</b></span></div>
-    <div class="logbox" id="qrlog"></div>
-    <div class="row" style="margin-top:10px"><button class="btn ghost small" id="btnQrClose">QR 닫기</button></div>
   </div>
 
   <!-- CHAMPION -->
   <div id="champ" class="card hidden champ" style="margin-top:22px">
     <div style="font-size:44px">🏆🔥</div>
     <div class="note">우승 찬양</div>
+    <img id="champImg" alt="">
     <div class="name" id="champName">—</div>
     <div class="note" id="champMeta">—</div>
     <div class="row" style="margin-top:20px">
       <button class="btn" id="btnRestart">🔄 다시 하기</button>
       <button class="btn ghost" id="btnShowBracket">🗂 전체 대진표 보기</button>
     </div>
-    <div id="bracketView" class="bracket hidden" style="margin-top:20px;justify-content:flex-start"></div>
+    <div id="bracketView" class="bracket hidden" style="margin-top:20px"></div>
   </div>
 </div>
 
+<!-- 대결 중 모서리 QR (늦게 온 사람용) -->
+<div class="qrdock hidden" id="qrDock">
+  <div class="qrbox"><div id="qrSmall"></div></div>
+  <div class="tag">📱 투표 참여 · 접속 <b id="dockCount" class="hook">0</b>명</div>
+</div>
 <div class="toast" id="toast"></div>
 
-<script src="https://www.youtube.com/iframe_api"></script>
 <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
-/* ================================================================
-   DATA — 128곡 · 실제 YouTube 검색 결과에서 수집한 video ID 사용
-   필드: [곡명, 아티스트, 연도, YouTube ID, 후렴 시작(초)]
-   (하이라이트 60초 = start ~ start+60, 결승은 전곡)
-================================================================ */
+/* 필드: [곡명, 아티스트, 시대(1:~2000 / 2:2001–2010 / 3:2011–2020 / 4:2021~), YouTube ID] */
 const SONGS=[
-/* — 1990–2000 : 40곡 — */
-["은혜","손경민","1998","pZuW2CV0mXY",35],
-["주님 다시 오실 때까지","마커스워십","1999","NtWG05adY2Q",40],
-["물이 바다 덮음 같이","J-US","1999","jZG7FZiQRlc",45],
-["모든 열방 주 볼 때까지","MARKERS WORSHIP","2000","yTr51RNJrNY",50],
-["주의 손에 나의 손을 포개고","강중현","1998","A018qr6KlgM",45],
-["나의 반석이신 하나님","호산나싱어즈","1995","LNrHo0uoK0Q",40],
-["날마다 숨쉬는 순간마다","Five Sense","1997","ePWmBJY_d0Y",40],
-["내 영혼이 은총 입어","노사연","1993","jLuhZ5o_yUM",50],
-["주를 찬양 (세상의 유혹 시험이)","마커스워십","1999","PwPXxH7JIv0",45],
-["내게 강 같은 평화","F.I.A","1996","u1icKuc44jA",40],
-["거룩하신 하나님","마커스워십","1997","uJ8aO72L71w",40],
-["나 주님의 기쁨되기 원하네","마커스워십","1998","u732RKS-4Ec",45],
-["모든 이름 위에 뛰어난 이름","마커스워십","2000","RM7RiBIHvKY",50],
-["위대하신 주","마커스워십","2000","hTl1LpcM9xs",55],
-["은혜 아니면","조수아","2000","efaOfUYd7Yo",45],
-["아무것도 두려워 말라","한성교회 Happy People","1999","S0IsVcwuyrc",50],
-["사랑은 언제나 오래 참고","박종호","1994","A17YXyqt3os",50],
-["주님의 마음을 본받는 자","Various","1992","Qlw7FT6O6WQ",35],
-["내 영혼 주를 노래하네","윤주형","1996","9CBOKEfTM0s",45],
-["주만 바라볼찌라","마커스워십","2000","NszzgBMoQ_M",45],
-["좋으신 하나님","마커스워십","2000","oNLHcnZwaWM",50],
-["주의 음성을 내가 들으니","F.I.A","1995","hzG_axZtqtE",50],
-["주 여호와는 광대하시도다","Various","1998","WLebzuM5OM8",45],
-["주 예수보다 더 귀한 것은 없네","Various","1993","oIhXUOFC9Sw",40],
-["감사","손경민","1999","Tk23p0NiVos",45],
-["할렐루야 찬양을 주님께","마커스워십","2000","LvgLQpf3Um8",50],
-["나의 갈 길 다 가도록","AGAPAO Worship","1994","VZdMLgChd-8",40],
-["내가 매일 기쁘게","BeeCompany","1991","Vv_kXSYyW-g",35],
-["오 신실하신 주","마커스워십","1996","9CLiEAZxndc",45],
-["너 예수께 조용히 나가","마커스워십","1997","LsjkqlDiVrY",45],
-["내 영혼의 그윽히 깊은데서","피아워십","1994","2yW2BHpjgS8",45],
-["샤론의 꽃 예수","BEST Hymns","1993","r0hOkRdhU24",40],
-["주님의 시간에","마커스워십","1998","PJ_CLfu3GjI",45],
-["예수 사랑하심은","마커스워십","1995","24Xe1Wh7AQQ",40],
-["주 앞에 엎드려","마커스워십","1999","Cps2LA0gVTo",45],
-["나의 백성이","제이어스 J-US","2000","FXDGoRse8nk",50],
-["죄 많은 이 세상은","마커스워십","1998","AmSizATG4l4",45],
-["왕이신 나의 하나님","AGAPAO Worship","1997","MXXpjKT4I7A",45],
-["주 이름 찬양 (Blessed Be Your Name)","마커스워십","1999","tYu9zpnQrU8",50],
-["내가 주인 삼은","조수아","1996","VNS4i2IGVsM",45],
-/* — 2001–2010 : 40곡 — */
-["여호와께 돌아가자","제이어스 J-US","2008","kdFH0iSBU9I",50],
-["하나님의 은혜","Various","2005","uRsorIufY4s",45],
-["주님만이","어노인팅","2006","DPqtWNCcvOY",45],
-["믿음이 없이는","히즈윌","2010","4Cq3IN7Q9ac",50],
-["감사함으로","Various","2008","8r-_4flpZOo",45],
-["주 사랑이 나를 숨쉬게 해","어노인팅","2007","kVs65EbxuU4",45],
-["약할 때 강함 되시네","예람워십","2006","6ZLaChORt7o",50],
-["예수 나의 첫사랑 되시네","어노인팅","2010","V0RNjPbgOhA",50],
-["내가 살아가는 이유는","꿈이 있는 자유","2005","Tsx382_UnYA",45],
-["어느 날 문득","히즈윌","2010","HYPcx0DKTjU",45],
-["나의 하나님","박우정","2010","8WQ4Hz06lY8",50],
-["주의 이름 높이며","제이어스 J-US","2004","Q377AqjOiI8",40],
-["나를 사랑하시는 주님","파이디온선교회","2009","U4ct-PLsUcI",35],
-["왕의 왕 주의 주","올네이션스","2003","sBcJ7mLzuUw",45],
-["주님 한 분만으로","WLWorship","2005","-WiYRca0-o8",45],
-["나의 평생에","올네이션스","2003","FY_43gR4HiU",45],
-["주 은혜를 받으려","BeeCompany","2002","htYveYz7QtU",35],
-["나의 힘 나의 노래","원웨이워십","2010","WT_po79O7Rk",45],
-["주님은 나의 노래","나경화","2010","yGKU6m7W_K0",45],
-["감사와 찬양드리며","REMNANT WORSHIP","2010","r7MXvFZZRRw",45],
-["하나님 아버지의 마음","예람워십","2010","igd4R0tV8uw",50],
-["주의 영광 위해","올네이션스","2004","0mJOPKCNGnM",45],
-["나는 주의 것","송승현","2010","jUcMTe5Ni4A",45],
-["나를 사용하소서","유은성","2010","8dMsHObMgdM",45],
-["성령이 오셨네","김도현","2009","PzlHBfF2yqo",50],
-["거룩하신 하나님","옹기장이","2008","qLTBL6WfHfQ",45],
-["주만 바라볼찌라","다윗과 요나단","2003","azbFvv6LtA8",45],
-["온 세상 위에","디어제이워십","2010","6KOri4dme_o",45],
-["할렐루야 살아계신 주","마커스워십","2009","_Qt2EKJ7wic",45],
-["주의 길","강찬","2010","lSsHf7Cfnqo",45],
-["큰 소리로 찬양해","유빌라테","2005","3va7-LPSqZ8",40],
-["내 눈 주의 영광을 보네","MARKERS WORSHIP","2010","QiPG8Jb8HIA",50],
-["감사","지선","2010","WJCk35xzHFM",45],
-["은혜 (Grace)","손경민","2010","AXCuHNnHRRM",45],
-["선한 능력으로","Various","2010","vG_E39ZYAjs",50],
-["주님께 감사 드리라","Various","2010","EcNG4MzNJUU",45],
-["오늘 이 하루도","Various","2010","1Qh59r8rWxE",45],
-["감사 위에 감사","MARKERS WORSHIP","2010","KWxH0LZMbT0",50],
-["주님 다시 오실 때까지","LEVISTANCE","2010","Xur6J6OAFaU",50],
-["주님 다시 오실 때까지","지선","2010","-nEVMzkG7B0",45],
-/* — 2011–2020 : 40곡 — */
-["위대하신 주 (How Great)","예람워십","2016","RWVxl7_R4QM",55],
-["주 은혜임을","마커스워십","2014","7kuBu5Qa3PA",45],
-["성령이 오셨네","마커스워십","2013","8QiJFeiuwtk",50],
-["주님의 마음 있는 곳","YKDC","2019","k8qloQzenSo",50],
-["당신은 영광의 왕","YKDC","2016","9h44OUxrQbM",45],
-["주님 다시 오실 때까지","마커스워십","2018","0aqGHpBNJjE",45],
-["성령이 오셨네","예람워십","2019","XbQU6bPr2Mg",50],
-["주 앞에 엎드려","Gina","2018","IFPXEIFpESs",45],
-["예수 나의 모든 것","Gina","2019","t3aef7xV8Hg",45],
-["나의 하나님","Gina","2020","Do-j2r7dcOo",45],
-["내 눈 주의 영광을 보네","온누리워십","2015","3EgacummoL8",50],
-["성령님 임재하소서","Various","2017","5e5_furptrc",45],
-["주 앞에 엎드려","마커스워십","2017","EjO48eoObjU",45],
-["주의 이름 높이며","마커스워십","2016","5AiWh_dxxIY",45],
-["오 신실하신 주","호산나싱어즈","2015","_tdwTsTf2cg",45],
-["내 영혼 주를 찬양","중앙아트","2016","v-hpo1Fn5mY",45],
-["주 여호와는 광대하시도다","호산나싱어즈","2014","3UYoplZ_2ew",45],
-["나의 반석 되신 주","Sing a New Song","2018","MJPD8n7c8ws",45],
-["나의 힘 나의 노래","Gospel Walk","2017","CsuewPXMD8g",45],
-["주의 영광 위해","달라스베다니","2016","531VAY_uvr4",45],
-["나는 주의 것","송승현","2020","axmJJPH2InY",45],
-["나를 사용하소서","글로리아찬양대","2015","BePWqYMkhVo",45],
-["할렐루야 (Great is the Lord)","Various","2013","3gF_odzDqls",45],
-["감사 (Thanks to God)","Various","2015","1hUfF_634_k",45],
-["주님 다시 오실 때까지 (1시간)","Various","2019","8dXtvdU23G8",45],
-["모든 이름 위에 뛰어난 이름","Various","2012","tJlXgczMf6I",50],
-["주 은혜임을","매일찬송","2018","Web-6Jv__gs",45],
-["너 예수께 조용히 나가","피아워십","2016","SzY6q14xcmk",45],
-["나의 갈 길 다 가도록","매일찬송","2017","J12I4E7XX_o",40],
-["오늘 이 하루도","Various","2019","GuFe0ZRO4lU",45],
-["은혜 (찬양 모음)","손경민","2018","v90diWh-Obo",45],
-["약할 때 강함 되시네","호산나싱어즈","2017","7B2cPaGQlHk",50],
-["나의 반석 되신 주 (Psalm 62)","Peaceful Worship","2020","1sEkdsW6Otg",45],
-["주님은 나의 노래","나경화","2020","5iYgVKKKsZQ",45],
-["내 영혼이 주를 찬양하며","Various","2020","Ujpn56EO93s",45],
-["하나님 아버지의 마음","F.I.A","2017","Eohe2W9PG4k",50],
-["주의 이름 높이며","갈보리교회","2015","b_ZMCCKbWN0",45],
-["주를 찬양 (세상의 유혹 시험이)","마커스워십","2013","en8Oiz4tnpk",45],
-["나 주님의 기쁨되기 원하네","마커스워십","2013","8C5D0_wbe20",45],
-["거룩하신 하나님","마커스워십","2012","7lGLoGsYcgA",45],
-/* — 최신 2021–현재 : 8곡 — */
-["나의 하나님 (My Lord My God)","예람워십","2022","YnyY7dsWPg0",50],
-["여호와께 돌아가자","예람워십","2021","SPvMxO-Fzc0",50],
-["은혜 아니면","조수아","2022","nmafBfCphMA",45],
-["주님 다시 오실 때까지","소향","2021","B_U8CtpBIyA",45],
-["아무것도 두려워 말라","피아워십","2021","7pCCsQ8mlQM",50],
-["내게 강 같은 평화","마음과마음","2022","jYLD20e5BYY",40],
-["좋으신 하나님","마커스워십","2021","a9a5DsI8ACs",50],
-["주 은혜임을","박상규","2021","CVKH512uvSY",45]
+/* ── ~2000 : 8곡 ── */
+["당신은 사랑받기 위해 태어난 사람","이민섭",1,"bKgykRsT248"],
+["부흥 (이 땅의 황무함을 보소서)","예수전도단",1,"svl4XsKm0gI"],
+["나의 모습 나의 소유","피아워십",1,"0bIltK_0vNs"],
+["물이 바다 덮음 같이","제이어스 J-US",1,"jZG7FZiQRlc"],
+["내게 강 같은 평화","F.I.A",1,"u1icKuc44jA"],
+["주만 바라볼찌라","마커스워십",1,"NszzgBMoQ_M"],
+["하나님의 은혜 (나를 향한 주의 사랑)","Various",1,"uRsorIufY4s"],
+["거룩하신 하나님","마커스워십",1,"uJ8aO72L71w"],
+/* ── 2001–2010 : 40곡 ── */
+["부르신 곳에서","마커스워십",2,"PO4Z8mr6yyk"],
+["성령이 오셨네","김도현",2,"PzlHBfF2yqo"],
+["예수 나의 첫사랑 되시네","어노인팅",2,"V0RNjPbgOhA"],
+["주 사랑이 나를 숨쉬게 해","어노인팅",2,"kVs65EbxuU4"],
+["약할 때 강함 되시네","예람워십",2,"6ZLaChORt7o"],
+["내가 살아가는 이유는","꿈이 있는 자유",2,"Tsx382_UnYA"],
+["위대하신 주","마커스워십",2,"hTl1LpcM9xs"],
+["주 이름 찬양","마커스워십",2,"tYu9zpnQrU8"],
+["선한 능력으로","Various",2,"vG_E39ZYAjs"],
+["나 주님의 기쁨되기 원하네","마커스워십",2,"u732RKS-4Ec"],
+["모든 이름 위에 뛰어난 이름","마커스워십",2,"RM7RiBIHvKY"],
+["주님 한 분만으로","WLWorship",2,"-WiYRca0-o8"],
+["은혜 아니면","조수아",2,"efaOfUYd7Yo"],
+["좋으신 하나님","마커스워십",2,"a9a5DsI8ACs"],
+["왕이신 나의 하나님","AGAPAO Worship",2,"MXXpjKT4I7A"],
+["주 앞에 엎드려","마커스워십",2,"Cps2LA0gVTo"],
+["주를 찬양 (세상의 유혹 시험이)","마커스워십",2,"en8Oiz4tnpk"],
+["아무것도 두려워 말라","한성교회 Happy People",2,"S0IsVcwuyrc"],
+["모든 열방 주 볼 때까지","마커스워십",2,"yTr51RNJrNY"],
+["나의 백성이","제이어스 J-US",2,"FXDGoRse8nk"],
+["주 여호와는 광대하시도다","Various",2,"WLebzuM5OM8"],
+["감사함으로","Various",2,"8r-_4flpZOo"],
+["내 눈 주의 영광을 보네","마커스워십",2,"QiPG8Jb8HIA"],
+["할렐루야 살아계신 주","마커스워십",2,"_Qt2EKJ7wic"],
+["사랑은 언제나 오래 참고","박종호",2,"A17YXyqt3os"],
+["주님 다시 오실 때까지","마커스워십",2,"NtWG05adY2Q"],
+["내 모든 삶의 행동 주 안에","제이어스 J-US",2,"6RUSp_XVmRs"],
+["주의 손에 나의 손을 포개고","강중현",2,"A018qr6KlgM"],
+["주 품에 (Still)","어노인팅",2,"OU35xk_lKjw"],
+["소원 (삶의 작은 일에도)","한웅재",2,"FeAqF3U6Yjc"],
+["사명 (주님이 홀로 가신 그 길)","조수아",2,"jkLjKTwdTG8"],
+["나의 안에 거하라","류수영",2,"HkSrDT1ctVI"],
+["예수 열방의 소망","어노인팅",2,"aCAyftWOCzw"],
+["새 힘 얻으리 (Everlasting God)","마커스워십",2,"94HpEfcYH14"],
+["빛 되신 주 (Here I am to worship)","마커스워십",2,"DykHdEFrRJs"],
+["호산나 (찬양 중에 눈을 들어)","마커스워십",2,"pGaI_Y4cOqk"],
+["날 세우시네 (You Raise Me Up)","소울",2,"Dt-e8afuLWU"],
+["주님 말씀하시면","Various",2,"fHQUiQm1o3o"],
+["온 땅의 주인 (Who am I)","마커스워십",2,"9negfrUOtHM"],
+["주의 이름 높이며","제이어스 J-US",2,"Q377AqjOiI8"],
+/* ── 2011–2020 : 40곡 ── */
+["은혜","손경민",3,"AXCuHNnHRRM"],
+["여호와께 돌아가자","제이어스 J-US",3,"kdFH0iSBU9I"],
+["시간을 뚫고","WELOVE",3,"A0FUMbDKmLA"],
+["축복 (The Blessing)","AGAPAO Worship",3,"mDK9ZrhJA34"],
+["주 은혜임을","마커스워십",3,"LaO19EbMzcE"],
+["내 모습 이대로","제이어스 J-US",3,"FV5nMb93UwY"],
+["당신은 영광의 왕","YKDC",3,"9h44OUxrQbM"],
+["주님의 선하심 (Goodness of God)","GIFTED",3,"9n5luv7LV28"],
+["시선","마커스워십",3,"dKWa9vcq9fk"],
+["요게벳의 노래","염평안 · 조찬미",3,"knI6bsXeg2U"],
+["광야를 지나며","히즈윌",3,"1UBsTYjh91Y"],
+["오직 예수뿐이네","마커스워십",3,"fptmag7dexc"],
+["송축해 내 영혼 (10,000 Reasons)","예수전도단 화요모임",3,"IToU4fzyIBo"],
+["나는 예배자입니다","어노인팅",3,"HHupVXtnjRs"],
+["꽃들도","마커스워십",3,"0Eq3R4P_NdQ"],
+["행복 (화려하지 않아도)","손경민",3,"LCscWAAg-lg"],
+["원하고 바라고 기도합니다","찬미워십",3,"eoDsJr7LF-0"],
+["공감하시네","WELOVE",3,"4jH3MqokNMw"],
+["사랑은 여기 있으니","제이어스 J-US",3,"lbiz-xEu254"],
+["그 사랑으로 우리","제이어스 J-US",3,"dtXg2j4iMLc"],
+["주님의 마음 있는 곳","YKDC",3,"k8qloQzenSo"],
+["다시 복음 앞에","오은",3,"9JpxtZnbI54"],
+["십자가의 전달자","온누리교회",3,"K0aakTM_F_M"],
+["주가 일하시네","김브라이언",3,"kwFW0zE80UU"],
+["길을 만드시는 분 (Way Maker)","예람워십",3,"QSdlAz1Togo"],
+["내가 주인 삼은","조수아",3,"VNS4i2IGVsM"],
+["하나님의 세계 (with 홍이삭)","WELOVE",3,"nUTvfKu7q3c"],
+["빛으로 비추시네","YKDC",3,"4KDP6E2Kezo"],
+["내 안에 가장 귀한 것","아이자야씩스티원",3,"eb42F1T_UlQ"],
+["시편 139편","제이어스 J-US",3,"mgS_ng-wAqY"],
+["나의 기도하는 것보다","Gina",3,"UokeLjXBW0w"],
+["오 신실하신 주 (하나님 한 번도 나를)","마커스워십",3,"9CLiEAZxndc"],
+["예수 예수","어노인팅",3,"C2iSLs3wG64"],
+["놀라우신 은혜 (This is amazing grace)","마커스워십",3,"EuHNoSp0pAs"],
+["오 주께 나오라 (O Come to the Altar)","제이어스 J-US",3,"tfDp1CZav5E"],
+["참 좋으신 아버지 (Good Good Father)","사운딩라이츠",3,"iMGTA__VHHY"],
+["날 자녀라 하시네 (Who You Say I Am)","사랑의교회",3,"GRvAgqO68Gs"],
+["은혜로다 (시작됐네)","손영진",3,"QVRFqHeiB6s"],
+["하나님 아버지의 마음","예람워십",3,"igd4R0tV8uw"],
+["큰 길을 만드시는 주","마커스워십",3,"W9JMKBH6HQU"],
+/* ── 2021~ : 40곡 ── */
+["어둔날 다 지나고","WELOVE",4,"EqDL2-OW1Z4"],
+["예배하는 자 되어 (입례)","WELOVE",4,"6Xdy8I6aGpg"],
+["프레이즈 (Praise)","AGAPAO Worship",4,"1m2XHLr-sO4"],
+["나는 주를 섬기는 것에 후회가 없습니다","피아워십",4,"AmwX2-BIpRU"],
+["하나님의 부르심","피아워십",4,"ovjWMKsks2Y"],
+["왜 나만 겪는 고난이냐고","피아워십",4,"a_bAWNYzsUE"],
+["돌아서지 않으리","피아워십",4,"PIC9LIHmk0c"],
+["창조의 아버지","피아워십",4,"sn6w2VxtQx4"],
+["남은 자의 고백","GIFTED",4,"FjfvAzc5ALo"],
+["주의 자녀로 산다는 것은","GIFTED",4,"TKSS0P4H2zQ"],
+["내 마음을 가득 채운","마커스워십",4,"Vc5IgSYEBSE"],
+["주가 주되심을","마커스워십",4,"JkvlcZiqDLw"],
+["주님의 사랑","마커스워십",4,"TkFrjw0y_7I"],
+["주만 의지해 (Trust Him)","마커스워십",4,"MrKACrWdO-0"],
+["여호와의 집으로 올라가","마커스워십",4,"U_wVkKdqUNk"],
+["이유 있음을 믿네","마커스워십",4,"JS4LPAWM4kU"],
+["예수, 늘 함께 하시네","마커스워십",4,"4v0oHeJ8-2k"],
+["나는 주님께 속한 자","마커스워십",4,"BcIWMvIz7Tg"],
+["영원한 생명의 주님 (Through it All)","마커스워십",4,"TMRNL8Md640"],
+["이제는 내가 없고","마커스워십",4,"qb-m841p7hw"],
+["기도할 수 있는데","마커스워십",4,"NdGdpjO9_yA"],
+["말씀 앞에서","마커스워십",4,"8szyv1G9h9w"],
+["믿음과 삶","마커스워십",4,"-t9JAVfgryU"],
+["전부","마커스워십",4,"b9hfCQY--SM"],
+["주가 지으신 이 날에","어노인팅",4,"FkpbYaNiU8Y"],
+["우린 주를 만나고","어노인팅",4,"PRlEqQJ9c10"],
+["예수 날 위해 이 땅에 오신 주","어노인팅",4,"iTDqXucIY9w"],
+["푯대를 향하여","어노인팅",4,"ufD_Ov6umK4"],
+["영원한 약속 우리 안에","어노인팅",4,"y7H_YLJVn50"],
+["하나님 우리를 부르시네","어노인팅",4,"MnYi1nV1B14"],
+["주를 찾는 모든 자들이","팀룩워십",4,"Fi2waeWY18g"],
+["주와 함께 걸어가네","팀룩워십",4,"ApHcXxQPSC4"],
+["이날은 주가 지으신 날 (This is the Day)","팀룩워십",4,"MLTho35qBmc"],
+["우리를 사랑하시는 이로 말미암아","팀룩워십",4,"9-GnazASHEo"],
+["성령의 바람","제이어스 J-US",4,"PklFusQuQ0Q"],
+["하나님께서 세상을 사랑하사","아이자야씩스티원",4,"j_fxvfTShVg"],
+["Shine Your Light","아이자야씩스티원",4,"nF0ymoTzAEg"],
+["밀알","천관웅",4,"L2QueVJKGRY"],
+["기다릴게","Wayhome",4,"w5U3naoyMa0"],
+["우리 주 크고 놀라운 하나님 (Awesome God)","예수전도단 화요모임",4,"DYM3yjPfj6U"]
 ];
 
-/* ================================================================
-   APP
-================================================================ */
-const S=SONGS.map(x=>({t:x[0],a:x[1],y:x[2],id:x[3],s:x[4],e:x[4]+60}));
-const $=id=>document.getElementById(id);
-const thumb=id=>`https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+/* ================================================================ APP */
+const S=SONGS.map(x=>({t:x[0],a:x[1],era:x[2],id:x[3],s:60,e:120}));
+const ERA={1:"~2000",2:"2001–2010",3:"2011–2020",4:"2021~"};
 const ROUND_NAMES=["64강","32강","16강","8강","4강","준결승","3·4위전","결승"];
+const VERSIONS=[{name:"64강",n:128},{name:"32강",n:64},{name:"16강",n:32}];
+const $=id=>document.getElementById(id);
+const thumb=id=>`https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+const ytSearch=s=>"https://www.youtube.com/results?search_query="+encodeURIComponent(s.t+" "+s.a);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
-const state={mode:"single",voters:3,rounds:[],ri:0,mi:0,votesA:0,votesB:0,voter:1,playing:[]};
-let ytReady=false, players={};
+/* 눈 내리기 */
+(function(){const box=$("snow");if(!box)return;let h="";for(let i=0;i<50;i++){const x=Math.random()*100,d=6+Math.random()*10,dl=-Math.random()*16,sz=2+Math.random()*4;
+h+=`<i style="left:${x}%;width:${sz}px;height:${sz}px;animation-duration:${d}s;animation-delay:${dl}s"></i>`;}box.innerHTML=h;})();
 
-/* ---------- YouTube ---------- */
-window.onYouTubeIframeAPIReady=()=>{ytReady=true;};
-function ensurePlayer(side,song,full){
-  if(typeof YT==="undefined"||!YT.Player){
-    $("cover"+side).innerHTML="<span>⚠ 음원을 불러오지 못했어요 (인터넷 확인)</span>";
-    const l=$("link"+side);l.href="https://www.youtube.com/watch?v="+song.id;l.classList.remove("hidden");return;
-  }
-  const host=$("host"+side);
-  const vars={rel:0,playsinline:1,modestbranding:1};
-  if(!full){vars.start=song.s;vars.end=song.e;}
-  if(players[side]){
-    players[side].loadVideoById(full?{videoId:song.id}:{videoId:song.id,startSeconds:song.s,endSeconds:song.e});
-    return;
-  }
-  host.innerHTML='<div id="yt'+side+'" style="width:100%;height:100%"></div>';
-  players[side]=new YT.Player("yt"+side,{videoId:song.id,playerVars:vars,
-    events:{
-      onReady:e=>{if(side==="A"){try{e.target.playVideo();}catch(_){}}},
-      onStateChange:e=>{
-        if(e.data===1){try{players[side==="A"?"B":"A"].pauseVideo();}catch(_){}}
-        if(e.data===0&&side==="A"){try{players.B.playVideo();}catch(_){}}
-      },
-      onError:()=>{
-        $("cover"+side).innerHTML="<span>⚠ 이 영상은 외부 재생이 막혀 있어요</span>";
-        const l=$("link"+side);l.href="https://www.youtube.com/watch?v="+song.id;l.classList.remove("hidden");
-      }}});
-}
-function stopPlayers(){["A","B"].forEach(k=>{try{if(players[k])players[k].stopVideo();}catch(_){}});}
-
-/* ---------- 일러스트: 겨울 펜션 캠프파이어 (곡마다 하늘 색이 달라짐) ---------- */
-const SKY=[["#0b1633","#2b3f7a"],["#241238","#7a3a6b"],["#0a2a33","#1f6f73"],["#2a1408","#a44a1a"]];
-function scene(i){
-  const [c1,c2]=SKY[i%4];
-  const stars=[[40,30],[120,60],[210,25],[300,70],[390,35],[470,80],[600,90],[80,110],[250,110],[350,120]]
-    .map(([x,y],n)=>`<circle cx="${x}" cy="${y}" r="${n%3?1.3:2}" fill="#fff" opacity=".85"/>`).join("");
-  const snow=[...Array(30)].map((_,n)=>`<circle cx="${(n*97+i*31)%640}" cy="${(n*53+i*17)%330}" r="${1+n%3}" fill="#fff" opacity=".7"/>`).join("");
-  const pine=(x,y,k)=>`<rect x="${x-3*k}" y="${y-8*k}" width="${6*k}" height="${16*k}" fill="#2a1a10"/><polygon points="${x},${y-70*k} ${x-24*k},${y-28*k} ${x+24*k},${y-28*k}" fill="#0f3a2f"/><polygon points="${x},${y-50*k} ${x-30*k},${y-6*k} ${x+30*k},${y-6*k}" fill="#134a3a"/>`;
-  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360"><defs>
-<linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient>
-<radialGradient id="g"><stop offset="0" stop-color="#ff9a2e" stop-opacity=".75"/><stop offset="1" stop-color="#ff9a2e" stop-opacity="0"/></radialGradient>
-<linearGradient id="f" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#e03a12"/><stop offset=".55" stop-color="#ff8a1c"/><stop offset="1" stop-color="#ffd166"/></linearGradient></defs>
-<rect width="640" height="360" fill="url(#s)"/>${stars}
-<circle cx="530" cy="70" r="48" fill="#fff6d8" opacity=".15"/><circle cx="530" cy="70" r="28" fill="#fff6d8"/>
-<path d="M0 250 L90 170 L170 240 L270 150 L380 245 L470 180 L560 240 L640 200 L640 360 L0 360Z" fill="#101a33" opacity=".85"/>
-<path d="M0 275 Q160 250 320 270 T640 262 L640 360 L0 360Z" fill="#e8eefb"/><path d="M0 305 Q200 288 400 305 T640 298 L640 360 L0 360Z" fill="#cdd8ef"/>
-${pine(40,300,1.2)}${pine(600,295,1.1)}${pine(330,285,.8)}${pine(560,282,.7)}
-<rect x="200" y="150" width="16" height="32" fill="#4a2c1a"/><rect x="90" y="195" width="150" height="85" fill="#5a3620"/>
-<polygon points="78,198 165,140 252,198" fill="#3a2416"/><polygon points="78,198 165,140 252,198 240,198 165,152 90,198" fill="#f4f8ff"/>
-<rect x="116" y="215" width="36" height="32" fill="#ffcf5a"/><rect x="178" y="225" width="30" height="55" fill="#2b1a0f"/>
-<circle cx="430" cy="280" r="120" fill="url(#g)"/>
-<rect x="395" y="284" width="70" height="10" rx="5" fill="#4a2a12" transform="rotate(-12 430 290)"/><rect x="395" y="284" width="70" height="10" rx="5" fill="#5a3316" transform="rotate(12 430 290)"/>
-<path d="M430 290 C402 274 414 248 430 220 C446 248 458 274 430 290Z" fill="url(#f)"/><path d="M430 288 C418 278 424 262 430 246 C436 262 442 278 430 288Z" fill="#fff1a8"/>
-<path d="M410 290 C398 282 402 270 410 258 C418 270 422 282 410 290Z" fill="url(#f)"/><path d="M452 290 C442 282 446 270 452 260 C460 270 464 282 452 290Z" fill="url(#f)"/>
-<circle cx="445" cy="205" r="2" fill="#ffb347"/><circle cx="416" cy="195" r="1.6" fill="#ffd166"/><circle cx="452" cy="180" r="1.4" fill="#ffb347"/>${snow}</svg>`;
-  return "data:image/svg+xml;utf8,"+encodeURIComponent(svg);
+/* 썸네일: 없거나 기본 회색 이미지면 대체 디자인 */
+function setThumb(el,song){
+  el.classList.remove("noimg");el.style.backgroundImage="";el.innerHTML="";
+  const img=new Image();
+  img.onload=()=>{if(img.naturalWidth<=120){fallback();}else{el.style.backgroundImage=`url("${img.src}")`;el.innerHTML='<span class="pill">🎧 소리만 재생</span>';}};
+  img.onerror=fallback;img.src=thumb(song.id);
+  function fallback(){el.classList.add("noimg");el.style.backgroundImage="";el.textContent=song.t.trim().charAt(0);}
 }
 
-/* ---------- util ---------- */
-function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2200);}
-function show(id){["home","match","qrpanel","champ"].forEach(x=>$(x).classList.add("hidden"));$(id).classList.remove("hidden");}
-
-/* ---------- roster preview ---------- */
-$("songTotal").textContent=S.length;
-$("rosterPreview").innerHTML=S.slice(0,40).map(s=>`· ${s.t} — ${s.a} <span style="color:#8a7358">(${s.y})</span>`).join("<br>")+`<br>… 외 ${S.length-40}곡`;
-
-/* ---------- bracket ---------- */
-function buildBracket(){
-  const st=state.start||0;
-  const idx=shuffle(S.map((_,i)=>i)).slice(0,128>>st);
-  const r1=[];
-  for(let i=0;i<idx.length;i+=2)r1.push({a:idx[i],b:idx[i+1],w:null});
-  state.rounds=[];state.rounds[st]=r1;
-  state.ri=st;state.mi=0;state.votesA=0;state.votesB=0;state.voter=1;
-}
-function nextRoundIfDone(){
-  const cur=state.rounds[state.ri];
-  if(cur.every(m=>m.w!==null)){
-    if(state.ri===7){return false;} // 결승 종료
-    if(state.ri===5){state.rounds[6]=[{a:cur[0].l,b:cur[1].l,w:null}];return true;} // 3·4위전: 준결승 패자끼리
-    if(state.ri===6){const sf=state.rounds[5];state.rounds[7]=[{a:sf[0].w,b:sf[1].w,w:null}];return true;} // 결승: 준결승 승자끼리
-    const winners=cur.map(m=>m.w);
-    const next=[];
-    for(let i=0;i<winners.length;i+=2)next.push({a:winners[i],b:(winners[i+1]!==undefined?winners[i+1]:winners[i]),w:null});
-    state.rounds[state.ri+1]=next;
-    return true;
-  }
-  return false;
-}
-function currentMatch(){return state.rounds[state.ri][state.mi];}
-
-/* ---------- render match ---------- */
-function renderMatch(){
-  show("match");stopPlayers();players={};
-  const m=currentMatch();
-  const A=S[m.a],B=S[m.b];
-  const isFinal=(state.ri===7);
-  const roundName=ROUND_NAMES[state.ri];
-  $("roundLabel").textContent=roundName;
-  const total=state.rounds[state.ri].length;
-  $("matchLabel").textContent=`대결 ${state.mi+1} / ${total}`;
-  $("voterLabel").textContent=`투표자 ${state.voter} / ${state.voters}`;
-  $("roundBar").style.width=((state.mi)/total*100)+"%";
-  $("finalNote").classList.toggle("hidden",!isFinal);
-
-  setSide("A",A);setSide("B",B);
-  [["A",A,m.a],["B",B,m.b]].forEach(([k,sg,ix])=>{
-    $("cover"+k).innerHTML="<span>🎧 소리만 재생</span>";
-    $("cover"+k).style.backgroundImage="url(\""+scene(ix)+"\")";
-    $("link"+k).classList.add("hidden");
-  });
-  $("clipA").textContent=isFinal?"전곡 재생":"1분 하이라이트";
-  $("clipB").textContent=isFinal?"전곡 재생":"1분 하이라이트";
-  state.votesA=0;state.votesB=0;$("tallyA").textContent="0";$("tallyB").textContent="0";
-  $("cardA").classList.remove("active");$("cardB").classList.remove("active");
-  $("voteA").disabled=false;$("voteB").disabled=false;
-
-  ensurePlayer("A",A,isFinal);ensurePlayer("B",B,isFinal);
-
-  // QR 모드: 관객에게 대결 정보 브로드캐스트
-  if(state.mode==="qr"&&window.__qr)window.__qr.broadcast({type:"match",round:roundName,at:A,b:B,isFinal});
-  logQR(`▶ ${roundName} · ${A.t} vs ${B.t}`);
-}
-function setSide(side,song){
-  $("title"+side).textContent=song.t;
-  $("artist"+side).textContent=song.a;
-  $("year"+side).textContent=song.y;
-}
-
-/* ---------- voting ---------- */
-function castVote(side){
-  if(side==="A")state.votesA++;else state.votesB++;
-  $("tallyA").textContent=state.votesA;$("tallyB").textContent=state.votesB;
-  if(state.mode==="single"){
-    state.voter++;
-    if(state.voter>state.voters){finishMatch();}
-    else{$("voterLabel").textContent=`투표자 ${state.voter} / ${state.voters}`;}
-  }else{
-    $("voterLabel").textContent=`관객 투표 ${state.votesA+state.votesB}명`;
-  }
-}
-function finishMatch(){
-  const tA=state.votesA,tB=state.votesB;
-  let w;
-  if(tA===tB){w=Math.random()<.5?"A":"B";toast("동점! 무작위 추첨으로 결정 🔥");}
-  else w=tA>tB?"A":"B";
-  const m=currentMatch();
-  m.w=(w==="A"?m.a:m.b);m.l=(w==="A"?m.b:m.a);
-  $("voteA").disabled=true;$("voteB").disabled=true;
-  $("cardA").classList.toggle("active",w==="A");
-  $("cardB").classList.toggle("active",w==="B");
-  logQR(`🏁 승자: ${S[m.w].t} (${tA}:${tB})`);
-  if(state.mode==="qr"&&window.__qr)window.__qr.broadcast({type:"result",winner:S[m.w].t,ta:tA,tb:tB});
-  setTimeout(advance,900);
-}
-function advance(){
-  state.mi++;
-  if(state.mi>=state.rounds[state.ri].length){
-    if(state.ri===7){return showChampion();}
-    const ok=nextRoundIfDone();
-    if(!ok){return showChampion();}
-    state.ri++;state.mi=0;
-    if(state.ri===7){/* 결승 */ }
-  }
-  state.voter=1;
-  renderMatch();
-}
-function showChampion(){
-  const finalM=state.rounds[7]?state.rounds[7][0]:null;
-  let champIdx;
-  if(finalM&&finalM.w!==null)champIdx=finalM.w;
-  else{const last=state.rounds[state.ri];champIdx=last?last[0].w:0;}
-  const s=S[champIdx];
-  show("champ");
-  $("champName").textContent=s.t;
-  const ru=finalM?S[finalM.w===finalM.a?finalM.b:finalM.a]:null,th=state.rounds[6]?S[state.rounds[6][0].w]:null;
-  $("champMeta").innerHTML=`${s.a} · ${s.y}`+(ru?`<br>🥈 준우승: ${ru.t}`:"")+(th?` &nbsp;·&nbsp; 🥉 3위: ${th.t}`:"");
-  stopPlayers();
-  buildBracketView();
-  if(state.mode==="qr"&&window.__qr)window.__qr.broadcast({type:"champion",name:s.t,artist:s.a});
-}
-
-/* ---------- bracket view ---------- */
-function buildBracketView(){
-  const names=["64강","32강","16강","8강","4강","준결승","3·4위전","결승"];
-  let html="";
-  for(let r=0;r<8;r++){
-    const rd=state.rounds[r];if(!rd)continue;
-    html+=`<div class="col"><h4>${names[r]}</h4>`;
-    rd.forEach(m=>{
-      const a=S[m.a],b=S[m.b];
-      const wa=m.w!==null&&m.w===m.a?"w":"l";
-      const wb=m.w!==null&&m.w===m.b?"w":"l";
-      html+=`<div class="mrow"><span class="${m.w!==null?wa:''}">${a.t}</span><br><span class="${m.w!==null?wb:''}">${b.t}</span></div>`;
-    });
-    html+="</div>";
-  }
-  $("bracketView").innerHTML=html;
-}
-
-/* ---------- QR (PeerJS) ---------- */
-let qrObj=null;
-function logQR(msg){const b=$("qrlog");if(!b)return;b.innerHTML+=msg+"<br>";b.scrollTop=b.scrollHeight;}
-function startQR(){
-  show("qrpanel");show("match");
-  if(window.__qr)return;
-  if(typeof Peer==="undefined"){logQR("PeerJS 로드 실패 — 인터넷 연결을 확인하세요.");return;}
-  const peer=new Peer();
-  const clients=[];
-  const api={
-    broadcast(data){clients.forEach(c=>{try{c.send(data);}catch(_){}});},
-    clients
-  };
-  window.__qr=api;
-  peer.on("open",id=>{
-    $("peerId").textContent=id;
-    const url=location.origin+location.pathname+"?join="+id;
-    const box=$("qrcode");box.innerHTML="";
-    if(window.QRCode){qrObj=new QRCode(box,{text:url,width:190,height:190,colorDark:"#2a1503",colorLight:"#ffffff"});}
-    else box.textContent=url;
-    logQR("방 코드 생성 완료: "+id);
-    logQR("관객 URL: "+url);
-  });
-  peer.on("connection",conn=>{
-    clients.push(conn);
-    logQR("👤 관객 접속 ("+clients.length+"명)");
-    conn.on("data",d=>{
-      if(d&&d.type==="vote"){castVote(d.side);}
-      if(d&&d.type==="hello"){conn.send({type:"match",at:S[currentMatch().a],b:S[currentMatch().b]});}
-    });
-    conn.on("close",()=>{const i=clients.indexOf(conn);if(i>=0)clients.splice(i,1);});
-  });
-  peer.on("error",e=>logQR("⚠ "+e.type));
-}
-/* ---------- joiner view (?join=ID) ---------- */
-function joinerView(id){
-  document.body.innerHTML=`<div class="wrap"><h1 class="title">🔥 찬양 배틀 · 투표</h1>
-  <div class="card center" style="margin-top:20px">
-    <div id="jstatus" class="note">호스트에 연결 중…</div>
-    <div id="jmatch" class="big"></div>
-    <div class="grid2" style="margin-top:16px">
-      <button class="btn" id="jA" disabled>▲ A</button>
-      <button class="btn" id="jB" disabled>▲ B</button>
-    </div>
-    <div class="tally"><div class="pill a">A · <span id="jtA">0</span></div><div class="pill b">B · <span id="jtB">0</span></div></div>
-  </div></div>`;
-  const peer=new Peer();
-  let conn=null,cur=null;
-  peer.on("open",()=>{
-    conn=peer.connect(id);
-    conn.on("open",()=>{document.getElementById("jstatus").textContent="✅ 연결됨";conn.send({type:"hello"});});
-    conn.on("data",d=>{
-      if(d.type==="match"){cur=d;document.getElementById("jmatch").textContent=`A: ${d.at.t}  vs  B: ${d.b.t}`;
-        document.getElementById("jA").disabled=false;document.getElementById("jB").disabled=false;
-        document.getElementById("jA").textContent="▲ "+d.at.t;document.getElementById("jB").textContent="▲ "+d.b.t;}
-      if(d.type==="result"){document.getElementById("jstatus").textContent=`🏁 승자: ${d.winner} (${d.ta}:${d.tb})`;}
-      if(d.type==="champion"){document.getElementById("jstatus").textContent=`🏆 우승: ${d.name} — ${d.artist}`;}
-    });
-  });
-  peer.on("error",()=>{document.getElementById("jstatus").textContent="⚠ 연결 실패";});
-  document.getElementById("jA").onclick=()=>conn&&conn.send({type:"vote",side:"A"});
-  document.getElementById("jB").onclick=()=>conn&&conn.send({type:"vote",side:"B"});
-}
-
-/* ---------- wiring ---------- */
-document.querySelectorAll('input[name=mode]').forEach(r=>r.onchange=e=>{
-  state.mode=e.target.value;
-  $("voterWrap").style.display=(state.mode==="single")?"block":"none";
-});
-$("btnStart").onclick=()=>{
-  state.voters=Math.max(1,Math.min(20,parseInt($("voterCount").value||"3",10)));
-  state.mode=document.querySelector('input[name=mode]:checked').value;
-  state.start=parseInt($("startRound").value,10)||0;
-  buildBracket();
-  if(state.mode==="qr")startQR();
-  renderMatch();
-};
-document.querySelectorAll('[data-vote]').forEach(b=>b.onclick=()=>{
-  castVote(b.getAttribute("data-vote"));b.blur();
-  if(state.mode==="single")return;
-  if(state.votesA+state.votesB>=state.voters)finishMatch();
-});
-document.querySelectorAll('[data-play]').forEach(b=>b.onclick=()=>{
-  const side=b.getAttribute("data-play");
-  const m=currentMatch();const song=(side==="A")?S[m.a]:S[m.b];
-  const full=state.ri===7;
-  if(!players[side]||!players[side].getPlayerState){ensurePlayer(side,song,full);return;}
-  const p=players[side],st=p.getPlayerState();
-  if(st===1)p.pauseVideo();
-  else{if(st===0)p.seekTo(full?0:song.s,true);p.playVideo();}
-});
-$("btnResetVotes").onclick=()=>{
-  state.votesA=0;state.votesB=0;state.voter=1;$("tallyA").textContent="0";$("tallyB").textContent="0";
-  $("voterLabel").textContent=`투표자 1 / ${state.voters}`;
-  $("voteA").disabled=false;$("voteB").disabled=false;
-  $("cardA").classList.remove("active");$("cardB").classList.remove("active");
-};
-$("btnQuit").onclick=()=>{stopPlayers();show("home");};
-$("btnQrClose").onclick=()=>$("qrpanel").classList.add("hidden");
-$("btnRestart").onclick=()=>{
-  stopPlayers();show("home");
-  players={};
-};
-$("btnShowBracket").onclick=()=>$("bracketView").classList.toggle("hidden");
-
-/* joint entry */
+/* ================================================================ 관객(폰) 화면 */
 const params=new URLSearchParams(location.search);
 if(params.get("join")){joinerView(params.get("join"));}
+else{hostInit();}
+
+function joinerView(hostId){
+  document.body.classList.add("joiner");
+  $("app").outerHTML=`<div class="jwrap" id="japp">
+    <h1 class="title" style="font-size:24px">🔥 찬양 토너먼트 투표</h1>
+    <div id="jround" class="sub"></div>
+    <div id="jcards"></div>
+    <div id="jstatus" class="jstatus">호스트에 연결 중…</div></div>`;
+  ["qrDock","toast"].forEach(i=>{const e=$(i);if(e)e.remove();});
+  /* 뒤로가기·새로고침 등 이탈 막기 */
+  history.pushState({lock:1},"",location.href);
+  window.addEventListener("popstate",()=>history.pushState({lock:1},"",location.href));
+  window.addEventListener("beforeunload",e=>{e.preventDefault();e.returnValue="";});
+  document.addEventListener("contextmenu",e=>e.preventDefault());
+
+  const st=$("jstatus"),cards=$("jcards"),rd=$("jround");
+  let peer=null,conn=null,cur=null,voted=null;
+  const card=(side,s)=>`<button class="jcard" data-side="${side}">
+      <img src="${thumb(s.id)}" alt="" onerror="this.outerHTML='<div class=ph>${esc(s.t.charAt(0))}</div>'">
+      <div><div class="t">${esc(s.t)}</div><div class="a">${esc(s.a)}</div><span class="go">이 곡에 투표</span></div></button>`;
+  function render(){
+    if(!cur){cards.innerHTML="";rd.textContent="";return;}
+    rd.textContent=cur.round||"";
+    cards.innerHTML=card("A",cur.a)+card("B",cur.b);
+    cards.querySelectorAll(".jcard").forEach(b=>{
+      if(voted){b.disabled=true;if(b.dataset.side===voted)b.classList.add("pick");}
+      b.onclick=()=>{if(voted||!conn||!conn.open)return;voted=b.dataset.side;conn.send({type:"vote",side:voted,mid:cur.mid});render();st.textContent="✅ 투표했어요! 큰 화면을 봐주세요";};
+    });
+    if(!voted)st.textContent="마음에 드는 곡을 눌러 투표하세요";
+  }
+  function connect(){
+    if(!peer||peer.destroyed){peer=new Peer();peer.on("open",()=>connect());peer.on("error",()=>{st.textContent="⚠ 연결 실패 · 다시 시도 중…";setTimeout(retry,3000);});return;}
+    if(!peer.open)return;
+    conn=peer.connect(hostId,{reliable:true});
+    conn.on("open",()=>{st.textContent="✅ 연결됨 · 대결을 기다리는 중";conn.send({type:"hello"});});
+    conn.on("data",d=>{
+      if(!d)return;
+      if(d.type==="match"){if(!cur||cur.mid!==d.mid)voted=d.voted||null;cur=d;render();}
+      if(d.type==="voted"){voted=d.side;render();st.textContent="✅ 투표했어요! 큰 화면을 봐주세요";}
+      if(d.type==="wait"){cur=null;voted=null;render();st.textContent="⏳ 다음 대결을 준비하고 있어요";}
+      if(d.type==="end"){cur=null;render();st.textContent="🏆 토너먼트가 끝났어요. 큰 화면에서 우승곡을 확인하세요!";}
+    });
+    conn.on("close",()=>{st.textContent="⚠ 연결이 끊겼어요 · 다시 연결 중…";setTimeout(retry,2500);});
+  }
+  function retry(){if(conn&&conn.open)return;if(peer&&!peer.destroyed&&peer.open)connect();else{try{peer&&peer.destroy();}catch(_){}peer=null;connect();}}
+  if(typeof Peer==="undefined"){st.textContent="⚠ 인터넷 연결을 확인해 주세요";return;}
+  connect();
+}
+
+/* ================================================================ 호스트 */
+function hostInit(){
+  const yt=document.createElement("script");yt.src="https://www.youtube.com/iframe_api";document.head.appendChild(yt);
+
+  const state={mode:"single",voters:3,start:0,rounds:[],ri:0,mi:0,votesA:0,votesB:0,voter:1,mid:0,voted:new Map(),finishing:false};
+  let players={};
+
+  /* ---- 버전(64/32/16강)에 따라 제목·문구 변경 ---- */
+  function applyVersion(){
+    const st=parseInt($("startRound").value,10)||0,v=VERSIONS[st];
+    const title=`찬양 ${v.name} 토너먼트 · ${v.n}곡`;
+    $("mainTitle").textContent="🔥 "+title;document.title=title;
+    $("mainSub").textContent=`${v.name}(${v.n}곡) → `+ROUND_NAMES.slice(st+1).join(" → ");
+    const per=[8,40,40,40].map(c=>c>>st);
+    $("homeDesc").innerHTML=`<b class="hook">${v.n}곡</b>이 단판 승부로 맞붙습니다. 각 곡은 후렴 1분으로 겨루고, 결승은 전곡을 들어요.<br>
+      복음성가 ${per[0]}곡(~2000) · ${per[1]}곡(2001–2010) · ${per[2]}곡(2011–2020) · ${per[3]}곡(2021~)`;
+    $("pickTag").textContent=st?`128곡 중 시대별 비율대로 ${v.n}곡을 무작위로 뽑아요`:"128곡이 모두 출전해요";
+  }
+  $("startRound").onchange=applyVersion;applyVersion();
+
+  $("songTotal").textContent=S.length;
+  $("rosterPreview").innerHTML=[1,2,3,4].map(e=>`<b>${ERA[e]} · ${S.filter(s=>s.era===e).length}곡</b><br>`+
+    S.filter(s=>s.era===e).map(s=>`· ${esc(s.t)} <span style="opacity:.6">— ${esc(s.a)}</span>`).join("<br>")).join("<br><br>");
+
+  /* ---- 유틸 ---- */
+  const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+  function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("show"),2200);}
+  function show(id){["home","lobby","match","champ"].forEach(x=>$(x).classList.add("hidden"));$(id).classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"});}
+
+  /* ---- YouTube ---- */
+  function ensurePlayer(side,song,full){
+    const l=$("link"+side);l.href=ytSearch(song);
+    if(typeof YT==="undefined"||!YT.Player){l.classList.remove("hidden");return;}
+    const opt=full?{videoId:song.id}:{videoId:song.id,startSeconds:song.s,endSeconds:song.e};
+    if(players[side]&&players[side].loadVideoById){try{players[side].cueVideoById(opt);}catch(_){}return;}
+    $("host"+side).innerHTML='<div id="yt'+side+'" style="width:100%;height:100%"></div>';
+    const vars={rel:0,playsinline:1,modestbranding:1};if(!full){vars.start=song.s;vars.end=song.e;}
+    players[side]=new YT.Player("yt"+side,{videoId:song.id,playerVars:vars,events:{
+      onStateChange:e=>{if(e.data===1){const o=players[side==="A"?"B":"A"];try{o&&o.pauseVideo();}catch(_){}}},
+      onError:()=>{l.classList.remove("hidden");toast("이 영상은 외부 재생이 막혀 있어요 · YouTube에서 찾기를 눌러주세요");}}});
+  }
+  function stopPlayers(){["A","B"].forEach(k=>{try{players[k]&&players[k].stopVideo();}catch(_){}});}
+
+  /* ---- 대진 ---- */
+  function buildBracket(){
+    const st=state.start,pick=[];
+    [1,2,3,4].forEach(e=>{const pool=shuffle(S.map((s,i)=>i).filter(i=>S[i].era===e));pick.push(...pool.slice(0,pool.length>>st));});
+    shuffle(pick);
+    const r=[];for(let i=0;i<pick.length;i+=2)r.push({a:pick[i],b:pick[i+1],w:null,l:null});
+    state.rounds=[];state.rounds[st]=r;state.ri=st;state.mi=0;
+  }
+  function nextRound(){
+    const cur=state.rounds[state.ri];
+    if(state.ri===5){state.rounds[6]=[{a:cur[0].l,b:cur[1].l,w:null}];return;}
+    if(state.ri===6){const sf=state.rounds[5];state.rounds[7]=[{a:sf[0].w,b:sf[1].w,w:null}];return;}
+    const w=cur.map(m=>m.w),n=[];for(let i=0;i<w.length;i+=2)n.push({a:w[i],b:w[i+1],w:null,l:null});
+    state.rounds[state.ri+1]=n;
+  }
+  const currentMatch=()=>state.rounds[state.ri][state.mi];
+  const pub=s=>({t:s.t,a:s.a,id:s.id});
+
+  /* ---- 대결 화면 ---- */
+  function renderMatch(){
+    show("match");stopPlayers();
+    const m=currentMatch(),A=S[m.a],B=S[m.b],isFinal=state.ri===7,total=state.rounds[state.ri].length;
+    const rn=ROUND_NAMES[state.ri];
+    $("roundLabel").textContent=rn;
+    $("matchLabel").textContent=`대결 ${state.mi+1} / ${total}`;
+    $("roundBar").style.width=(state.mi/total*100)+"%";
+    $("finalNote").classList.toggle("hidden",!isFinal);
+    [["A",A],["B",B]].forEach(([k,s])=>{
+      $("title"+k).textContent=s.t;$("artist"+k).textContent=s.a;$("year"+k).textContent=ERA[s.era];
+      setThumb($("cover"+k),s);$("link"+k).classList.add("hidden");
+      $("clip"+k).textContent=isFinal?"전곡 재생":"1분 하이라이트";
+      $("card"+k).classList.remove("active");$("vote"+k).disabled=false;
+    });
+    resetTally();
+    ensurePlayer("A",A,isFinal);ensurePlayer("B",B,isFinal);
+    if(state.mode==="qr"){state.mid++;state.voted=new Map();broadcastMatch();updateQrLabel();}
+    logQR(`▶ ${rn} · ${A.t} vs ${B.t}`);
+  }
+  function resetTally(){state.votesA=0;state.votesB=0;state.voter=1;state.finishing=false;$("tallyA").textContent="0";$("tallyB").textContent="0";
+    $("voterLabel").textContent=state.mode==="qr"?"투표 0명":`투표자 1 / ${state.voters}`;}
+  function castVote(side){
+    if(state.finishing)return;
+    side==="A"?state.votesA++:state.votesB++;
+    $("tallyA").textContent=state.votesA;$("tallyB").textContent=state.votesB;
+    if(state.mode==="single"){state.voter++;if(state.voter>state.voters)finishMatch();else $("voterLabel").textContent=`투표자 ${state.voter} / ${state.voters}`;}
+    else{updateQrLabel();const n=clients().length;if(n>0&&state.voted.size>=n){state.finishing=true;setTimeout(()=>{state.finishing=false;finishMatch();},900);}}
+  }
+  function finishMatch(){
+    if(state.finishing)return;state.finishing=true;
+    const tA=state.votesA,tB=state.votesB;let w;
+    if(tA===tB){w=Math.random()<.5?"A":"B";toast("동점! 무작위 추첨으로 결정 🔥");}else w=tA>tB?"A":"B";
+    const m=currentMatch();m.w=w==="A"?m.a:m.b;m.l=w==="A"?m.b:m.a;
+    $("voteA").disabled=true;$("voteB").disabled=true;
+    $("cardA").classList.toggle("active",w==="A");$("cardB").classList.toggle("active",w==="B");
+    logQR(`🏁 승자: ${S[m.w].t} (${tA}:${tB})`);
+    if(state.mode==="qr")broadcast({type:"wait"});
+    setTimeout(advance,1400);
+  }
+  function advance(){
+    state.mi++;
+    if(state.mi>=state.rounds[state.ri].length){
+      if(state.ri===7)return showChampion();
+      nextRound();state.ri++;state.mi=0;
+    }
+    renderMatch();
+  }
+  function showChampion(){
+    stopPlayers();show("champ");
+    const f=state.rounds[7][0],s=S[f.w],ru=S[f.w===f.a?f.b:f.a],th=S[state.rounds[6][0].w];
+    $("champName").textContent=s.t;
+    const im=$("champImg");im.src=thumb(s.id);im.onerror=()=>im.classList.add("hidden");im.classList.remove("hidden");
+    $("champMeta").innerHTML=`${esc(s.a)} · ${ERA[s.era]}<br>🥈 준우승: ${esc(ru.t)} &nbsp;·&nbsp; 🥉 3위: ${esc(th.t)}`;
+    buildBracketView();
+    if(state.mode==="qr")broadcast({type:"end"});
+  }
+  function buildBracketView(){
+    let h="";for(let r=0;r<8;r++){const rd=state.rounds[r];if(!rd)continue;
+      h+=`<div class="col"><h4>${ROUND_NAMES[r]}</h4>`+rd.map(m=>{const c=x=>m.w===null?"":(m.w===x?"w":"l");
+        return `<div class="mrow"><span class="${c(m.a)}">${esc(S[m.a].t)}</span><br><span class="${c(m.b)}">${esc(S[m.b].t)}</span></div>`;}).join("")+"</div>";}
+    $("bracketView").innerHTML=h;
+  }
+
+  /* ---- QR (PeerJS) ---- */
+  let peer=null,conns=[];
+  const clients=()=>conns.filter(c=>c.open);
+  function logQR(m){const b=$("qrlog");b.innerHTML+=esc(m)+"<br>";b.scrollTop=b.scrollHeight;}
+  function broadcast(d){clients().forEach(c=>{try{c.send(d);}catch(_){}});}
+  function matchMsg(voted){const m=currentMatch();return {type:"match",mid:state.mid,round:`${ROUND_NAMES[state.ri]} · 대결 ${state.mi+1}`,a:pub(S[m.a]),b:pub(S[m.b]),voted:voted||null};}
+  function broadcastMatch(){clients().forEach(c=>{try{c.send(matchMsg(state.voted.get(c.peer)));}catch(_){}});}
+  function updateCounts(){const n=clients().length;$("lobbyCount").textContent=n;$("dockCount").textContent=n;updateQrLabel();}
+  function updateQrLabel(){if(state.mode==="qr"&&!$("match").classList.contains("hidden"))$("voterLabel").textContent=`투표 ${state.voted.size} / 접속 ${clients().length}명`;}
+  function startPeer(){
+    if(peer&&!peer.destroyed)return;
+    if(typeof Peer==="undefined"){logQR("⚠ PeerJS를 불러오지 못했어요. 인터넷 연결을 확인하세요.");return;}
+    peer=new Peer();
+    peer.on("open",id=>{
+      $("peerId").textContent=id.slice(0,8);
+      const url=location.origin+location.pathname+"?join="+id;
+      ["qrBig","qrSmall"].forEach((el,i)=>{const b=$(el);b.innerHTML="";
+        if(window.QRCode)new QRCode(b,{text:url,width:i?110:260,height:i?110:260,colorDark:"#2a1503",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M});
+        else b.textContent=url;});
+      logQR("방이 열렸어요 · "+url);
+    });
+    peer.on("connection",c=>{
+      conns.push(c);
+      c.on("open",()=>{updateCounts();logQR("👤 기기 접속 ("+clients().length+"대)");});
+      c.on("data",d=>{
+        if(!d)return;
+        if(d.type==="hello"){ if(!$("match").classList.contains("hidden")&&!state.finishing)c.send(matchMsg(state.voted.get(c.peer))); else c.send({type:"wait"}); }
+        if(d.type==="vote"&&state.mode==="qr"&&d.mid===state.mid&&!state.finishing&&(d.side==="A"||d.side==="B")){
+          if(state.voted.has(c.peer)){c.send({type:"voted",side:state.voted.get(c.peer)});return;}
+          state.voted.set(c.peer,d.side);c.send({type:"voted",side:d.side});castVote(d.side);
+        }
+      });
+      c.on("close",()=>{conns=conns.filter(x=>x!==c);updateCounts();});
+    });
+    peer.on("disconnected",()=>{try{peer.reconnect();}catch(_){}});
+    peer.on("error",e=>logQR("⚠ "+e.type));
+  }
+
+  /* ---- 버튼 ---- */
+  document.querySelectorAll("input[name=mode]").forEach(r=>r.onchange=()=>{
+    const qr=document.querySelector("input[name=mode]:checked").value==="qr";
+    $("voterWrap").classList.toggle("hidden",qr);$("qrHint").classList.toggle("hidden",!qr);
+  });
+  $("btnStart").onclick=()=>{
+    state.voters=Math.max(1,Math.min(20,parseInt($("voterCount").value||"3",10)));
+    state.mode=document.querySelector("input[name=mode]:checked").value;
+    state.start=parseInt($("startRound").value,10)||0;
+    buildBracket();
+    const qr=state.mode==="qr";
+    $("voteA").classList.toggle("hidden",qr);$("voteB").classList.toggle("hidden",qr);$("btnClose").classList.toggle("hidden",!qr);
+    if(qr){startPeer();show("lobby");updateCounts();}
+    else{$("qrDock").classList.add("hidden");renderMatch();}
+  };
+  $("btnBegin").onclick=()=>{$("qrDock").classList.remove("hidden");renderMatch();};
+  $("btnLobbyQuit").onclick=()=>show("home");
+  document.querySelectorAll("[data-vote]").forEach(b=>b.onclick=()=>{castVote(b.dataset.vote);b.blur();});
+  $("btnClose").onclick=()=>finishMatch();
+  document.querySelectorAll("[data-play]").forEach(b=>b.onclick=()=>{
+    const side=b.dataset.play,m=currentMatch(),song=S[side==="A"?m.a:m.b],full=state.ri===7,p=players[side];
+    if(!p||!p.getPlayerState){ensurePlayer(side,song,full);return;}
+    const st=p.getPlayerState();
+    if(st===1)p.pauseVideo();else{if(st===0)p.seekTo(full?0:song.s,true);p.playVideo();}
+  });
+  $("btnResetVotes").onclick=()=>{
+    resetTally();$("voteA").disabled=false;$("voteB").disabled=false;$("cardA").classList.remove("active");$("cardB").classList.remove("active");
+    if(state.mode==="qr"){state.mid++;state.voted=new Map();broadcastMatch();updateQrLabel();}
+  };
+  const toHome=()=>{stopPlayers();$("qrDock").classList.add("hidden");if(state.mode==="qr")broadcast({type:"wait"});show("home");};
+  $("btnQuit").onclick=toHome;$("btnRestart").onclick=toHome;
+  $("btnShowBracket").onclick=()=>$("bracketView").classList.toggle("hidden");
+}
 </script>
 </body>
 </html>
