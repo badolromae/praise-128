@@ -311,7 +311,7 @@ const SONGS=[
 ["물이 바다 덮음 같이","제이어스 J-US",1,"jZG7FZiQRlc"],
 ["내게 강 같은 평화","F.I.A",1,"u1icKuc44jA"],
 ["주만 바라볼찌라","마커스워십",1,"NszzgBMoQ_M"],
-["하나님의 은혜 (나를 향한 주의 사랑)","Various",1,"uRsorIufY4s"],
+["하나님의 은혜","Various",1,"uRsorIufY4s"],
 ["거룩하신 하나님","마커스워십",1,"uJ8aO72L71w"],
 /* ── 2001–2010 : 40곡 ── */
 ["부르신 곳에서","마커스워십",2,"PO4Z8mr6yyk"],
@@ -322,19 +322,19 @@ const SONGS=[
 ["내가 살아가는 이유는","꿈이 있는 자유",2,"Tsx382_UnYA"],
 ["위대하신 주","마커스워십",2,"hTl1LpcM9xs"],
 ["주 이름 찬양","마커스워십",2,"tYu9zpnQrU8"],
-["선한 능력으로","Various",2,"vG_E39ZYAjs"],
+["선한 능력으로","마커스워십",2,"vG_E39ZYAjs"],
 ["나 주님의 기쁨되기 원하네","마커스워십",2,"u732RKS-4Ec"],
 ["모든 이름 위에 뛰어난 이름","마커스워십",2,"RM7RiBIHvKY"],
 ["주님 한 분만으로","WLWorship",2,"-WiYRca0-o8"],
 ["은혜 아니면","조수아",2,"efaOfUYd7Yo"],
 ["좋으신 하나님","마커스워십",2,"a9a5DsI8ACs"],
 ["왕이신 나의 하나님","AGAPAO Worship",2,"MXXpjKT4I7A"],
-["주 앞에 엎드려","마커스워십",2,"Cps2LA0gVTo"],
+["주 앞에 엎드려","마커스워십",2,"EjO48eoObjU"],
 ["주를 찬양 (세상의 유혹 시험이)","마커스워십",2,"en8Oiz4tnpk"],
 ["아무것도 두려워 말라","한성교회 Happy People",2,"S0IsVcwuyrc"],
 ["모든 열방 주 볼 때까지","마커스워십",2,"yTr51RNJrNY"],
 ["나의 백성이","제이어스 J-US",2,"FXDGoRse8nk"],
-["주 여호와는 광대하시도다","Various",2,"WLebzuM5OM8"],
+["주 여호와는 광대하시도다","팀룩워십 (LOOKE)",2,"M2UBZXjIxWk"],
 ["감사함으로","Various",2,"8r-_4flpZOo"],
 ["내 눈 주의 영광을 보네","마커스워십",2,"QiPG8Jb8HIA"],
 ["할렐루야 살아계신 주","마커스워십",2,"_Qt2EKJ7wic"],
@@ -439,7 +439,10 @@ const SONGS=[
 ];
 
 /* ================================================================ APP */
-const S=SONGS.map(x=>({t:x[0],a:x[1],era:x[2],id:x[3],s:60,e:120}));
+const S=SONGS.map(x=>({t:x[0],a:x[1],era:x[2],id:x[3],orig:x[3],s:60,e:120}));
+let OVR={};try{OVR=JSON.parse(localStorage.getItem("praiseVideoOverrides")||"{}");}catch(_){}
+S.forEach(s=>{if(OVR[s.orig])s.id=OVR[s.orig];});
+const parseYt=u=>{u=(u||"").trim();if(/^[A-Za-z0-9_-]{11}$/.test(u))return u;const m=u.match(/(?:v=|youtu\.be\/|shorts\/|embed\/|live\/)([A-Za-z0-9_-]{11})/);return m?m[1]:null;};
 const ERA={1:"~2000",2:"2001–2010",3:"2011–2020",4:"2021~"};
 const ROUND_NAMES=["64강","32강","16강","8강","4강","준결승","3·4위전","결승"];
 const VERSIONS=[{name:"64강",n:128},{name:"32강",n:64},{name:"16강",n:32}];
@@ -482,6 +485,8 @@ function joinerView(hostId){
 
   const st=$("jstatus"),cards=$("jcards"),rd=$("jround");
   let peer=null,conn=null,cur=null,voted=null;
+  let dev=null;try{dev=localStorage.getItem("praiseDevId");}catch(_){}
+  if(!dev){dev="d"+Math.random().toString(36).slice(2,10)+Date.now().toString(36);try{localStorage.setItem("praiseDevId",dev);}catch(_){}}
   const card=(side,s)=>`<button class="jcard" data-side="${side}">
       <img src="${thumb(s.id)}" alt="" onerror="this.outerHTML='<div class=ph>${esc(s.t.charAt(0))}</div>'">
       <div><div class="t">${esc(s.t)}</div><div class="a">${esc(s.a)}</div><span class="go">이 곡에 투표</span></div></button>`;
@@ -498,10 +503,11 @@ function joinerView(hostId){
   function connect(){
     if(!peer||peer.destroyed){peer=new Peer();peer.on("open",()=>connect());peer.on("error",()=>{st.textContent="⚠ 연결 실패 · 다시 시도 중…";setTimeout(retry,3000);});return;}
     if(!peer.open)return;
-    conn=peer.connect(hostId,{reliable:true});
-    conn.on("open",()=>{st.textContent="✅ 연결됨 · 대결을 기다리는 중";conn.send({type:"hello"});});
+    conn=peer.connect(hostId,{reliable:true,metadata:{dev}});
+    conn.on("open",()=>{st.textContent="✅ 연결됨 · 대결을 기다리는 중";conn.send({type:"hello",dev});});
     conn.on("data",d=>{
       if(!d)return;
+      if(d.type==="ping"){try{conn.send({type:"pong"});}catch(_){}return;}
       if(d.type==="match"){if(!cur||cur.mid!==d.mid)voted=d.voted||null;cur=d;render();}
       if(d.type==="voted"){voted=d.side;render();st.textContent="✅ 투표했어요! 큰 화면을 봐주세요";}
       if(d.type==="wait"){cur=null;voted=null;render();st.textContent="⏳ 다음 대결을 준비하고 있어요";}
@@ -536,8 +542,21 @@ function hostInit(){
 
 
   $("songTotal").textContent=S.length;
-  $("rosterPreview").innerHTML=[1,2,3,4].map(e=>`<b>${ERA[e]} · ${S.filter(s=>s.era===e).length}곡</b><br>`+
-    S.filter(s=>s.era===e).map(s=>`· ${esc(s.t)} <span style="opacity:.6">— ${esc(s.a)}</span>`).join("<br>")).join("<br><br>");
+  function renderRoster(){
+    $("rosterPreview").innerHTML=[1,2,3,4].map(e=>`<b>${ERA[e]} · ${S.filter(s=>s.era===e).length}곡</b><br>`+
+      S.map((s,i)=>[s,i]).filter(([s])=>s.era===e).map(([s,i])=>`· ${esc(s.t)} <span style="opacity:.6">— ${esc(s.a)}</span>
+        <a href="#" data-edit="${i}" style="color:var(--amber);font-size:11px;margin-left:4px">${s.id!==s.orig?"🔗변경됨":"🔗영상"}</a>`).join("<br>")).join("<br><br>");
+    $("rosterPreview").querySelectorAll("[data-edit]").forEach(a=>a.onclick=ev=>{
+      ev.preventDefault();const s=S[+a.dataset.edit];
+      const v=prompt(`"${s.t}"에 쓸 YouTube 주소를 붙여넣으세요.\n(비워두고 확인 → 기본 영상으로 되돌리기)`,"https://youtu.be/"+s.id);
+      if(v===null)return;
+      if(v.trim()===""){delete OVR[s.orig];s.id=s.orig;}
+      else{const id=parseYt(v);if(!id){alert("YouTube 주소를 인식하지 못했어요.");return;}s.id=id;if(id===s.orig)delete OVR[s.orig];else OVR[s.orig]=id;}
+      try{localStorage.setItem("praiseVideoOverrides",JSON.stringify(OVR));}catch(_){}
+      renderRoster();toast("영상이 바뀌었어요 · 이 브라우저에 저장됩니다");
+    });
+  }
+  renderRoster();
 
   /* ---- 유틸 ---- */
   const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
@@ -596,11 +615,11 @@ function hostInit(){
     if(state.mode==="qr"){state.mid++;state.voted=new Map();broadcastMatch();updateQrLabel();}
     logQR(`▶ ${rn} · ${A.t} vs ${B.t}`);
   }
-  function resetTally(){state.votesA=0;state.votesB=0;state.voter=1;state.finishing=false;$("tallyA").textContent="0";$("tallyB").textContent="0";
+  function resetTally(){state.lastSide=null;state.votesA=0;state.votesB=0;state.voter=1;state.finishing=false;$("tallyA").textContent="0";$("tallyB").textContent="0";
     $("voterLabel").textContent=state.mode==="qr"?"투표 0명":`투표자 1 / ${state.voters}`;}
   function castVote(side){
     if(state.finishing)return;
-    side==="A"?state.votesA++:state.votesB++;
+    side==="A"?state.votesA++:state.votesB++;state.lastSide=side;
     $("tallyA").textContent=state.votesA;$("tallyB").textContent=state.votesB;
     if(state.mode==="single"){state.voter++;if(state.voter>state.voters)finishMatch();else $("voterLabel").textContent=`투표자 ${state.voter} / ${state.voters}`;}
     else{updateQrLabel();const n=clients().length;if(n>0&&state.voted.size>=n){state.finishing=true;setTimeout(()=>{state.finishing=false;finishMatch();},900);}}
@@ -608,7 +627,10 @@ function hostInit(){
   function finishMatch(){
     if(state.finishing)return;state.finishing=true;
     const tA=state.votesA,tB=state.votesB;let w;
-    if(tA===tB){w=Math.random()<.5?"A":"B";toast("동점! 무작위 추첨으로 결정 🔥");}else w=tA>tB?"A":"B";
+    if(tA===tB){
+      if(state.lastSide){w=state.lastSide==="A"?"B":"A";toast("동점! 마지막에 투표된 곡이 탈락합니다");}
+      else{w=Math.random()<.5?"A":"B";toast("투표가 없어 무작위로 결정했어요");}
+    }else w=tA>tB?"A":"B";
     const m=currentMatch();m.w=w==="A"?m.a:m.b;m.l=w==="A"?m.b:m.a;
     $("voteA").disabled=true;$("voteB").disabled=true;
     $("cardA").classList.toggle("active",w==="A");$("cardB").classList.toggle("active",w==="B");
@@ -641,19 +663,24 @@ function hostInit(){
   }
 
   /* ---- QR (PeerJS) ---- */
-  let peer=null,conns=[];
-  const clients=()=>conns.filter(c=>c.open);
+  let peer=null;const devs=new Map(); /* 기기ID → 연결 (새로고침해도 한 명) */
+  const clients=()=>[...devs.values()].filter(c=>c.open);
+  const devOf=c=>(c.metadata&&c.metadata.dev)||c.peer;
+  setInterval(()=>{const now=Date.now();devs.forEach((c,k)=>{
+    if(!c.open||now-(c._seen||now)>15000){devs.delete(k);try{c.close();}catch(_){}updateCounts();}
+    else{try{c.send({type:"ping"});}catch(_){}}});},5000);
   function logQR(m){const b=$("qrlog");b.innerHTML+=esc(m)+"<br>";b.scrollTop=b.scrollHeight;}
   function broadcast(d){clients().forEach(c=>{try{c.send(d);}catch(_){}});}
   function matchMsg(voted){const m=currentMatch();return {type:"match",mid:state.mid,round:`${ROUND_NAMES[state.ri]} · 대결 ${state.mi+1}`,a:pub(S[m.a]),b:pub(S[m.b]),voted:voted||null};}
-  function broadcastMatch(){clients().forEach(c=>{try{c.send(matchMsg(state.voted.get(c.peer)));}catch(_){}});}
+  function broadcastMatch(){clients().forEach(c=>{try{c.send(matchMsg(state.voted.get(devOf(c))));}catch(_){}});}
   function updateCounts(){const n=clients().length;$("lobbyCount").textContent=n;$("dockCount").textContent=n;updateQrLabel();}
   function updateQrLabel(){if(state.mode==="qr"&&!$("match").classList.contains("hidden"))$("voterLabel").textContent=`투표 ${state.voted.size} / 접속 ${clients().length}명`;}
   function startPeer(){
     if(peer&&!peer.destroyed)return;
     if(typeof Peer==="undefined"){logQR("⚠ PeerJS를 불러오지 못했어요. 인터넷 연결을 확인하세요.");return;}
-    peer=new Peer();
-    peer.on("open",id=>{
+    let saved=null;try{saved=localStorage.getItem("praiseHostId");}catch(_){}
+    peer=saved?new Peer(saved):new Peer();
+    peer.on("open",id=>{try{localStorage.setItem("praiseHostId",id);}catch(_){}
       $("peerId").textContent=id.slice(0,8);
       const url=location.origin+location.pathname+"?join="+id;
       ["qrBig","qrSmall"].forEach((el,i)=>{const b=$(el);b.innerHTML="";
@@ -662,20 +689,28 @@ function hostInit(){
       logQR("방이 열렸어요 · "+url);
     });
     peer.on("connection",c=>{
-      conns.push(c);
-      c.on("open",()=>{updateCounts();logQR("👤 기기 접속 ("+clients().length+"대)");});
+      const k=devOf(c);
+      c.on("open",()=>{
+        const old=devs.get(k);const again=!!old;
+        if(old&&old!==c){try{old.close();}catch(_){}}
+        c._seen=Date.now();devs.set(k,c);updateCounts();
+        logQR((again?"🔄 재접속 · ":"👤 기기 접속 · ")+clients().length+"명");
+      });
       c.on("data",d=>{
-        if(!d)return;
-        if(d.type==="hello"){ if(!$("match").classList.contains("hidden")&&!state.finishing)c.send(matchMsg(state.voted.get(c.peer))); else c.send({type:"wait"}); }
+        if(!d)return;c._seen=Date.now();
+        if(d.type==="pong")return;
+        if(d.type==="hello"){ if(!$("match").classList.contains("hidden")&&!state.finishing)c.send(matchMsg(state.voted.get(devOf(c)))); else c.send({type:"wait"}); }
         if(d.type==="vote"&&state.mode==="qr"&&d.mid===state.mid&&!state.finishing&&(d.side==="A"||d.side==="B")){
-          if(state.voted.has(c.peer)){c.send({type:"voted",side:state.voted.get(c.peer)});return;}
-          state.voted.set(c.peer,d.side);c.send({type:"voted",side:d.side});castVote(d.side);
+          if(state.voted.has(k)){c.send({type:"voted",side:state.voted.get(k)});return;}
+          state.voted.set(k,d.side);c.send({type:"voted",side:d.side});castVote(d.side);
         }
       });
-      c.on("close",()=>{conns=conns.filter(x=>x!==c);updateCounts();});
+      c.on("close",()=>{if(devs.get(k)===c)devs.delete(k);updateCounts();});
     });
     peer.on("disconnected",()=>{try{peer.reconnect();}catch(_){}});
-    peer.on("error",e=>logQR("⚠ "+e.type));
+    peer.on("error",e=>{
+      if(e.type==="unavailable-id"){try{localStorage.removeItem("praiseHostId");}catch(_){}try{peer.destroy();}catch(_){}peer=null;setTimeout(startPeer,500);return;}
+      logQR("⚠ "+e.type);});
   }
 
   /* ---- 버튼 ---- */
