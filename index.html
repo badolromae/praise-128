@@ -98,6 +98,21 @@ input[type=number],select{background:rgba(10,6,2,.7);border:1px solid var(--line
 /* ── 우승/대진표 ── */
 .champ{text-align:center;padding:26px}
 .champ img{width:min(420px,90%);border-radius:14px;margin:14px auto 0;display:block;border:2px solid var(--ember)}
+.champplayer{width:min(640px,100%);margin:14px auto 0;border-radius:14px;border:2px solid var(--ember);box-shadow:0 0 40px rgba(255,170,60,.5)}
+#fx{position:fixed;inset:0;width:100%;height:100%;z-index:45;pointer-events:none}
+.song.playing{border-color:var(--flame);box-shadow:0 0 0 3px rgba(255,209,102,.55),0 0 34px rgba(255,140,40,.45)}
+.song.playing .clipbar .tag{color:var(--flame);font-weight:800}
+.guide{text-align:left;margin:16px auto 0;max-width:760px}
+.gtabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+.gtab{cursor:pointer;border:1px solid var(--line);background:rgba(0,0,0,.3);color:var(--cream);border-radius:20px;padding:8px 14px;font-weight:700;font-family:inherit;font-size:13px}
+.gtab.on{background:var(--flame);color:#2a1503;border-color:var(--flame)}
+.guide ol{padding-left:20px;line-height:1.8;font-size:14px}
+.guide ol b{color:var(--flame)}
+.qrpair{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin:16px 0}
+.qrpair .step{text-align:center}
+.qrpair .step .tag{margin-top:8px;color:var(--cream);font-weight:700}
+.wifiform{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+.wifiform input{background:rgba(10,6,2,.7);border:1px solid var(--line);color:var(--cream);border-radius:10px;padding:9px 11px;font-size:14px;font-family:inherit;min-width:160px}
 .champ .name{font-size:clamp(24px,5vw,46px);font-weight:900;color:var(--flame);margin:12px 0}
 .bracket{display:flex;gap:18px;overflow-x:auto;padding:10px 4px}
 .col{min-width:190px;display:flex;flex-direction:column;gap:8px}
@@ -194,6 +209,7 @@ body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none
           <option value="0">64강 (128곡)</option>
           <option value="1">32강 (64곡)</option>
           <option value="2">16강 (32곡)</option>
+          <option value="3">8강 (16곡)</option>
         </select>
         <div class="tag" id="pickTag" style="margin:6px 0 18px"></div>
         <div style="font-weight:800;margin-bottom:10px">🎯 투표 방식</div>
@@ -207,7 +223,7 @@ body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none
           <div class="tag" style="margin-bottom:6px">👥 투표 인원 (한 대결당)</div>
           <input id="voterCount" type="number" min="1" max="20" value="3" style="width:120px">
         </div>
-        <div id="qrHint" class="tag hidden" style="margin-top:12px">시작하면 큰 QR이 나와요. 폰으로 스캔해 접속한 뒤 첫 대결을 시작하세요.</div>
+        <div id="qrHint" class="tag hidden" style="margin-top:12px">시작하면 연결 안내와 QR이 나와요. 메인이 휴대폰·패드면 참가자는 메인의 핫스팟에, 메인이 노트북이면 같은 공유기 와이파이에 먼저 연결한 뒤 게임 QR을 스캔합니다.</div>
         <div id="ytBox" style="margin-top:18px;padding:12px;border:1px dashed var(--line);border-radius:12px;background:rgba(0,0,0,.25)">
           <div style="font-weight:800;margin-bottom:6px">📺 YouTube 로그인 <span class="tag">(선택)</span></div>
           <div class="tag" style="line-height:1.6">YouTube Premium 계정으로 로그인하면 게임 중 광고 없이 재생돼요. 로그인하지 않아도 게임은 그대로 진행됩니다.</div>
@@ -229,9 +245,37 @@ body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none
 
   <!-- LOBBY (QR) -->
   <div id="lobby" class="card hidden center" style="margin-top:22px">
-    <div class="big">📱 폰으로 QR을 스캔해 투표에 참여하세요</div>
+    <div class="big">📱 ① 와이파이(핫스팟) 연결 → ② 게임 QR 스캔</div>
+    <div class="guide card">
+      <div class="gtabs">
+        <button class="gtab" data-g="ios" type="button">📱 메인이 휴대폰·패드일 때 (핫스팟)</button>
+        <button class="gtab" data-g="lap" type="button">💻 메인이 노트북일 때 (공유기 와이파이)</button>
+      </div>
+      <ol id="gIos" class="hidden">
+        <li>게임 화면을 띄운 <b>메인 휴대폰·패드의 핫스팟을 켭니다.</b><br>
+          <span class="tag">아이폰·아이패드: 설정 → 개인용 핫스팟 → '다른 사람의 연결 허용' / 갤럭시: 설정 → 연결 → 모바일 핫스팟</span></li>
+        <li>참가자 <b>아이폰·아이패드</b>는 <b>설정 → Wi-Fi</b>에서 <b>메인 폰·패드의 핫스팟 이름</b>을 눌러 먼저 연결합니다.<br>
+          <span class="tag">아래 ① 와이파이 QR을 카메라로 찍으면 비밀번호 입력 없이 바로 연결돼요.</span></li>
+        <li>핫스팟 연결이 끝나면 카메라로 <b>② 게임 참가 QR</b>을 찍어 게임에 들어옵니다.</li>
+        <li>참가자 화면 위쪽에 와이파이(또는 🔗 핫스팟) 표시가 떠 있는지 확인한 뒤 QR을 찍어 주세요.</li>
+      </ol>
+      <ol id="gLap" class="hidden">
+        <li>노트북이 연결된 <b>공유기 와이파이 이름</b>을 확인합니다. (화면 오른쪽 아래 와이파이 아이콘)</li>
+        <li>참가자 폰·패드는 <b>노트북과 같은 공유기 와이파이에 먼저 연결</b>합니다. 아래 ① 와이파이 QR을 찍으면 바로 연결돼요.</li>
+        <li>와이파이 연결이 끝나면 <b>② 게임 참가 QR</b>을 스캔합니다.</li>
+        <li>펜션·카페의 '게스트 와이파이'는 기기끼리 연결을 막는 경우가 있어요. 연결이 안 되면 노트북 핫스팟이나 휴대폰 핫스팟을 사용하세요.</li>
+      </ol>
+      <div class="tag center" style="margin-top:8px">① 와이파이 QR 만들기 (선택 · 이 기기에 저장됨)</div>
+      <div class="wifiform">
+        <input id="wifiSsid" placeholder="와이파이(핫스팟) 이름" autocomplete="off">
+        <input id="wifiPw" placeholder="비밀번호" autocomplete="off">
+      </div>
+    </div>
+    <div class="qrpair">
+      <div class="step hidden" id="wifiStep"><div class="qrbox"><div id="qrWifi"></div></div><div class="tag" id="wifiStepLabel">① 와이파이 연결</div><div class="tag" id="wifiName" style="font-weight:400;opacity:.8"></div></div>
+      <div class="step"><div class="qrbox"><div id="qrBig"></div></div><div class="tag">② 게임 참가</div></div>
+    </div>
     <p class="note">접속한 기기에는 두 곡 정보와 투표 버튼만 보입니다.</p>
-    <div style="margin:16px 0"><div class="qrbox"><div id="qrBig"></div></div></div>
     <div class="row">
       <span class="badge">방 코드 <b id="peerId" class="hook">생성 중…</b></span>
       <span class="badge">접속 <b id="lobbyCount" class="hook">0</b>명</span>
@@ -249,12 +293,12 @@ body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none
       <div><span class="badge" id="roundLabel">64강</span><div class="progress" style="width:220px"><i id="roundBar"></i></div></div>
       <div><span class="badge" id="matchLabel">대결 1 / 64</span> <span class="badge" id="voterLabel">투표자 1 / 3</span></div>
     </div>
-    <div id="finalNote" class="note center hidden" style="margin-bottom:10px">🎬 결승전 · 전곡 재생</div>
+    <div id="finalNote" class="note center hidden" style="margin-bottom:10px">🏆 결승전</div>
     <div class="versus">
       <div class="song" id="cardA">
         <div class="player"><div class="yth" id="hostA"></div><div class="cover" id="coverA"></div></div>
         <div class="meta"><div class="t" id="titleA">—</div><div class="a" id="artistA">—</div><span class="y" id="yearA">—</span></div>
-        <div class="clipbar"><span class="tag" id="clipA">1분 하이라이트</span>
+        <div class="clipbar"><span class="tag" id="clipA">20초 하이라이트</span>
           <a class="lnk hidden" id="linkA" target="_blank" rel="noopener">YouTube에서 찾기 ↗</a>
           <button class="btn small ghost" data-play="A">▶ 듣기</button></div>
         <div style="padding:0 14px 14px"><button class="btn vote-btn" data-vote="A" id="voteA">이 곡에 투표</button></div>
@@ -263,7 +307,7 @@ body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none
       <div class="song" id="cardB">
         <div class="player"><div class="yth" id="hostB"></div><div class="cover" id="coverB"></div></div>
         <div class="meta"><div class="t" id="titleB">—</div><div class="a" id="artistB">—</div><span class="y" id="yearB">—</span></div>
-        <div class="clipbar"><span class="tag" id="clipB">1분 하이라이트</span>
+        <div class="clipbar"><span class="tag" id="clipB">20초 하이라이트</span>
           <a class="lnk hidden" id="linkB" target="_blank" rel="noopener">YouTube에서 찾기 ↗</a>
           <button class="btn small ghost" data-play="B">▶ 듣기</button></div>
         <div style="padding:0 14px 14px"><button class="btn vote-btn" data-vote="B" id="voteB">이 곡에 투표</button></div>
@@ -272,6 +316,7 @@ body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none
     <div class="tally"><div class="tpill a">왼쪽 · <span id="tallyA">0</span>표</div><div class="tpill b">오른쪽 · <span id="tallyB">0</span>표</div></div>
     <div class="row" style="margin-top:12px">
       <button class="btn small hidden" id="btnClose">✅ 투표 마감</button>
+      <button class="btn ghost small" id="btnReplay">🔁 두 곡 다시 듣기</button>
       <button class="btn ghost small" id="btnResetVotes">이 대결 다시 투표</button>
       <button class="btn ghost small" id="btnQuit">처음으로</button>
     </div>
@@ -281,7 +326,9 @@ body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none
   <div id="champ" class="card hidden champ" style="margin-top:22px">
     <div style="font-size:44px">🏆🔥</div>
     <div class="note">우승 찬양</div>
-    <img id="champImg" alt="">
+    <div class="player champplayer"><div class="yth" id="champHost"></div></div>
+    <img id="champImg" alt="" class="hidden">
+    <div class="tag" style="margin-top:8px">🎵 우승곡 전곡 재생 중</div>
     <div class="name" id="champName">—</div>
     <div class="note" id="champMeta">—</div>
     <div class="row" style="margin-top:20px">
@@ -298,6 +345,7 @@ body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none
   <div class="tag">📱 투표 참여 · 접속 <b id="dockCount" class="hook">0</b>명</div>
 </div>
 <div class="toast" id="toast"></div>
+<canvas id="fx" class="hidden"></canvas>
 
 <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
@@ -445,7 +493,7 @@ S.forEach(s=>{if(OVR[s.orig])s.id=OVR[s.orig];});
 const parseYt=u=>{u=(u||"").trim();if(/^[A-Za-z0-9_-]{11}$/.test(u))return u;const m=u.match(/(?:v=|youtu\.be\/|shorts\/|embed\/|live\/)([A-Za-z0-9_-]{11})/);return m?m[1]:null;};
 const ERA={1:"~2000",2:"2001–2010",3:"2011–2020",4:"2021~"};
 const ROUND_NAMES=["64강","32강","16강","8강","4강","준결승","3·4위전","결승"];
-const VERSIONS=[{name:"64강",n:128},{name:"32강",n:64},{name:"16강",n:32}];
+const VERSIONS=[{name:"64강",n:128},{name:"32강",n:64},{name:"16강",n:32},{name:"8강",n:16}];
 const $=id=>document.getElementById(id);
 const thumb=id=>`https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 const ytSearch=s=>"https://www.youtube.com/results?search_query="+encodeURIComponent(s.t+" "+s.a);
@@ -534,7 +582,7 @@ function hostInit(){
     $("mainTitle").textContent="🔥 "+title;document.title=title;
     $("mainSub").textContent=`${v.name}(${v.n}곡) → `+ROUND_NAMES.slice(st+1).join(" → ");
     const per=[8,40,40,40].map(c=>c>>st);
-    $("homeDesc").innerHTML=`<b class="hook">${v.n}곡</b>이 단판 승부로 맞붙습니다. 각 곡은 후렴 1분으로 겨루고, 결승은 전곡을 들어요.<br>
+    $("homeDesc").innerHTML=`<b class="hook">${v.n}곡</b>이 단판 승부로 맞붙습니다. 두 곡을 20초씩 이어서 듣고 투표해요. 우승곡은 전곡이 재생됩니다.<br>
       복음성가 ${per[0]}곡(~2000) · ${per[1]}곡(2001–2010) · ${per[2]}곡(2011–2020) · ${per[3]}곡(2021~)`;
     $("pickTag").textContent=st?`128곡 중 시대별 비율대로 ${v.n}곡을 무작위로 뽑아요`:"128곡이 모두 출전해요";
   }
@@ -564,18 +612,108 @@ function hostInit(){
   function show(id){["home","lobby","match","champ"].forEach(x=>$(x).classList.add("hidden"));$(id).classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"});}
 
   /* ---- YouTube ---- */
-  function ensurePlayer(side,song,full){
+  const CLIP=20;                        /* 한 곡 재생 시간(초) */
+  const cur={A:null,B:null},ready={A:false,B:false};
+  const seq={side:null,chain:false,timer:null,end:0,gen:0,pending:null};
+  function ensurePlayer(side,song){
+    cur[side]=song;
     const l=$("link"+side);l.href=ytSearch(song);
     if(typeof YT==="undefined"||!YT.Player){l.classList.remove("hidden");return;}
-    const opt=full?{videoId:song.id}:{videoId:song.id,startSeconds:song.s,endSeconds:song.e};
-    if(players[side]&&players[side].loadVideoById){try{players[side].cueVideoById(opt);}catch(_){}return;}
+    if(players[side]){if(ready[side]){try{players[side].cueVideoById({videoId:song.id,startSeconds:song.s});}catch(_){}}return;}
     $("host"+side).innerHTML='<div id="yt'+side+'" style="width:100%;height:100%"></div>';
-    const vars={rel:0,playsinline:1,modestbranding:1};if(!full){vars.start=song.s;vars.end=song.e;}
-    players[side]=new YT.Player("yt"+side,{host:"https://www.youtube.com",videoId:song.id,playerVars:vars,events:{
-      onStateChange:e=>{if(e.data===1){const o=players[side==="A"?"B":"A"];try{o&&o.pauseVideo();}catch(_){}}},
-      onError:()=>{l.classList.remove("hidden");toast("이 영상은 외부 재생이 막혀 있어요 · YouTube에서 찾기를 눌러주세요");}}});
+    players[side]=new YT.Player("yt"+side,{host:"https://www.youtube.com",videoId:song.id,
+      playerVars:{rel:0,playsinline:1,modestbranding:1,start:song.s},events:{
+      onReady:()=>{ready[side]=true;
+        if(seq.pending===side){seq.pending=null;startLoad(side);}
+        else{try{players[side].cueVideoById({videoId:cur[side].id,startSeconds:cur[side].s});}catch(_){}}},
+      onStateChange:e=>{
+        if(e.data===1&&seq.side===side&&!seq.timer){seq.end=Date.now()+CLIP*1000;seq.timer=setTimeout(()=>clipDone(side),CLIP*1000);}
+        if(e.data===0&&seq.side===side)clipDone(side);},
+      onError:()=>{l.classList.remove("hidden");toast("이 영상은 재생이 막혀 있어요 · YouTube에서 찾기를 눌러주세요");if(seq.side===side)clipDone(side);}}});
   }
-  function stopPlayers(){["A","B"].forEach(k=>{try{players[k]&&players[k].stopVideo();}catch(_){}});}
+  function startLoad(side){
+    const p=players[side],song=cur[side];
+    try{p.loadVideoById({videoId:song.id,startSeconds:song.s});}catch(_){}
+    const g=seq.gen;
+    setTimeout(()=>{if(seq.gen===g&&seq.side===side&&!seq.timer)toast("자동 재생이 막혔어요 · '▶ 듣기'를 눌러주세요");},7000);
+  }
+  function playSide(side,chain){
+    clearTimeout(seq.timer);seq.timer=null;seq.gen++;
+    const other=side==="A"?"B":"A";
+    try{players[other]&&ready[other]&&players[other].pauseVideo();}catch(_){}
+    $("card"+other).classList.remove("playing");$("card"+side).classList.add("playing");
+    seq.side=side;seq.chain=chain;seq.pending=null;
+    if(typeof YT==="undefined"||!YT.Player){clipLabels();return;}
+    if(!players[side]||!ready[side]){seq.pending=side;return;}
+    startLoad(side);
+  }
+  function clipDone(side){
+    if(seq.side!==side)return;
+    clearTimeout(seq.timer);seq.timer=null;
+    try{players[side].pauseVideo();}catch(_){}
+    $("card"+side).classList.remove("playing");
+    const next=seq.chain&&side==="A";seq.side=null;clipLabels();
+    if(next)setTimeout(()=>playSide("B",false),400);
+  }
+  function clipLabels(){
+    ["A","B"].forEach(k=>{const el=$("clip"+k);if(!el)return;
+      if(seq.side===k&&seq.timer){el.textContent=`▶ 재생 중 · ${Math.max(0,Math.ceil((seq.end-Date.now())/1000))}초`;}
+      else if(seq.side===k){el.textContent="⏳ 불러오는 중…";}
+      else el.textContent=`${CLIP}초 하이라이트`;});
+  }
+  setInterval(clipLabels,300);
+  function stopPlayers(){
+    clearTimeout(seq.timer);seq.timer=null;seq.side=null;seq.pending=null;seq.gen++;
+    ["A","B"].forEach(k=>{$("card"+k).classList.remove("playing");try{players[k]&&ready[k]&&players[k].pauseVideo();}catch(_){}});
+  }
+
+  /* ---- 우승곡 전곡 재생 + 폭죽 ---- */
+  let champPlayer=null;
+  function playChampion(song){
+    if(typeof YT==="undefined"||!YT.Player){const im=$("champImg");im.src=thumb(song.id);im.classList.remove("hidden");return;}
+    if(champPlayer&&champPlayer.loadVideoById){try{champPlayer.loadVideoById({videoId:song.id,startSeconds:0});}catch(_){}return;}
+    $("champHost").innerHTML='<div id="champYT" style="width:100%;height:100%"></div>';
+    champPlayer=new YT.Player("champYT",{host:"https://www.youtube.com",videoId:song.id,
+      playerVars:{rel:0,playsinline:1,modestbranding:1,autoplay:1},
+      events:{onReady:e=>{try{e.target.playVideo();}catch(_){}}}});
+  }
+  function stopChampion(){try{champPlayer&&champPlayer.stopVideo&&champPlayer.stopVideo();}catch(_){}stopFireworks();}
+  let fxRun=null;
+  function fireworks(sec){
+    if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+    const cv=$("fx"),ctx=cv.getContext("2d");cv.classList.remove("hidden");
+    const dpr=Math.min(2,window.devicePixelRatio||1);
+    const fit=()=>{cv.width=innerWidth*dpr;cv.height=innerHeight*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);};fit();
+    window.addEventListener("resize",fit);
+    const cols=["#ffd166","#ff7a18","#ff4d6d","#7bdff2","#b8f2a0","#ffffff","#c77dff"];
+    const parts=[],rockets=[],conf=[];
+    const W=()=>innerWidth,H=()=>innerHeight,stopAt=performance.now()+sec*1000;
+    function burst(x,y){const c=cols[Math.random()*cols.length|0],n=70+Math.random()*40;
+      for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,v=2+Math.random()*5;
+        parts.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:1,c:Math.random()<.2?"#fff":c,r:1.6+Math.random()*1.8});}}
+    function launch(){rockets.push({x:W()*(.15+Math.random()*.7),y:H(),vy:-(9+Math.random()*4),ty:H()*(.15+Math.random()*.35)});}
+    for(let i=0;i<120;i++)conf.push({x:Math.random()*W(),y:-Math.random()*H(),vy:1.5+Math.random()*2.5,vx:-1+Math.random()*2,
+      r:4+Math.random()*5,a:Math.random()*6,va:-.2+Math.random()*.4,c:cols[Math.random()*cols.length|0]});
+    let last=0;
+    function tick(t){
+      ctx.clearRect(0,0,W(),H());
+      const live=t<stopAt;
+      if(live&&t-last>380){launch();if(Math.random()<.5)launch();last=t;}
+      for(let i=rockets.length-1;i>=0;i--){const r=rockets[i];r.y+=r.vy;r.vy+=.12;
+        ctx.fillStyle="#ffe3a0";ctx.beginPath();ctx.arc(r.x,r.y,2.4,0,7);ctx.fill();
+        if(r.y<=r.ty||r.vy>=0){burst(r.x,r.y);rockets.splice(i,1);}}
+      ctx.globalCompositeOperation="lighter";
+      for(let i=parts.length-1;i>=0;i--){const p=parts[i];p.x+=p.vx;p.y+=p.vy;p.vx*=.985;p.vy=p.vy*.985+.06;p.life-=.012;
+        if(p.life<=0){parts.splice(i,1);continue;}
+        ctx.globalAlpha=p.life;ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fill();}
+      ctx.globalCompositeOperation="source-over";ctx.globalAlpha=1;
+      conf.forEach(c=>{c.y+=c.vy;c.x+=c.vx;c.a+=c.va;if(c.y>H()+20){if(live){c.y=-20;c.x=Math.random()*W();}else return;}
+        ctx.save();ctx.translate(c.x,c.y);ctx.rotate(c.a);ctx.fillStyle=c.c;ctx.fillRect(-c.r/2,-c.r/4,c.r,c.r/2);ctx.restore();});
+      if(live||parts.length||rockets.length||conf.some(c=>c.y<H()+20))fxRun=requestAnimationFrame(tick);else stopFireworks();
+    }
+    cancelAnimationFrame(fxRun);fxRun=requestAnimationFrame(tick);
+  }
+  function stopFireworks(){cancelAnimationFrame(fxRun);fxRun=null;const cv=$("fx");if(cv){cv.getContext("2d").clearRect(0,0,cv.width,cv.height);cv.classList.add("hidden");}}
 
   /* ---- 대진 ---- */
   function buildBracket(){
@@ -607,11 +745,11 @@ function hostInit(){
     [["A",A],["B",B]].forEach(([k,s])=>{
       $("title"+k).textContent=s.t;$("artist"+k).textContent=s.a;$("year"+k).textContent=ERA[s.era];
       setThumb($("cover"+k),s);$("link"+k).classList.add("hidden");
-      $("clip"+k).textContent=isFinal?"전곡 재생":"1분 하이라이트";
       $("card"+k).classList.remove("active");$("vote"+k).disabled=false;
     });
     resetTally();
-    ensurePlayer("A",A,isFinal);ensurePlayer("B",B,isFinal);
+    ensurePlayer("A",A);ensurePlayer("B",B);
+    setTimeout(()=>playSide("A",true),350);   /* 곡 정보가 뜨자마자 A 20초 → B 20초 */
     if(state.mode==="qr"){state.mid++;state.voted=new Map();broadcastMatch();updateQrLabel();}
     logQR(`▶ ${rn} · ${A.t} vs ${B.t}`);
   }
@@ -650,7 +788,8 @@ function hostInit(){
     stopPlayers();show("champ");
     const f=state.rounds[7][0],s=S[f.w],ru=S[f.w===f.a?f.b:f.a],th=S[state.rounds[6][0].w];
     $("champName").textContent=s.t;
-    const im=$("champImg");im.src=thumb(s.id);im.onerror=()=>im.classList.add("hidden");im.classList.remove("hidden");
+    $("champImg").classList.add("hidden");
+    playChampion(s);fireworks(9);
     $("champMeta").innerHTML=`${esc(s.a)} · ${ERA[s.era]}<br>🥈 준우승: ${esc(ru.t)} &nbsp;·&nbsp; 🥉 3위: ${esc(th.t)}`;
     buildBracketView();
     if(state.mode==="qr")broadcast({type:"end"});
@@ -684,7 +823,7 @@ function hostInit(){
       $("peerId").textContent=id.slice(0,8);
       const url=location.origin+location.pathname+"?join="+id;
       ["qrBig","qrSmall"].forEach((el,i)=>{const b=$(el);b.innerHTML="";
-        if(window.QRCode)new QRCode(b,{text:url,width:i?110:260,height:i?110:260,colorDark:"#2a1503",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M});
+        if(window.QRCode)new QRCode(b,{text:url,width:i?110:200,height:i?110:200,colorDark:"#2a1503",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M});
         else b.textContent=url;});
       logQR("방이 열렸어요 · "+url);
     });
@@ -725,24 +864,44 @@ function hostInit(){
     buildBracket();
     const qr=state.mode==="qr";
     $("voteA").classList.toggle("hidden",qr);$("voteB").classList.toggle("hidden",qr);$("btnClose").classList.toggle("hidden",!qr);
-    if(qr){startPeer();show("lobby");updateCounts();}
+    if(qr){startPeer();show("lobby");updateCounts();drawWifi();}
     else{$("qrDock").classList.add("hidden");renderMatch();}
   };
+  /* 연결 안내: 메인 기기 종류에 맞춰 기본 탭 선택 */
+  function setGuide(g){document.querySelectorAll(".gtab").forEach(b=>b.classList.toggle("on",b.dataset.g===g));
+    $("gIos").classList.toggle("hidden",g!=="ios");$("gLap").classList.toggle("hidden",g!=="lap");
+    $("wifiSsid").placeholder=g==="ios"?"메인 폰·패드 핫스팟 이름":"공유기 와이파이 이름";
+    $("wifiStepLabel").textContent=g==="ios"?"① 핫스팟 연결":"① 와이파이 연결";}
+  document.querySelectorAll(".gtab").forEach(b=>b.onclick=()=>setGuide(b.dataset.g));
+  const isMobileHost=/iPhone|iPad|iPod|Android|Mobile|Tablet/i.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+  setGuide(isMobileHost?"ios":"lap");
+  const wEsc=v=>String(v).replace(/([\\;,:"])/g,"\\$1");
+  function drawWifi(){
+    const ss=$("wifiSsid").value.trim(),pw=$("wifiPw").value;
+    try{localStorage.setItem("praiseWifi",JSON.stringify({ss,pw}));}catch(_){}
+    const box=$("qrWifi");box.innerHTML="";
+    if(!ss||!window.QRCode){$("wifiStep").classList.add("hidden");return;}
+    const txt=`WIFI:T:${pw?"WPA":"nopass"};S:${wEsc(ss)};${pw?"P:"+wEsc(pw)+";":""};`;
+    new QRCode(box,{text:txt,width:200,height:200,colorDark:"#0b1026",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M});
+    $("wifiName").textContent=ss;$("wifiStep").classList.remove("hidden");
+  }
+  try{const w=JSON.parse(localStorage.getItem("praiseWifi")||"null");if(w){$("wifiSsid").value=w.ss||"";$("wifiPw").value=w.pw||"";}}catch(_){}
+  $("wifiSsid").oninput=drawWifi;$("wifiPw").oninput=drawWifi;
   $("btnBegin").onclick=()=>{$("qrDock").classList.remove("hidden");renderMatch();};
   $("btnLobbyQuit").onclick=()=>show("home");
   document.querySelectorAll("[data-vote]").forEach(b=>b.onclick=()=>{castVote(b.dataset.vote);b.blur();});
   $("btnClose").onclick=()=>finishMatch();
   document.querySelectorAll("[data-play]").forEach(b=>b.onclick=()=>{
-    const side=b.dataset.play,m=currentMatch(),song=S[side==="A"?m.a:m.b],full=state.ri===7,p=players[side];
-    if(!p||!p.getPlayerState){ensurePlayer(side,song,full);return;}
-    const st=p.getPlayerState();
-    if(st===1)p.pauseVideo();else{if(st===0)p.seekTo(full?0:song.s,true);p.playVideo();}
+    const side=b.dataset.play;
+    if(seq.side===side&&seq.timer){clipDone(side);return;}      /* 재생 중이면 멈춤 */
+    playSide(side,false);
   });
+  $("btnReplay").onclick=()=>playSide("A",true);
   $("btnResetVotes").onclick=()=>{
     resetTally();$("voteA").disabled=false;$("voteB").disabled=false;$("cardA").classList.remove("active");$("cardB").classList.remove("active");
     if(state.mode==="qr"){state.mid++;state.voted=new Map();broadcastMatch();updateQrLabel();}
   };
-  const toHome=()=>{stopPlayers();$("qrDock").classList.add("hidden");if(state.mode==="qr")broadcast({type:"wait"});show("home");};
+  const toHome=()=>{stopPlayers();stopChampion();$("qrDock").classList.add("hidden");if(state.mode==="qr")broadcast({type:"wait"});show("home");};
   $("btnQuit").onclick=toHome;$("btnRestart").onclick=toHome;
   $("btnShowBracket").onclick=()=>$("bracketView").classList.toggle("hidden");
 
@@ -753,7 +912,7 @@ function hostInit(){
     $("ytStatus").textContent="로그인 창이 열렸어요. 로그인한 뒤 창을 닫아주세요.";
     const t=setInterval(()=>{if(w.closed){clearInterval(t);$("ytStatus").textContent=msgDone;
       try{localStorage.setItem("ytLoginTried","1");}catch(_){}
-      try{Object.values(players).forEach(p=>p&&p.destroy&&p.destroy());}catch(_){}players={};}},700);
+      try{Object.values(players).forEach(p=>p&&p.destroy&&p.destroy());}catch(_){}players={};ready.A=ready.B=false;champPlayer=null;}},700);
   }
   $("btnYtLogin").onclick=()=>ytPopup("https://accounts.google.com/ServiceLogin?service=youtube&continue=https%3A%2F%2Fwww.youtube.com%2F",
     "✅ 이 브라우저에 Premium 계정으로 로그인돼 있으면 광고 없이 재생돼요.");
