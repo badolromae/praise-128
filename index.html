@@ -348,7 +348,7 @@ body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none
 <canvas id="fx" class="hidden"></canvas>
 
 <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 <script>
 /* 필드: [곡명, 아티스트, 시대(1:~2000 / 2:2001–2010 / 3:2011–2020 / 4:2021~), YouTube ID] */
 const SONGS=[
@@ -497,6 +497,20 @@ const VERSIONS=[{name:"64강",n:128},{name:"32강",n:64},{name:"16강",n:32},{na
 const $=id=>document.getElementById(id);
 const thumb=id=>`https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 const ytSearch=s=>"https://www.youtube.com/results?search_query="+encodeURIComponent(s.t+" "+s.a);
+/* QR 그리기: 한글·특수문자 포함 긴 텍스트도 안정적으로 (UTF-8, 크기 자동) */
+function drawQR(el,text,size,dark){
+  el.innerHTML="";
+  if(typeof qrcode==="undefined"){el.textContent="QR을 불러오지 못했어요";return false;}
+  try{
+    qrcode.stringToBytes=qrcode.stringToBytesFuncs["UTF-8"];
+    const q=qrcode(0,"M");q.addData(text,"Byte");q.make();
+    const n=q.getModuleCount(),cv=document.createElement("canvas"),px=Math.max(2,Math.floor(size/(n+2))),dim=px*(n+2);
+    cv.width=cv.height=dim;cv.style.width=cv.style.height=size+"px";
+    const c=cv.getContext("2d");c.fillStyle="#fff";c.fillRect(0,0,dim,dim);c.fillStyle=dark||"#000";
+    for(let r=0;r<n;r++)for(let k=0;k<n;k++)if(q.isDark(r,k))c.fillRect((k+1)*px,(r+1)*px,px,px);
+    el.appendChild(cv);return true;
+  }catch(e){el.textContent="QR 생성 실패: 입력을 줄여 주세요";return false;}
+}
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 /* 눈 내리기 */
@@ -823,8 +837,7 @@ function hostInit(){
       $("peerId").textContent=id.slice(0,8);
       const url=location.origin+location.pathname+"?join="+id;
       ["qrBig","qrSmall"].forEach((el,i)=>{const b=$(el);b.innerHTML="";
-        if(window.QRCode)new QRCode(b,{text:url,width:i?110:200,height:i?110:200,colorDark:"#2a1503",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M});
-        else b.textContent=url;});
+        if(!drawQR(b,url,i?110:200,"#2a1503"))b.textContent=url;});
       logQR("방이 열렸어요 · "+url);
     });
     peer.on("connection",c=>{
@@ -880,9 +893,9 @@ function hostInit(){
     const ss=$("wifiSsid").value.trim(),pw=$("wifiPw").value;
     try{localStorage.setItem("praiseWifi",JSON.stringify({ss,pw}));}catch(_){}
     const box=$("qrWifi");box.innerHTML="";
-    if(!ss||!window.QRCode){$("wifiStep").classList.add("hidden");return;}
+    if(!ss){$("wifiStep").classList.add("hidden");return;}
     const txt=`WIFI:T:${pw?"WPA":"nopass"};S:${wEsc(ss)};${pw?"P:"+wEsc(pw)+";":""};`;
-    new QRCode(box,{text:txt,width:200,height:200,colorDark:"#0b1026",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M});
+    drawQR(box,txt,200,"#0b1026");
     $("wifiName").textContent=ss;$("wifiStep").classList.remove("hidden");
   }
   try{const w=JSON.parse(localStorage.getItem("praiseWifi")||"null");if(w){$("wifiSsid").value=w.ss||"";$("wifiPw").value=w.pw||"";}}catch(_){}
