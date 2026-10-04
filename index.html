@@ -297,7 +297,7 @@ body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none
         <div style="font-weight:800;margin-bottom:10px">📋 곡 목록 (복음성가)</div>
         <div id="rosterPreview" class="logbox" style="max-height:300px"></div>
         <div class="tag" style="margin-top:8px">총 <b id="songTotal" class="hook">0</b>곡</div>
-        <div class="tag" style="margin-top:4px;opacity:.6">버전 2026.10.04-IDEAL2</div>
+        <div class="tag" style="margin-top:4px;opacity:.6">버전 2026.10.04-IDEAL64</div>
       </div>
     </div>
     </div><!-- /praiseHome -->
@@ -330,11 +330,13 @@ body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none
           <span class="tag">아래 ① 와이파이 QR을 카메라로 찍으면 비밀번호 입력 없이 바로 연결돼요.</span></li>
         <li>핫스팟 연결이 끝나면 카메라로 <b>② 게임 참가 QR</b>을 찍어 게임에 들어옵니다.</li>
         <li>참가자 화면 위쪽에 와이파이(또는 🔗 핫스팟) 표시가 떠 있는지 확인한 뒤 QR을 찍어 주세요.</li>
+        <li class="tag">⚠ 휴대폰 핫스팟은 연결 가능한 기기 수가 적어요(아이폰 약 5대, 갤럭시 약 10대). <b>10명이 넘으면 '메인이 노트북일 때' 방식</b>으로 진행하세요.</li>
       </ol>
       <ol id="gLap" class="hidden">
         <li>노트북이 연결된 <b>공유기 와이파이 이름</b>을 확인합니다. (화면 오른쪽 아래 와이파이 아이콘)</li>
         <li>참가자 폰·패드는 <b>노트북과 같은 공유기 와이파이에 먼저 연결</b>합니다. 아래 ① 와이파이 QR을 찍으면 바로 연결돼요.</li>
         <li>와이파이 연결이 끝나면 <b>② 게임 참가 QR</b>을 스캔합니다.</li>
+        <li>최대 64명까지 함께할 수 있어요. 인원이 많으면 <b>노트북은 충전기를 꽂고</b>, 공유기 가까이에 두세요.</li>
         <li>펜션·카페의 '게스트 와이파이'는 기기끼리 연결을 막는 경우가 있어요. 연결이 안 되면 노트북 핫스팟이나 휴대폰 핫스팟을 사용하세요.</li>
       </ol>
       <div class="tag center" style="margin-top:8px">① 와이파이 QR 만들기 (선택 · 이 기기에 저장됨)</div>
@@ -677,11 +679,13 @@ function joinerView(hostId){
   function connect(){
     if(!peer||peer.destroyed){peer=new Peer();peer.on("open",()=>connect());peer.on("error",()=>{st.textContent="⚠ 연결 실패 · 다시 시도 중…";setTimeout(retry,3000);});return;}
     if(!peer.open)return;
-    conn=peer.connect(hostId,{reliable:true,metadata:{dev}});
+    conn=peer.connect(hostId,{reliable:true,serialization:"json",metadata:{dev}});
     conn.on("open",()=>{st.textContent="✅ 연결됨 · 대결을 기다리는 중";conn.send({type:"hello",dev});});
     conn.on("data",d=>{
       if(!d)return;
       if(d.type==="ping"){try{conn.send({type:"pong"});}catch(_){}return;}
+      if(d.type==="pgo"){const g=IM.goResolve;if(g&&g.id===d.id){IM.goResolve=null;bump();g.res();}return;}
+      if(d.type==="pq"){if(IM.goResolve&&IM.goResolve.id===d.id){bump();st.textContent=`📷 사진 전송 순서를 기다리는 중… (앞에 ${d.pos}명)`;}return;}
       if(/^i(reg|ok|err|match|wait|voted|end)$/.test(d.type)){onIdeal(d);return;}
       if(d.type==="match"){if(!cur||cur.mid!==d.mid)voted=d.voted||null;cur=d;render();}
       if(d.type==="voted"){voted=d.side;render();st.textContent="✅ 투표했어요! 큰 화면을 봐주세요";}
@@ -691,15 +695,15 @@ function joinerView(hostId){
     conn.on("close",()=>{st.textContent="⚠ 연결이 끊겼어요 · 다시 연결 중…";setTimeout(retry,2500);});
   }
   /* ---------------- 이상형 토너먼트 (폰) ---------------- */
-  const IM={phase:null,me:null,cur:null,voted:null,wait:"",view:"",editing:false,wantVoter:false,sending:false};
+  const IM={phase:null,me:null,cur:null,voted:null,wait:"",view:"",editing:false,wantVoter:false,sending:false,sendSeq:0,sendTimer:null,watch:null,lastAct:0,goResolve:null};
   const draft={g:null,name:"",adv:"",photo:null,dropPhoto:false,consent:false,agree:false,nameOk:false};
   const GLb={M:"남성",F:"여성"};
   function iTitle(){const t=document.querySelector("#japp .title");if(t)t.textContent="💘 이상형 토너먼트";}
   function onIdeal(d){
     iTitle();
     if(d.type==="ireg"){IM.phase=d.phase;IM.me=d.me||null;if(d.phase!=="play")IM.cur=null;}
-    else if(d.type==="iok"){IM.me=d.me;IM.editing=false;IM.wantVoter=false;IM.sending=false;draft.photo=null;draft.dropPhoto=false;}
-    else if(d.type==="ierr"){IM.sending=false;if(d.reset){IM.me=null;IM.editing=false;}IM.view="";alert(d.msg);}
+    else if(d.type==="iok"){clearInterval(IM.watch);IM.me=d.me;IM.editing=false;IM.wantVoter=false;IM.sending=false;draft.photo=null;draft.dropPhoto=false;}
+    else if(d.type==="ierr"){clearInterval(IM.watch);IM.goResolve=null;IM.sending=false;if(d.reset){IM.me=null;IM.editing=false;}IM.view="";alert(d.msg);}
     else if(d.type==="imatch"){IM.phase="play";if(!IM.cur||IM.cur.mid!==d.mid)IM.voted=d.voted||null;IM.cur=d;}
     else if(d.type==="iwait"){IM.cur=null;IM.voted=null;IM.wait=d.msg||"";}
     else if(d.type==="ivoted"){IM.voted=d.side;}
@@ -753,9 +757,9 @@ function joinerView(hostId){
     b.onclick=()=>{draft.g=b.dataset.g;cards.querySelectorAll(".gsel button").forEach(x=>x.classList.toggle("on",x===b));};});}
   function compress(file){return new Promise((res,rej)=>{
     const url=URL.createObjectURL(file),im=new Image();
-    im.onload=()=>{const M=1600;let w=im.naturalWidth,h=im.naturalHeight;const r=Math.min(1,M/Math.max(w,h));w=Math.round(w*r);h=Math.round(h*r);
+    im.onload=()=>{const M=1280;let w=im.naturalWidth,h=im.naturalHeight;const r=Math.min(1,M/Math.max(w,h));w=Math.round(w*r);h=Math.round(h*r);
       const c=document.createElement("canvas");c.width=w;c.height=h;c.getContext("2d").drawImage(im,0,0,w,h);URL.revokeObjectURL(url);
-      let q=.85,d=c.toDataURL("image/jpeg",q);while(d.length>480000&&q>.45){q-=.1;d=c.toDataURL("image/jpeg",q);}res(d);};
+      let q=.85,d=c.toDataURL("image/jpeg",q);while(d.length>330000&&q>.4){q-=.1;d=c.toDataURL("image/jpeg",q);}res(d);};
     im.onerror=()=>{URL.revokeObjectURL(url);rej(new Error("img"));};im.src=url;});}
   function iForm(){
     st.textContent="";
@@ -803,9 +807,37 @@ function joinerView(hostId){
       if(hasPhoto&&!draft.consent)return alert("사진을 보내려면 공개 동의에 체크해 주세요. (원치 않으면 '사진 빼기')");
       if(!draft.agree)return alert("'부적절한 표현을 쓰지 않겠습니다'에 체크해 주세요.");
       if(!conn||!conn.open)return alert("연결이 끊겼어요. 잠시 후 다시 시도해 주세요.");
-      IM.sending=true;st.textContent="보내는 중…";
-      conn.send({type:"reg",role:"player",nameOk:true,g:draft.g,name,adv,photo:draft.photo||null,keepPhoto:!draft.photo&&!draft.dropPhoto,consent:hasPhoto&&draft.consent});
+      IM.sending=true;st.textContent="보내는 중…";$("fSubmit").disabled=true;
+      sendReg({type:"reg",role:"player",nameOk:true,g:draft.g,name,adv,keepPhoto:!draft.photo&&!draft.dropPhoto,consent:hasPhoto&&draft.consent},draft.photo);
     };
+  }
+  const wait=ms=>new Promise(r=>setTimeout(r,ms));
+  /* 사진 전송: 메인이 허락한 순서대로(동시에 몇 명씩) 보내서 많은 인원도 막히지 않게 */
+  function bump(){IM.lastAct=Date.now();}
+  function failSend(msg){IM.sending=false;IM.goResolve=null;clearInterval(IM.watch);IM.view="";renderIdeal();st.textContent=msg;}
+  async function sendReg(msg,photo){
+    const my=++IM.sendSeq;bump();clearInterval(IM.watch);
+    IM.watch=setInterval(()=>{if(!IM.sending||IM.sendSeq!==my){clearInterval(IM.watch);return;}
+      if(Date.now()-IM.lastAct>45000)failSend("⚠ 응답이 없어요. 와이파이 연결을 확인하고 다시 제출해 주세요.");},2000);
+    try{
+      if(photo){
+        const id="p"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),SZ=12000,n=Math.ceil(photo.length/SZ);
+        st.textContent="사진 보낼 준비 중…";
+        await new Promise((res,rej)=>{IM.goResolve={id,res};conn.send({type:"preq",id,n});
+          const t=setInterval(()=>{if(IM.sendSeq!==my||!IM.sending){clearInterval(t);rej(new Error("x"));}else if(!IM.goResolve){clearInterval(t);}},500);});
+        for(let i=0;i<n;i++){
+          if(IM.sendSeq!==my||!conn||!conn.open)throw new Error("closed");
+          const dc=conn.dataChannel;let guard=0;
+          while(dc&&dc.bufferedAmount>64000&&guard++<600)await wait(30);
+          conn.send({type:"pchunk",id,i,n,data:photo.slice(i*SZ,(i+1)*SZ)});bump();
+          st.textContent=`사진 보내는 중… ${Math.round((i+1)/n*100)}%`;
+          if(i%4===3)await wait(15);
+        }
+        msg.photoId=id;
+      }
+      if(IM.sendSeq!==my)return;
+      st.textContent="보내는 중…";bump();conn.send(msg);
+    }catch(_){if(IM.sendSeq===my&&IM.sending)failSend("⚠ 보내지 못했어요. 다시 제출해 주세요.");}
   }
   function iVoter(){
     st.textContent="";
@@ -1101,7 +1133,7 @@ function hostInit(){
           state.voted.set(k,d.side);c.send({type:"voted",side:d.side});castVote(d.side);
         }
       });
-      c.on("close",()=>{if(devs.get(k)===c)devs.delete(k);updateCounts();});
+      c.on("close",()=>{if(devs.get(k)===c){devs.delete(k);if(appMode==="ideal"&&I.upA.has(k)){I.upA.delete(k);upPump();}}updateCounts();});
     });
     peer.on("disconnected",()=>{try{peer.reconnect();}catch(_){}});
     peer.on("error",e=>{
@@ -1164,7 +1196,7 @@ function hostInit(){
   $("btnQuit").onclick=toHome;$("btnRestart").onclick=toHome;
   /* ======================= 💘 이상형 토너먼트 (메인) ======================= */
   var appMode="praise";
-  const I={phase:"idle",entries:new Map(),voters:new Map(),br:{M:null,F:null},stats:new Map(),mid:0,busy:false};
+  const I={phase:"idle",upA:new Map(),upQ:[],pend:new Map(),entries:new Map(),voters:new Map(),br:{M:null,F:null},stats:new Map(),mid:0,busy:false};
   const GL={M:"남성",F:"여성"},OPP={M:"F",F:"M"},GI={M:"🙋‍♂️",F:"🙋‍♀️"},VI={M:"👨",F:"👩"};
   const E=k=>I.entries.get(k);
   function setMode(m){
@@ -1177,7 +1209,7 @@ function hostInit(){
   document.querySelectorAll(".mtab").forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
   window.addEventListener("beforeunload",e=>{if(appMode==="ideal"&&I.phase!=="idle"&&I.entries.size){e.preventDefault();e.returnValue="";}});
 
-  function clearIdeal(){I.phase="idle";I.entries.clear();I.voters.clear();I.br={M:null,F:null};I.stats.clear();I.busy=false;
+  function clearIdeal(){I.phase="idle";I.pend.clear();I.upA.clear();I.upQ=[];I.entries.clear();I.voters.clear();I.br={M:null,F:null};I.stats.clear();I.busy=false;
     ["iWinners","iRanks","iadmin","ipM","ipF"].forEach(x=>$(x).innerHTML="");stopFireworks();}
   const meOf=k=>{const e=E(k);if(e)return {role:"player",g:e.g,name:e.name,adv:e.adv,photo:!!e.photo,consent:e.consent};
     const g=I.voters.get(k);return g?{role:"voter",g}:null;};
@@ -1208,8 +1240,29 @@ function hostInit(){
       renderILobby();});
   }
 
+  const UP_MAX=4;   /* 사진을 동시에 받는 인원 */
+  function upDrop(k){I.upA.delete(k);I.upQ=I.upQ.filter(x=>x.k!==k);}
+  function upPump(){
+    while(I.upA.size<UP_MAX&&I.upQ.length){const x=I.upQ.shift(),c=devs.get(x.k);
+      if(!c||!c.open)continue;I.upA.set(x.k,{id:x.id,ts:Date.now()});try{c.send({type:"pgo",id:x.id});}catch(_){I.upA.delete(x.k);}}
+    I.upQ.forEach((x,i)=>{const c=devs.get(x.k);if(c&&c.open)try{c.send({type:"pq",id:x.id,pos:i+I.upA.size});}catch(_){}});
+  }
+  setInterval(()=>{if(!I.upA.size)return;const now=Date.now();let ch=false;
+    I.upA.forEach((v,k)=>{const c=devs.get(k);if(now-v.ts>25000||!c||!c.open){I.upA.delete(k);ch=true;}});if(ch)upPump();},3000);
   function idealData(c,k,d){
     if(d.type==="hello"){sendIState(c,k);return;}
+    if(d.type==="preq"){
+      if(I.phase!=="reg"||typeof d.id!=="string")return;
+      upDrop(k);I.upQ.push({k,id:d.id});upPump();return;
+    }
+    if(d.type==="pchunk"){
+      if(I.phase!=="reg"||typeof d.data!=="string"||!(d.n>0&&d.n<=400)||!(d.i>=0&&d.i<d.n))return;
+      let p=I.pend.get(k);if(!p||p.id!==d.id){p={id:d.id,n:d.n,parts:new Array(d.n),got:0};I.pend.set(k,p);}
+      if(p.parts[d.i]===undefined){p.parts[d.i]=d.data;p.got++;}
+      const a=I.upA.get(k);if(a)a.ts=Date.now();
+      if(p.got===p.n&&a&&a.id===d.id){I.upA.delete(k);upPump();}   /* 다 받으면 다음 사람에게 차례 */
+      return;
+    }
     if(d.type==="reg"){
       if(d.role==="voter"){
         if(d.g!=="M"&&d.g!=="F")return;
@@ -1222,6 +1275,9 @@ function hostInit(){
       if(d.nameOk!==true){c.send({type:"ierr",msg:"실명 공개에 동의해야 참가할 수 있어요."});return;}
       if(badWord(name)||badWord(adv)){c.send({type:"ierr",msg:"부적절한 표현이 있어요. 다시 작성해 주세요."});return;}
       const old=E(k);let photo=null;
+      if(d.photoId){const p=I.pend.get(k);I.pend.delete(k);
+        if(!p||p.id!==d.photoId||p.got!==p.n){c.send({type:"ierr",msg:"사진이 끝까지 도착하지 않았어요. 다시 제출해 주세요."});return;}
+        d.photo=p.parts.join("");}
       if(typeof d.photo==="string"&&/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(d.photo)&&d.photo.length<4e6)photo=d.photo;
       else if(d.keepPhoto&&old)photo=old.photo;
       I.entries.set(k,{dev:k,g,name,adv,photo,consent:!!(photo&&d.consent)});I.voters.set(k,g);
