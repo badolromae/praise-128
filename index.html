@@ -125,6 +125,59 @@ input[type=number],select{background:rgba(10,6,2,.7);border:1px solid var(--line
 .ytlogin{margin-top:16px;padding:12px;border:1px dashed var(--line);border-radius:12px;background:rgba(0,0,0,.25)}
 a.btn{text-decoration:none;display:inline-block}
 
+/* ── 모드 탭 ── */
+.mtabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+.mtab{cursor:pointer;border:1px solid var(--line);background:rgba(0,0,0,.3);color:var(--cream);border-radius:24px;padding:10px 18px;font-weight:800;font-family:inherit;font-size:15px}
+.mtab.on{background:linear-gradient(180deg,var(--flame),var(--ember));color:#2a1503;border-color:var(--flame)}
+/* ── 이상형 토너먼트 (메인) ── */
+.ipanels{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:1000px){.ipanels{grid-template-columns:1fr 1fr}}
+.ipanel h3{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:18px;margin-bottom:8px}
+.ivs{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:stretch}
+.ivs .vs{min-width:40px;font-size:22px}
+.ibox{background:rgba(12,7,3,.78);border:1px solid var(--line);border-radius:14px;padding:16px;font-size:clamp(16px,1.9vw,22px);line-height:1.55;font-weight:700;min-height:140px;display:flex;align-items:center;justify-content:center;text-align:center;white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere;transition:.3s}
+.ibox.win{border-color:var(--ember);box-shadow:0 0 0 3px rgba(255,122,24,.5),0 0 30px rgba(255,140,40,.35)}
+.ibox.lose{opacity:.3}
+.idone{text-align:center;padding:40px 10px;color:var(--muted);font-weight:700}
+.iwinners{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin:14px auto 0;max-width:820px}
+.icard{background:rgba(12,7,3,.82);border:2px solid var(--ember);border-radius:16px;padding:14px;text-align:center;box-shadow:0 0 40px rgba(255,170,60,.35)}
+.icard .lbl{font-weight:800;color:var(--amber);margin-bottom:8px}
+.ph{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--flame);background:radial-gradient(circle at 30% 30%,#7a3a12,#1a0f06)}
+.icard .ph{font-size:72px}
+.icard .nm{font-size:clamp(24px,3.4vw,36px);font-weight:900;color:var(--flame);margin-top:10px}
+.icard .ad,.rk .ad{color:var(--cream);margin-top:6px;line-height:1.5;white-space:pre-wrap;word-break:keep-all}
+.ranks{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin:10px 0 22px}
+.rk{background:rgba(12,7,3,.82);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center;opacity:0;transform:translateY(18px) scale(.94);transition:opacity .5s,transform .5s}
+.rk.on{opacity:1;transform:none}
+.rk .ph{font-size:44px}
+.rk .no{font-weight:900;color:var(--flame);font-size:20px;margin-bottom:6px}
+.rkgroup{display:flex;align-items:center;gap:10px;margin:18px 0 4px;flex-wrap:wrap}
+.rkg{background:linear-gradient(180deg,var(--flame),var(--ember));color:#2a1503;font-weight:900;border-radius:20px;padding:5px 14px;font-size:16px}
+.ranks.small{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.ranks.small .ph{font-size:30px}.ranks.small .nm{font-size:14px}.ranks.small .ad{font-size:11px}
+.rk .nm{font-weight:800;font-size:17px;margin-top:8px}
+.rk .ad{font-size:13px;color:var(--muted)}
+.adm{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+.adm img,.adm .ph{width:44px;height:58px;font-size:18px;border-radius:6px;object-fit:cover}
+/* ── 이상형 토너먼트 (폰) ── */
+.jform{background:rgba(12,7,3,.88);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:12px}
+.jform label.f{display:block;font-weight:800;margin:16px 0 6px}
+.jform input[type=text],.jform textarea{width:100%;background:rgba(10,6,2,.75);border:1px solid var(--line);color:var(--cream);border-radius:10px;padding:11px;font-size:16px;font-family:inherit;-webkit-user-select:text;user-select:text}
+.jform textarea{min-height:100px;resize:vertical}
+.jform input[type=file]{font-size:14px;color:var(--cream);max-width:100%}
+.gsel{display:flex;gap:10px}
+.gsel button{flex:1;padding:14px;border-radius:12px;border:2px solid var(--line);background:rgba(0,0,0,.3);color:var(--cream);font-size:16px;font-weight:800;font-family:inherit;cursor:pointer}
+.gsel button.on{border-color:var(--flame);background:rgba(255,122,24,.28)}
+.warn{background:rgba(255,77,77,.12);border:1px solid rgba(255,120,120,.5);border-radius:10px;padding:10px 12px;font-size:13px;line-height:1.6;color:#ffe0e0}
+.chk{display:flex;gap:8px;align-items:flex-start;margin-top:12px;font-size:14px;line-height:1.5;cursor:pointer}
+.chk input{width:20px;height:20px;margin-top:1px;flex:none}
+.jprev{width:110px;aspect-ratio:3/4;object-fit:cover;border-radius:10px;margin-top:8px;display:block}
+.jtext{display:block;background:rgba(12,7,3,.85);border:2px solid var(--line);border-radius:16px;padding:16px;margin-top:12px;font-size:17px;line-height:1.55;font-weight:700;white-space:pre-wrap;word-break:keep-all;width:100%;text-align:left;color:var(--cream);font-family:inherit;cursor:pointer}
+.jtext .go{display:inline-block;margin-top:10px;font-size:13px;font-weight:800;color:#2a1503;background:var(--flame);border-radius:20px;padding:4px 12px}
+.jtext.pick{border-color:var(--ember);box-shadow:0 0 0 3px rgba(255,122,24,.4)}
+.jtext:disabled{cursor:default}
+.jtext:disabled:not(.pick){opacity:.45}
+
 /* ── 관객(폰) 화면 ── */
 body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;overscroll-behavior:none}
 .jwrap{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:18px 14px calc(30px + env(safe-area-inset-bottom))}
@@ -200,6 +253,11 @@ body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none
 
   <!-- HOME -->
   <div id="home" class="card" style="margin-top:22px">
+    <div class="mtabs">
+      <button class="mtab on" data-mode="praise" type="button">🔥 찬양 토너먼트</button>
+      <button class="mtab" data-mode="ideal" type="button">💘 이상형 토너먼트</button>
+    </div>
+    <div id="praiseHome">
     <div class="big">🎄 오늘 밤, 가장 사랑받는 찬양은?</div>
     <p class="note center" id="homeDesc" style="max-width:720px;margin:8px auto 18px"></p>
     <div class="row">
@@ -239,7 +297,20 @@ body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none
         <div style="font-weight:800;margin-bottom:10px">📋 곡 목록 (복음성가)</div>
         <div id="rosterPreview" class="logbox" style="max-height:300px"></div>
         <div class="tag" style="margin-top:8px">총 <b id="songTotal" class="hook">0</b>곡</div>
-        <div class="tag" style="margin-top:4px;opacity:.6">버전 2026.10.04-QR2</div>
+        <div class="tag" style="margin-top:4px;opacity:.6">버전 2026.10.04-IDEAL2</div>
+      </div>
+    </div>
+    </div><!-- /praiseHome -->
+
+    <div id="idealHome" class="hidden">
+      <div class="big">💘 오늘 밤, 모두의 이상형은?</div>
+      <p class="note center" style="max-width:740px;margin:8px auto 18px">참가자가 폰으로 <b class="hook">성별 · 이름 · 나의 장점 · 사진</b>을 보내면, 남성 참가자 1:1과 여성 참가자 1:1이 한 화면에서 동시에 대결해요.<br>
+        여성은 남성 참가자에게, 남성은 여성 참가자에게 투표하고, 투표 중에는 이름과 사진이 숨겨집니다.<br>공개 모임용이라 <b class="hook">실명 공개에 동의해야 참가</b>할 수 있고, 결과 발표 때 우승자와 순위별 실명·사진이 공개된 뒤 모두 지워져요.</p>
+      <div class="card" style="max-width:480px;margin:0 auto">
+        <div style="font-weight:800;margin-bottom:8px">🏅 결과 발표 방식</div>
+        <div class="tag" style="line-height:1.65">월드컵처럼 <b class="hook">결승 → 1·2위, 3·4위전 → 3·4위</b>를 먼저 공개한 뒤, <b class="hook">8강 · 16강 · 32강…</b> 탈락자를 같은 순위로 묶어 참가자 전원의 사진을 보여줘요.</div>
+        <div class="tag" style="margin-top:12px;line-height:1.65">QR 연결 방식으로만 진행돼요. 진행 중에 이 화면을 새로고침하거나 닫으면 제출된 글과 사진이 모두 사라집니다.</div>
+        <div class="row" style="margin-top:16px"><button class="btn" id="btnIdealStart">💘 참가 접수 시작</button></div>
       </div>
     </div>
   </div>
@@ -276,7 +347,16 @@ body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none
       <div class="step hidden" id="wifiStep"><div class="qrbox"><div id="qrWifi"></div></div><div class="tag" id="wifiStepLabel">① 와이파이 연결</div><div class="tag" id="wifiName" style="font-weight:400;opacity:.85;line-height:1.5"></div></div>
       <div class="step"><div class="qrbox"><div id="qrBig"></div></div><div class="tag">② 게임 참가</div></div>
     </div>
-    <p class="note">접속한 기기에는 두 곡 정보와 투표 버튼만 보입니다.</p>
+    <p class="note" id="lobbyNote">접속한 기기에는 두 곡 정보와 투표 버튼만 보입니다.</p>
+    <div id="ilobby" class="hidden" style="margin:10px 0 14px">
+      <div class="row">
+        <span class="badge">🙋‍♂️ 남성 참가 <b id="icM" class="hook">0</b>명</span>
+        <span class="badge">🙋‍♀️ 여성 참가 <b id="icF" class="hook">0</b>명</span>
+        <span class="badge">🗳 투표만 <b id="icV" class="hook">0</b>명</span>
+      </div>
+      <div style="margin-top:10px"><button class="btn small ghost" id="btnIAdmin" type="button">🛠 제출 내용 관리 (진행자만 보세요)</button></div>
+      <div id="iadmin" class="logbox hidden" style="margin-top:10px;text-align:left;max-height:300px;font-size:13px"></div>
+    </div>
     <div class="row">
       <span class="badge">방 코드 <b id="peerId" class="hook">생성 중…</b></span>
       <span class="badge">접속 <b id="lobbyCount" class="hook">0</b>명</span>
@@ -314,7 +394,7 @@ body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none
         <div style="padding:0 14px 14px"><button class="btn vote-btn" data-vote="B" id="voteB">이 곡에 투표</button></div>
       </div>
     </div>
-    <div class="tally"><div class="tpill a">왼쪽 · <span id="tallyA">0</span>표</div><div class="tpill b">오른쪽 · <span id="tallyB">0</span>표</div></div>
+    <div class="tally hidden"><div class="tpill a">왼쪽 · <span id="tallyA">0</span>표</div><div class="tpill b">오른쪽 · <span id="tallyB">0</span>표</div></div>
     <div class="row" style="margin-top:12px">
       <button class="btn small hidden" id="btnClose">✅ 투표 마감</button>
       <button class="btn ghost small" id="btnReplay">🔁 두 곡 다시 듣기</button>
@@ -337,6 +417,30 @@ body.joiner{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none
       <button class="btn ghost" id="btnShowBracket">🗂 전체 대진표 보기</button>
     </div>
     <div id="bracketView" class="bracket hidden" style="margin-top:20px"></div>
+  </div>
+
+  <!-- IDEAL MATCH -->
+  <div id="imatch" class="hidden" style="margin-top:22px">
+    <div class="ipanels">
+      <div class="card ipanel" id="ipM"></div>
+      <div class="card ipanel" id="ipF"></div>
+    </div>
+    <div class="row" style="margin-top:16px">
+      <button class="btn" id="btnINext">다음 대결 ▶</button>
+      <button class="btn ghost small" id="btnIQuit">처음으로</button>
+    </div>
+  </div>
+
+  <!-- IDEAL RESULT -->
+  <div id="ichamp" class="card hidden champ" style="margin-top:22px">
+    <div style="font-size:44px">💘🏆</div>
+    <div class="note">이상형 토너먼트 우승</div>
+    <div class="iwinners" id="iWinners"></div>
+    <div class="row" style="margin-top:20px">
+      <button class="btn" id="btnIRank">🏅 순위 공개</button>
+      <button class="btn ghost" id="btnIEnd">🗑 종료 · 사진 삭제</button>
+    </div>
+    <div id="iRanks" class="hidden" style="margin-top:22px;text-align:left"></div>
   </div>
 </div>
 
@@ -516,6 +620,9 @@ function drawQR(el,text,size,dark){
     el.appendChild(cv);return true;
   }catch(e){el.textContent="QR 생성 실패: 입력을 줄여 주세요";return false;}
 }
+/* 부적절한 표현 간단 필터 (모든 표현을 걸러내지는 못함 → 진행자 삭제 기능 병행) */
+const BAD_WORDS=["씨발","시발","씨바","시바","ㅅㅂ","ㅆㅂ","씹","병신","븅신","ㅂㅅ","개새","새끼","ㅅㄲ","좆","존나","졸라","지랄","ㅈㄹ","염병","엠창","니미","느금","애미","애비","꺼져","닥쳐","섹스","야동","보지","자지","fuck","shit","bitch","sex"];
+const badWord=t=>{const x=String(t||"").toLowerCase().replace(/[\s.\-_*~!?^,'"`]/g,"");return BAD_WORDS.some(w=>x.includes(w));};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 /* 눈 내리기 */
@@ -575,6 +682,7 @@ function joinerView(hostId){
     conn.on("data",d=>{
       if(!d)return;
       if(d.type==="ping"){try{conn.send({type:"pong"});}catch(_){}return;}
+      if(/^i(reg|ok|err|match|wait|voted|end)$/.test(d.type)){onIdeal(d);return;}
       if(d.type==="match"){if(!cur||cur.mid!==d.mid)voted=d.voted||null;cur=d;render();}
       if(d.type==="voted"){voted=d.side;render();st.textContent="✅ 투표했어요! 큰 화면을 봐주세요";}
       if(d.type==="wait"){cur=null;voted=null;render();st.textContent="⏳ 다음 대결을 준비하고 있어요";}
@@ -582,6 +690,136 @@ function joinerView(hostId){
     });
     conn.on("close",()=>{st.textContent="⚠ 연결이 끊겼어요 · 다시 연결 중…";setTimeout(retry,2500);});
   }
+  /* ---------------- 이상형 토너먼트 (폰) ---------------- */
+  const IM={phase:null,me:null,cur:null,voted:null,wait:"",view:"",editing:false,wantVoter:false,sending:false};
+  const draft={g:null,name:"",adv:"",photo:null,dropPhoto:false,consent:false,agree:false,nameOk:false};
+  const GLb={M:"남성",F:"여성"};
+  function iTitle(){const t=document.querySelector("#japp .title");if(t)t.textContent="💘 이상형 토너먼트";}
+  function onIdeal(d){
+    iTitle();
+    if(d.type==="ireg"){IM.phase=d.phase;IM.me=d.me||null;if(d.phase!=="play")IM.cur=null;}
+    else if(d.type==="iok"){IM.me=d.me;IM.editing=false;IM.wantVoter=false;IM.sending=false;draft.photo=null;draft.dropPhoto=false;}
+    else if(d.type==="ierr"){IM.sending=false;if(d.reset){IM.me=null;IM.editing=false;}IM.view="";alert(d.msg);}
+    else if(d.type==="imatch"){IM.phase="play";if(!IM.cur||IM.cur.mid!==d.mid)IM.voted=d.voted||null;IM.cur=d;}
+    else if(d.type==="iwait"){IM.cur=null;IM.voted=null;IM.wait=d.msg||"";}
+    else if(d.type==="ivoted"){IM.voted=d.side;}
+    else if(d.type==="iend"){IM.phase="end";IM.cur=null;}
+    renderIdeal();
+  }
+  function renderIdeal(){
+    rd.textContent="";
+    let view;
+    if(IM.phase==="end")view="end";
+    else if(IM.phase==="reg")view=IM.wantVoter?"voter":((!IM.me||IM.editing)?"form":"done");
+    else if(IM.phase==="play")view=!IM.me?"voter":(IM.cur?"match":"wait");
+    else view="wait";
+    const key=view+(view==="match"?IM.cur.mid+"|"+IM.voted:"")+(view==="wait"?IM.wait:"")+(view==="done"?JSON.stringify(IM.me):"");
+    if(key===IM.view)return;            /* 입력 중인 화면은 다시 그리지 않음 */
+    IM.view=key;
+    if(view==="form")return iForm();
+    if(view==="voter")return iVoter();
+    if(view==="done"){
+      const m=IM.me;
+      if(m.role==="voter"){cards.innerHTML=`<div class="jform"><div style="font-weight:800">🗳 투표 참여 등록 완료 (${GLb[m.g]})</div>
+        <div class="tag" style="margin-top:6px">대결이 시작되면 ${GLb[m.g==="M"?"F":"M"]} 참가자 대결이 이 화면에 나와요.</div>
+        <button class="btn ghost small" id="dEdit" style="width:100%;margin-top:14px">✍ 참가자로 등록하기</button></div>`;}
+      else{cards.innerHTML=`<div class="jform"><div style="font-weight:800">✅ 제출 완료</div>
+        <div class="tag" style="margin-top:10px">${GLb[m.g]} · ${esc(m.name)} (실명 공개 동의)</div>
+        <div style="margin-top:8px;white-space:pre-wrap;line-height:1.55">${esc(m.adv)}</div>
+        <div class="tag" style="margin-top:8px">사진: ${m.photo?(m.consent?"보냄 (발표 때 공개 동의)":"보냄"):"없음"}</div>
+        <button class="btn ghost small" id="dEdit" style="width:100%;margin-top:14px">✏ 수정하기</button></div>`;}
+      $("dEdit").onclick=()=>{IM.editing=true;IM.wantVoter=false;
+        if(m.role==="player"){draft.g=m.g;draft.name=m.name;draft.adv=m.adv;draft.consent=!!m.consent;draft.agree=false;draft.nameOk=true;}
+        else draft.g=m.g;
+        renderIdeal();};
+      st.textContent="접수가 마감되면 대결이 시작돼요";return;
+    }
+    if(view==="match"){
+      const c=IM.cur;
+      cards.innerHTML=`<div class="tag" style="text-align:center;margin-top:6px">${esc(c.round||"")}</div>`+["A","B"].map(sd=>{
+        const t=sd==="A"?c.a:c.b;
+        return `<button class="jtext${IM.voted===sd?" pick":""}" data-side="${sd}" ${IM.voted?"disabled":""}>${esc(t.adv)}
+          <br><span class="go">${IM.voted===sd?"✅ 투표함":"이 사람에게 투표"}</span></button>`;}).join("");
+      cards.querySelectorAll(".jtext").forEach(b=>b.onclick=()=>{
+        if(IM.voted||!conn||!conn.open)return;IM.voted=b.dataset.side;
+        conn.send({type:"ivote",side:IM.voted,mid:c.mid});renderIdeal();});
+      st.textContent=IM.voted?"✅ 투표했어요! 큰 화면을 봐주세요":"마음에 드는 장점을 눌러 투표하세요";return;
+    }
+    if(view==="wait"){cards.innerHTML="";st.textContent=IM.wait||"⏳ 대결을 기다리는 중";return;}
+    if(view==="end"){cards.innerHTML="";st.textContent="🏆 결과 발표 중! 큰 화면을 봐주세요";}
+  }
+  function gselHTML(){return `<div class="gsel"><button type="button" data-g="M">🙋‍♂️ 남성</button><button type="button" data-g="F">🙋‍♀️ 여성</button></div>`;}
+  function bindGsel(){cards.querySelectorAll(".gsel button").forEach(b=>{b.classList.toggle("on",b.dataset.g===draft.g);
+    b.onclick=()=>{draft.g=b.dataset.g;cards.querySelectorAll(".gsel button").forEach(x=>x.classList.toggle("on",x===b));};});}
+  function compress(file){return new Promise((res,rej)=>{
+    const url=URL.createObjectURL(file),im=new Image();
+    im.onload=()=>{const M=1600;let w=im.naturalWidth,h=im.naturalHeight;const r=Math.min(1,M/Math.max(w,h));w=Math.round(w*r);h=Math.round(h*r);
+      const c=document.createElement("canvas");c.width=w;c.height=h;c.getContext("2d").drawImage(im,0,0,w,h);URL.revokeObjectURL(url);
+      let q=.85,d=c.toDataURL("image/jpeg",q);while(d.length>480000&&q>.45){q-=.1;d=c.toDataURL("image/jpeg",q);}res(d);};
+    im.onerror=()=>{URL.revokeObjectURL(url);rej(new Error("img"));};im.src=url;});}
+  function iForm(){
+    st.textContent="";
+    const had=IM.me&&IM.me.role==="player"&&IM.me.photo&&!draft.dropPhoto;
+    cards.innerHTML=`<div class="jform">
+      <div class="warn">⚠ 욕설·비방·성적인 표현 등 <b>부적절한 말은 쓰지 말아 주세요.</b><br>부적절한 내용은 자동으로 막히거나 진행자가 삭제할 수 있어요.</div>
+      <label class="f">성별</label>${gselHTML()}
+      <label class="f">이름 (실명)</label>
+      <input type="text" id="fName" maxlength="20" placeholder="예) 홍길동" autocomplete="off">
+      <label class="chk"><input type="checkbox" id="fNameOk"> <span><b>(필수)</b> 공개 모임에서 진행되므로, 결과 발표 때 내 <b>실명이 공개</b>되는 것에 동의합니다.</span></label>
+      <div class="tag" style="margin-top:4px">실명이 아니면 진행자가 삭제할 수 있어요.</div>
+      <label class="f">나의 장점 <span class="tag" id="fCnt">0/100</span></label>
+      <textarea id="fAdv" maxlength="100" placeholder="나의 매력 포인트를 적어 주세요"></textarea>
+      <div class="tag" style="margin-top:4px">투표 중에는 이름과 사진이 숨겨지고 장점 글만 보여요. 결과 발표 때 실명이 공개됩니다.</div>
+      <label class="f">사진 (선택)</label>
+      <input type="file" id="fPhoto" accept="image/*">
+      <div id="fPrev">${draft.photo?`<img class="jprev" src="${draft.photo}" alt="">`:(had?'<div class="tag" style="margin-top:6px">📷 이미 보낸 사진이 있어요 (바꾸려면 새로 선택)</div>':"")}</div>
+      ${(draft.photo||had)?'<button class="btn ghost small" id="fDrop" type="button" style="margin-top:8px">사진 빼기</button>':""}
+      <label class="chk ${(draft.photo||had)?"":"hidden"}" id="fConsentWrap"><input type="checkbox" id="fConsent"> <span>결과 발표 때 내 사진이 큰 화면에 공개되는 것에 동의합니다. (발표가 끝나면 바로 삭제돼요)</span></label>
+      <label class="chk"><input type="checkbox" id="fAgree"> <span>부적절한 표현을 쓰지 않겠습니다.</span></label>
+      <button class="btn" id="fSubmit" style="width:100%;margin-top:16px">제출하기</button>
+      <button class="btn ghost small" id="fVoter" type="button" style="width:100%;margin-top:10px">글은 안 쓰고 투표만 할게요</button>
+    </div>`;
+    bindGsel();
+    const fN=$("fName"),fA=$("fAdv"),cnt=$("fCnt");
+    fN.value=draft.name;fA.value=draft.adv;cnt.textContent=fA.value.length+"/100";
+    $("fConsent").checked=draft.consent;$("fAgree").checked=draft.agree;$("fNameOk").checked=draft.nameOk;
+    $("fNameOk").onchange=e=>draft.nameOk=e.target.checked;
+    fN.oninput=()=>draft.name=fN.value;fA.oninput=()=>{draft.adv=fA.value;cnt.textContent=fA.value.length+"/100";};
+    $("fConsent").onchange=e=>draft.consent=e.target.checked;$("fAgree").onchange=e=>draft.agree=e.target.checked;
+    $("fPhoto").onchange=async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;
+      $("fPrev").innerHTML='<div class="tag">사진 준비 중…</div>';
+      try{draft.photo=await compress(f);draft.dropPhoto=false;}catch(_){alert("사진을 읽지 못했어요. 다른 사진을 골라 주세요.");draft.photo=null;}
+      IM.view="";renderIdeal();};
+    const dr=$("fDrop");if(dr)dr.onclick=()=>{draft.photo=null;draft.dropPhoto=true;draft.consent=false;IM.view="";renderIdeal();};
+    $("fVoter").onclick=()=>{IM.wantVoter=true;renderIdeal();};
+    $("fSubmit").onclick=()=>{
+      if(IM.sending)return;
+      const name=draft.name.trim(),adv=draft.adv.trim(),hasPhoto=!!draft.photo||(had&&!draft.dropPhoto);
+      if(!draft.g)return alert("성별을 골라 주세요.");
+      if(!name)return alert("이름(실명)을 적어 주세요.");
+      if(!draft.nameOk)return alert("실명 공개에 동의해야 참가할 수 있어요.\n참가하지 않으려면 '투표만 할게요'를 눌러 주세요.");
+      if(!adv)return alert("나의 장점을 적어 주세요.");
+      if(badWord(name)||badWord(adv))return alert("부적절한 표현이 있어요. 다시 작성해 주세요.");
+      if(hasPhoto&&!draft.consent)return alert("사진을 보내려면 공개 동의에 체크해 주세요. (원치 않으면 '사진 빼기')");
+      if(!draft.agree)return alert("'부적절한 표현을 쓰지 않겠습니다'에 체크해 주세요.");
+      if(!conn||!conn.open)return alert("연결이 끊겼어요. 잠시 후 다시 시도해 주세요.");
+      IM.sending=true;st.textContent="보내는 중…";
+      conn.send({type:"reg",role:"player",nameOk:true,g:draft.g,name,adv,photo:draft.photo||null,keepPhoto:!draft.photo&&!draft.dropPhoto,consent:hasPhoto&&draft.consent});
+    };
+  }
+  function iVoter(){
+    st.textContent="";
+    cards.innerHTML=`<div class="jform"><div style="font-weight:800">🗳 투표만 참여하기</div>
+      <div class="tag" style="margin:6px 0 12px;line-height:1.6">성별을 고르면 반대 성별 참가자의 대결에 투표할 수 있어요.</div>
+      ${gselHTML()}
+      <button class="btn" id="vGo" style="width:100%;margin-top:16px">투표 참여하기</button>
+      ${IM.phase==="reg"?'<button class="btn ghost small" id="vBack" type="button" style="width:100%;margin-top:10px">← 참가자로 등록하기</button>':""}</div>`;
+    bindGsel();
+    $("vGo").onclick=()=>{if(!draft.g)return alert("성별을 골라 주세요.");if(!conn||!conn.open)return alert("연결이 끊겼어요.");
+      conn.send({type:"reg",role:"voter",g:draft.g});st.textContent="등록 중…";};
+    const bk=$("vBack");if(bk)bk.onclick=()=>{IM.wantVoter=false;IM.editing=true;renderIdeal();};
+  }
+
   function retry(){if(conn&&conn.open)return;if(peer&&!peer.destroyed&&peer.open)connect();else{try{peer&&peer.destroy();}catch(_){}peer=null;connect();}}
   if(typeof Peer==="undefined"){st.textContent="⚠ 인터넷 연결을 확인해 주세요";return;}
   connect();
@@ -628,7 +866,7 @@ function hostInit(){
   /* ---- 유틸 ---- */
   const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
   function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("show"),2200);}
-  function show(id){["home","lobby","match","champ"].forEach(x=>$(x).classList.add("hidden"));$(id).classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"});}
+  function show(id){["home","lobby","match","champ","imatch","ichamp"].forEach(x=>$(x).classList.add("hidden"));$(id).classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"});}
 
   /* ---- YouTube ---- */
   const CLIP=20;                        /* 한 곡 재생 시간(초) */
@@ -773,7 +1011,7 @@ function hostInit(){
     logQR(`▶ ${rn} · ${A.t} vs ${B.t}`);
   }
   function resetTally(){state.lastSide=null;state.votesA=0;state.votesB=0;state.voter=1;state.finishing=false;$("tallyA").textContent="0";$("tallyB").textContent="0";
-    $("voterLabel").textContent=state.mode==="qr"?"투표 0명":`투표자 1 / ${state.voters}`;}
+    $("voterLabel").textContent=state.mode==="qr"?"투표 참여 0명":`투표자 1 / ${state.voters}`;}
   function castVote(side){
     if(state.finishing)return;
     side==="A"?state.votesA++:state.votesB++;state.lastSide=side;
@@ -791,7 +1029,7 @@ function hostInit(){
     const m=currentMatch();m.w=w==="A"?m.a:m.b;m.l=w==="A"?m.b:m.a;
     $("voteA").disabled=true;$("voteB").disabled=true;
     $("cardA").classList.toggle("active",w==="A");$("cardB").classList.toggle("active",w==="B");
-    logQR(`🏁 승자: ${S[m.w].t} (${tA}:${tB})`);
+    logQR(`🏁 승자: ${S[m.w].t}`);
     if(state.mode==="qr")broadcast({type:"wait"});
     setTimeout(advance,1400);
   }
@@ -832,7 +1070,7 @@ function hostInit(){
   function matchMsg(voted){const m=currentMatch();return {type:"match",mid:state.mid,round:`${ROUND_NAMES[state.ri]} · 대결 ${state.mi+1}`,a:pub(S[m.a]),b:pub(S[m.b]),voted:voted||null};}
   function broadcastMatch(){clients().forEach(c=>{try{c.send(matchMsg(state.voted.get(devOf(c))));}catch(_){}});}
   function updateCounts(){const n=clients().length;$("lobbyCount").textContent=n;$("dockCount").textContent=n;updateQrLabel();}
-  function updateQrLabel(){if(state.mode==="qr"&&!$("match").classList.contains("hidden"))$("voterLabel").textContent=`투표 ${state.voted.size} / 접속 ${clients().length}명`;}
+  function updateQrLabel(){if(state.mode==="qr"&&!$("match").classList.contains("hidden"))$("voterLabel").textContent=`투표 참여 ${state.voted.size}명`;}
   function startPeer(){
     if(peer&&!peer.destroyed)return;
     if(typeof Peer==="undefined"){logQR("⚠ PeerJS를 불러오지 못했어요. 인터넷 연결을 확인하세요.");return;}
@@ -856,6 +1094,7 @@ function hostInit(){
       c.on("data",d=>{
         if(!d)return;c._seen=Date.now();
         if(d.type==="pong")return;
+        if(appMode==="ideal"){idealData(c,k,d);return;}
         if(d.type==="hello"){ if(!$("match").classList.contains("hidden")&&!state.finishing)c.send(matchMsg(state.voted.get(devOf(c)))); else c.send({type:"wait"}); }
         if(d.type==="vote"&&state.mode==="qr"&&d.mid===state.mid&&!state.finishing&&(d.side==="A"||d.side==="B")){
           if(state.voted.has(k)){c.send({type:"voted",side:state.voted.get(k)});return;}
@@ -882,6 +1121,8 @@ function hostInit(){
     buildBracket();
     const qr=state.mode==="qr";
     $("voteA").classList.toggle("hidden",qr);$("voteB").classList.toggle("hidden",qr);$("btnClose").classList.toggle("hidden",!qr);
+    appMode="praise";$("ilobby").classList.add("hidden");$("btnBegin").textContent="▶ 첫 대결 시작";
+    $("lobbyNote").textContent="접속한 기기에는 두 곡 정보와 투표 버튼만 보입니다.";
     if(qr){startPeer();show("lobby");updateCounts();drawWifi();}
     else{$("qrDock").classList.add("hidden");renderMatch();}
   };
@@ -905,8 +1146,8 @@ function hostInit(){
   }
   try{const w=JSON.parse(localStorage.getItem("praiseWifi")||"null");if(w){$("wifiSsid").value=w.ss||"";$("wifiPw").value=w.pw||"";}}catch(_){}
   ["input","change","keyup","compositionend"].forEach(ev=>{$("wifiSsid").addEventListener(ev,drawWifi);$("wifiPw").addEventListener(ev,drawWifi);});
-  $("btnBegin").onclick=()=>{$("qrDock").classList.remove("hidden");renderMatch();};
-  $("btnLobbyQuit").onclick=()=>show("home");
+  $("btnBegin").onclick=()=>{if(appMode==="ideal"){idealBegin();return;}$("qrDock").classList.remove("hidden");renderMatch();};
+  $("btnLobbyQuit").onclick=()=>{if(appMode==="ideal"){if(I.entries.size&&!confirm("접수된 글과 사진이 모두 지워져요. 처음으로 갈까요?"))return;clearIdeal();}show("home");};
   document.querySelectorAll("[data-vote]").forEach(b=>b.onclick=()=>{castVote(b.dataset.vote);b.blur();});
   $("btnClose").onclick=()=>finishMatch();
   document.querySelectorAll("[data-play]").forEach(b=>b.onclick=()=>{
@@ -921,6 +1162,210 @@ function hostInit(){
   };
   const toHome=()=>{stopPlayers();stopChampion();$("qrDock").classList.add("hidden");if(state.mode==="qr")broadcast({type:"wait"});show("home");};
   $("btnQuit").onclick=toHome;$("btnRestart").onclick=toHome;
+  /* ======================= 💘 이상형 토너먼트 (메인) ======================= */
+  var appMode="praise";
+  const I={phase:"idle",entries:new Map(),voters:new Map(),br:{M:null,F:null},stats:new Map(),mid:0,busy:false};
+  const GL={M:"남성",F:"여성"},OPP={M:"F",F:"M"},GI={M:"🙋‍♂️",F:"🙋‍♀️"},VI={M:"👨",F:"👩"};
+  const E=k=>I.entries.get(k);
+  function setMode(m){
+    appMode=m;document.querySelectorAll(".mtab").forEach(b=>b.classList.toggle("on",b.dataset.mode===m));
+    $("praiseHome").classList.toggle("hidden",m!=="praise");$("idealHome").classList.toggle("hidden",m!=="ideal");
+    if(m==="praise")applyVersion();
+    else{$("mainTitle").textContent="💘 이상형 토너먼트";document.title="이상형 토너먼트";
+      $("mainSub").textContent="남성 1:1 · 여성 1:1 동시 대결 → 반대 성별 투표 → 우승자 사진 공개";}
+  }
+  document.querySelectorAll(".mtab").forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+  window.addEventListener("beforeunload",e=>{if(appMode==="ideal"&&I.phase!=="idle"&&I.entries.size){e.preventDefault();e.returnValue="";}});
+
+  function clearIdeal(){I.phase="idle";I.entries.clear();I.voters.clear();I.br={M:null,F:null};I.stats.clear();I.busy=false;
+    ["iWinners","iRanks","iadmin","ipM","ipF"].forEach(x=>$(x).innerHTML="");stopFireworks();}
+  const meOf=k=>{const e=E(k);if(e)return {role:"player",g:e.g,name:e.name,adv:e.adv,photo:!!e.photo,consent:e.consent};
+    const g=I.voters.get(k);return g?{role:"voter",g}:null;};
+  function sendIState(c,k){try{c.send({type:"ireg",phase:I.phase==="result"?"end":I.phase,me:meOf(k)});if(I.phase==="play")sendIMatch(c,k);}catch(_){}}
+  function sendIStateAll(){devs.forEach((c,k)=>{if(c.open)sendIState(c,k);});}
+
+  $("btnIdealStart").onclick=()=>{
+    clearIdeal();
+    I.phase="reg";state.mode="ideal";appMode="ideal";
+    $("ilobby").classList.remove("hidden");$("btnBegin").textContent="✅ 접수 마감 · 대결 시작";
+    $("lobbyNote").textContent="참가자는 폰에서 성별·이름·장점·사진을 보내고, 투표만 할 사람은 성별만 고르면 돼요.";
+    $("iadmin").classList.add("hidden");
+    startPeer();show("lobby");updateCounts();drawWifi();renderILobby();sendIStateAll();
+  };
+  $("btnIAdmin").onclick=()=>{$("iadmin").classList.toggle("hidden");renderILobby();};
+  function photoHTML(e,cls){return e&&e.photo&&e.consent?`<img class="${cls||"ph"}" src="${e.photo}" alt="">`:`<div class="${cls||"ph"}">${esc(e?e.name.charAt(0):"?")}</div>`;}
+  function renderILobby(){
+    const all=[...I.entries.values()];
+    $("icM").textContent=all.filter(e=>e.g==="M").length;$("icF").textContent=all.filter(e=>e.g==="F").length;
+    $("icV").textContent=[...I.voters.keys()].filter(k=>!I.entries.has(k)).length;
+    const box=$("iadmin");if(box.classList.contains("hidden"))return;
+    box.innerHTML=all.length?all.map(e=>`<div class="adm">${photoHTML(e,"ph")}<div><b>${GI[e.g]} ${esc(e.name)}</b><br>${esc(e.adv)}${e.photo&&!e.consent?'<br><span class="tag">사진 공개 미동의</span>':""}</div>
+      <button class="btn small ghost" data-del="${esc(e.dev)}" type="button">삭제</button></div>`).join(""):'<div class="tag">아직 제출된 글이 없어요.</div>';
+    box.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{
+      const k=b.dataset.del,e=E(k);if(!e||!confirm(`"${e.name}" 님의 제출 내용을 삭제할까요?`))return;
+      I.entries.delete(k);I.voters.delete(k);
+      const c=devs.get(k);if(c&&c.open){try{c.send({type:"ierr",msg:"진행자가 제출 내용을 삭제했어요. 다시 작성해 주세요.",reset:true});}catch(_){}sendIState(c,k);}
+      renderILobby();});
+  }
+
+  function idealData(c,k,d){
+    if(d.type==="hello"){sendIState(c,k);return;}
+    if(d.type==="reg"){
+      if(d.role==="voter"){
+        if(d.g!=="M"&&d.g!=="F")return;
+        if(I.entries.has(k)){if(I.phase!=="reg"){sendIState(c,k);return;}I.entries.delete(k);}
+        I.voters.set(k,d.g);c.send({type:"iok",me:meOf(k)});renderILobby();if(I.phase==="play")sendIMatch(c,k);return;
+      }
+      if(I.phase!=="reg"){c.send({type:"ierr",msg:"참가 접수가 마감됐어요. 투표만 참여할 수 있어요."});sendIState(c,k);return;}
+      const g=d.g,name=String(d.name||"").trim().slice(0,20),adv=String(d.adv||"").trim().slice(0,100);
+      if((g!=="M"&&g!=="F")||!name||!adv){c.send({type:"ierr",msg:"성별·이름·장점을 모두 입력해 주세요."});return;}
+      if(d.nameOk!==true){c.send({type:"ierr",msg:"실명 공개에 동의해야 참가할 수 있어요."});return;}
+      if(badWord(name)||badWord(adv)){c.send({type:"ierr",msg:"부적절한 표현이 있어요. 다시 작성해 주세요."});return;}
+      const old=E(k);let photo=null;
+      if(typeof d.photo==="string"&&/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(d.photo)&&d.photo.length<4e6)photo=d.photo;
+      else if(d.keepPhoto&&old)photo=old.photo;
+      I.entries.set(k,{dev:k,g,name,adv,photo,consent:!!(photo&&d.consent)});I.voters.set(k,g);
+      c.send({type:"iok",me:meOf(k)});renderILobby();logQR(`📝 ${GL[g]} 참가 접수`);return;
+    }
+    if(d.type==="ivote"){
+      if(I.phase!=="play"||I.busy)return;
+      const g=I.voters.get(k);if(!g)return;
+      const br=I.br[OPP[g]],m=br&&curM(br);
+      if(!m||m.mid!==d.mid||(d.side!=="A"&&d.side!=="B"))return;
+      if(m.votes.has(k)){c.send({type:"ivoted",side:m.votes.get(k)});return;}
+      m.votes.set(k,d.side);m.last=d.side;c.send({type:"ivoted",side:d.side});updateIVotes();
+    }
+  }
+
+  /* 대진: 부전승 포함 */
+  function newBracket(g){
+    const ps=shuffle([...I.entries.values()].filter(e=>e.g===g).map(e=>e.dev));
+    const br={g,rounds:[],ri:0,mi:-1,done:false,champ:null,n:ps.length};
+    ps.forEach(p=>I.stats.set(p,{elim:-1,votes:0}));
+    if(ps.length<2){br.done=true;br.champ=ps[0]||null;return br;}
+    let size=1;while(size<ps.length)size*=2;
+    const byes=size-ps.length,r=[];
+    for(let i=0;i<byes;i++)r.push({a:ps[i],b:null,w:ps[i]});
+    for(let i=byes;i<ps.length;i+=2)r.push({a:ps[i],b:ps[i+1],w:null,votes:new Map(),last:null,mid:0});
+    br.rounds.push(shuffle(r));advanceBr(br);return br;
+  }
+  function advanceBr(br){
+    for(;;){
+      const rd=br.rounds[br.ri];
+      for(let i=br.mi+1;i<rd.length;i++)if(rd[i].b!==null&&rd[i].w===null){br.mi=i;rd[i].mid=++I.mid;return;}
+      if(rd.third){                       /* 3·4위전 끝 → 결승 */
+        br.rounds.push([{a:br.sfW[0],b:br.sfW[1],w:null,votes:new Map(),last:null,mid:0}]);br.ri++;br.mi=-1;continue;}
+      const ws=rd.map(m=>m.w);
+      if(ws.length===1){br.done=true;br.champ=ws[0];br.mi=-1;return;}
+      if(ws.length===2){                    /* 4강 끝: 탈락자 2명이면 3·4위전 먼저 */
+        const ls=rd.filter(m=>m.b!==null).map(m=>m.l);
+        if(ls.length===2){br.sfW=ws;const t=[{a:ls[0],b:ls[1],w:null,votes:new Map(),last:null,mid:0}];t.third=true;
+          br.rounds.push(t);br.ri++;br.mi=-1;continue;}
+      }
+      const n=[];for(let i=0;i<ws.length;i+=2)n.push({a:ws[i],b:ws[i+1],w:null,votes:new Map(),last:null,mid:0});
+      br.rounds.push(n);br.ri++;br.mi=-1;
+    }
+  }
+  const curM=br=>(!br||br.done||br.mi<0)?null:br.rounds[br.ri][br.mi];
+  function brLabel(br){
+    const rd=br.rounds[br.ri],size=rd.length*2,rn=rd.third?"3·4위전":size===2?"결승":size===4?"4강":size+"강";
+    const play=rd.filter(m=>m.b!==null),idx=play.indexOf(rd[br.mi])+1;
+    return `${GL[br.g]} ${rn} · 대결 ${idx} / ${play.length}`;
+  }
+  function decide(br){
+    const m=curM(br);if(!m)return;let a=0,b=0;m.votes.forEach(v=>v==="A"?a++:b++);
+    let w;if(a!==b)w=a>b?"A":"B";else if(m.last)w=m.last==="A"?"B":"A";else w=Math.random()<.5?"A":"B";
+    m.w=w==="A"?m.a:m.b;m.l=w==="A"?m.b:m.a;
+    I.stats.get(m.a).votes+=a;I.stats.get(m.b).votes+=b;
+    const rd=br.rounds[br.ri];
+    if(rd.third){br.p3=m.w;br.p4=m.l;return;}          /* 3·4위 확정 */
+    I.stats.get(m.l).elim=br.ri;
+    if(rd.length===1)br.p2=m.l;                          /* 결승 패자 = 2위 */
+  }
+  function panelHTML(g,showWin){
+    const br=I.br[g],m=curM(br);
+    const head=`<h3><span>${GI[g]} ${GL[g]} 참가자 대결</span>
+      <span class="badge">${VI[OPP[g]]} ${GL[OPP[g]]} 투표 참여 <b class="hook" id="ivc${g}">${m?m.votes.size:0}</b>명</span></h3>`;
+    if(!br||br.n===0)return head+`<div class="idone">${GL[g]} 참가자가 없어요</div>`;
+    if(!m)return head+`<div class="idone">✔ ${GL[g]} 토너먼트 완료<br>결과 발표를 기다려요</div>`;
+    const cls=x=>!showWin||!m.w?"":(m.w===x?" win":" lose");
+    return head+`<div class="tag" style="margin-bottom:10px">${esc(brLabel(br))}</div>
+      <div class="ivs"><div class="ibox${cls(m.a)}">${esc(E(m.a).adv)}</div><div class="vs">VS</div><div class="ibox${cls(m.b)}">${esc(E(m.b).adv)}</div></div>`;
+  }
+  function renderIMatch(showWin){$("ipM").innerHTML=panelHTML("M",showWin);$("ipF").innerHTML=panelHTML("F",showWin);}
+  function updateIVotes(){["M","F"].forEach(g=>{const el=$("ivc"+g),m=curM(I.br[g]);if(el)el.textContent=m?m.votes.size:0;});}
+  function sendIMatch(c,k){
+    const g=I.voters.get(k);
+    if(!g){c.send({type:"ireg",phase:"play",me:null});return;}
+    const br=I.br[OPP[g]],m=curM(br);
+    if(!m){c.send({type:"iwait",msg:br&&br.n===0?`${GL[OPP[g]]} 참가자가 없어요 · 큰 화면을 봐주세요`:`${GL[OPP[g]]} 대결이 모두 끝났어요 · 결과 발표를 기다려요`});return;}
+    c.send({type:"imatch",mid:m.mid,round:brLabel(br),a:{adv:E(m.a).adv},b:{adv:E(m.b).adv},voted:m.votes.get(k)||null});
+  }
+  function sendIMatchAll(){devs.forEach((c,k)=>{if(c.open)try{sendIMatch(c,k);}catch(_){}});}
+
+  function idealBegin(){
+    const all=[...I.entries.values()],nM=all.filter(e=>e.g==="M").length,nF=all.filter(e=>e.g==="F").length;
+    if(!all.length){toast("아직 참가자가 없어요");return;}
+    if(!confirm(`남성 ${nM}명 · 여성 ${nF}명으로 접수를 마감하고 대결을 시작할까요?`))return;
+    I.phase="play";I.stats.clear();I.br.M=newBracket("M");I.br.F=newBracket("F");
+    if(I.br.M.done&&I.br.F.done){showIResult();return;}
+    $("qrDock").classList.remove("hidden");show("imatch");renderIMatch(false);sendIStateAll();
+  }
+  $("btnINext").onclick=()=>{
+    if(I.busy||I.phase!=="play")return;I.busy=true;
+    ["M","F"].forEach(g=>{if(curM(I.br[g]))decide(I.br[g]);});
+    renderIMatch(true);devs.forEach(c=>{if(c.open)try{c.send({type:"iwait",msg:"⏳ 다음 대결을 준비하고 있어요"});}catch(_){}});
+    setTimeout(()=>{
+      ["M","F"].forEach(g=>{const br=I.br[g];if(br&&!br.done)advanceBr(br);});I.busy=false;
+      if(I.br.M.done&&I.br.F.done)showIResult();else{renderIMatch(false);sendIMatchAll();}
+    },1500);
+  };
+  $("btnIQuit").onclick=()=>{if(!confirm("진행 중인 대결과 사진이 모두 지워져요. 처음으로 갈까요?"))return;
+    devs.forEach(c=>{if(c.open)try{c.send({type:"iend"});}catch(_){}});clearIdeal();$("qrDock").classList.add("hidden");show("home");};
+
+  /* 월드컵 방식 순위: 1·2위 → 4강 탈락자(득표순 3·4위) → 8강·16강… 탈락자는 같은 순위로 묶음 */
+  /* 월드컵 방식 순위: 1·2위(결승) → 3·4위(3·4위전) → 8강·16강… 탈락자는 같은 순위로 묶음 */
+  function rankGroups(g){
+    const br=I.br[g];if(!br)return [];
+    const ps=[...I.entries.values()].filter(e=>e.g===g);if(!ps.length)return [];
+    const st=k=>I.stats.get(k)||{elim:-1,votes:0},out=[],used=new Set();let placed=0;
+    const put=(k,label)=>{const e=E(k);if(!e||used.has(k))return;used.add(k);out.push({label,items:[e],top:true});placed++;};
+    if(br.champ)put(br.champ,"1위");
+    if(br.p2)put(br.p2,"2위");
+    if(br.p3)put(br.p3,"3위");
+    if(br.p4)put(br.p4,"4위");
+    const byR={};ps.forEach(e=>{if(used.has(e.dev))return;const r=st(e.dev).elim;if(r>=0)(byR[r]=byR[r]||[]).push(e);});
+    Object.keys(byR).map(Number).sort((a,b)=>b-a).forEach(r=>{
+      const size=br.rounds[r].length*2,L=byR[r].sort((x,y)=>st(y.dev).votes-st(x.dev).votes);
+      if(size<=4){L.forEach(e=>{used.add(e.dev);out.push({label:`${placed+1}위`,items:[e],top:true});placed++;});}  /* 부전승으로 3·4위전이 없을 때 */
+      else{out.push({label:`${size}강`,sub:`공동 ${placed+1}위 · ${L.length}명`,items:L,top:false});placed+=L.length;}
+    });
+    return out;
+  }
+  function showIResult(){
+    I.phase="result";$("qrDock").classList.add("hidden");show("ichamp");
+    devs.forEach(c=>{if(c.open)try{c.send({type:"iend"});}catch(_){}});
+    $("iWinners").innerHTML=["M","F"].map(g=>{const br=I.br[g],e=br&&br.champ?E(br.champ):null;
+      return e?`<div class="icard"><div class="lbl">${GI[g]} ${GL[g]} 우승</div>${photoHTML(e)}<div class="nm">${esc(e.name)}</div><div class="ad">${esc(e.adv)}</div></div>`
+              :`<div class="icard"><div class="lbl">${GI[g]} ${GL[g]} 우승</div><div class="idone">참가자가 없어요</div></div>`;}).join("");
+    $("iRanks").classList.add("hidden");$("iRanks").innerHTML="";$("btnIRank").disabled=false;
+    fireworks(10);
+  }
+  $("btnIRank").onclick=()=>{
+    const box=$("iRanks");box.classList.remove("hidden");$("btnIRank").disabled=true;
+    const card=(e,no)=>`<div class="rk">${no?`<div class="no">${no}</div>`:""}${photoHTML(e)}<div class="nm">${esc(e.name)}</div><div class="ad">${esc(e.adv)}</div></div>`;
+    box.innerHTML=["M","F"].map(g=>{const G=rankGroups(g);if(!G.length)return "";
+      const top=G.filter(x=>x.top),rest=G.filter(x=>!x.top);
+      return `<div class="big" style="text-align:left;margin-top:8px">${GI[g]} ${GL[g]} 참가자 순위 · 전체 ${G.reduce((n,x)=>n+x.items.length,0)}명</div>
+        <div class="ranks">${top.map(x=>x.items.map(e=>card(e,x.label)).join("")).join("")}</div>`+
+        rest.map(x=>`<div class="rkgroup"><span class="rkg">${x.label}</span><span class="tag">${x.sub}</span></div>
+          <div class="ranks small">${x.items.map(e=>card(e,"")).join("")}</div>`).join("");}).join("");
+    let t=300;box.querySelectorAll(".rk").forEach(el=>{const big=!el.parentElement.classList.contains("small");
+      setTimeout(()=>el.classList.add("on"),t);t+=big?650:110;});
+    box.scrollIntoView({behavior:"smooth",block:"start"});
+  };
+  $("btnIEnd").onclick=()=>{if(!confirm("발표를 마치고 모든 글과 사진을 지울까요?"))return;clearIdeal();show("home");toast("사진과 글을 모두 지웠어요");};
+
   $("btnShowBracket").onclick=()=>$("bracketView").classList.toggle("hidden");
 
   /* ---- YouTube 로그인 (선택) : 이 브라우저에 로그인돼 있으면 임베드 영상에도 Premium이 적용됨 ---- */
